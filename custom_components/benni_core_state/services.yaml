@@ -21,6 +21,29 @@ mark_awake:
   name: Mark as awake
   description: Shortcut for set_bio_state with state=awake.
 
+set_day_phase_model:
+  name: Set day phase model
+  description: >-
+    Controlled switch of the model that drives the nine-state day_state sensor:
+    legacy (previous algorithm) or accordion (32 seasonal anchors). The
+    accordion is always computed in the additional day_phase sensor.
+  fields:
+    model:
+      name: Model
+      description: legacy = previous algorithm, accordion = seasonal anchor accordion.
+      required: true
+      selector:
+        select:
+          options:
+            - legacy
+            - accordion
+    entry_id:
+      name: Config entry
+      description: Optional Core State config-entry ID; omitted applies to all loaded entries.
+      required: false
+      selector:
+        text:
+
 configure_sleep_window:
   name: Configure sleep window
   description: Persist the minimum sleep duration (M) and provisional lead (A).

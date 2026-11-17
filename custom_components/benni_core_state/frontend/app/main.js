@@ -2465,32 +2465,39 @@ function Zi(e, t, n = t) {
 	var r = /* @__PURE__ */ new WeakSet();
 	gt(e, "input", async (i) => {
 		var a = i ? e.defaultValue : e.value;
-		if (a = Qi(e) ? $i(a) : a, n(a), I !== null && r.add(I), await br(), a !== (a = t())) {
+		if (a = $i(e) ? ea(a) : a, n(a), I !== null && r.add(I), await br(), a !== (a = t())) {
 			var o = e.selectionStart, s = e.selectionEnd, c = e.value.length;
 			if (e.value = a ?? "", s !== null) {
 				var l = e.value.length;
 				o === s && s === c && l > c ? (e.selectionStart = l, e.selectionEnd = l) : (e.selectionStart = o, e.selectionEnd = Math.min(s, l));
 			}
 		}
-	}), (k && e.defaultValue !== e.value || Cr(t) == null && e.value) && (n(Qi(e) ? $i(e.value) : e.value), I !== null && r.add(I)), Fn(() => {
+	}), (k && e.defaultValue !== e.value || Cr(t) == null && e.value) && (n($i(e) ? ea(e.value) : e.value), I !== null && r.add(I)), Fn(() => {
 		var n = t();
 		if (e === document.activeElement) {
 			var i = I;
 			if (r.has(i)) return;
 		}
-		Qi(e) && n === $i(e.value) || e.type === "date" && !n && !e.value || n !== e.value && (e.value = n ?? "");
+		$i(e) && n === ea(e.value) || e.type === "date" && !n && !e.value || n !== e.value && (e.value = n ?? "");
 	});
 }
-function Qi(e) {
+function Qi(e, t, n = t) {
+	gt(e, "change", (t) => {
+		n(t ? e.defaultChecked : e.checked);
+	}), (k && e.defaultChecked !== e.checked || Cr(t) == null) && n(e.checked), Fn(() => {
+		e.checked = !!t();
+	});
+}
+function $i(e) {
 	var t = e.type;
 	return t === "number" || t === "range";
 }
-function $i(e) {
+function ea(e) {
 	return e === "" ? null : +e;
 }
 //#endregion
 //#region node_modules/svelte/src/internal/client/reactivity/props.js
-var ea = {
+var ta = {
 	get(e, t) {
 		if (!e.exclude.has(t)) return e.props[t];
 	},
@@ -2516,9 +2523,9 @@ function X(e, t, n) {
 	return new Proxy({
 		props: e,
 		exclude: t
-	}, ea);
+	}, ta);
 }
-var ta = {
+var na = {
 	get(e, t) {
 		let n = e.props.length;
 		for (; n--;) {
@@ -2561,7 +2568,7 @@ var ta = {
 	}
 };
 function Z(...e) {
-	return new Proxy({ props: e }, ta);
+	return new Proxy({ props: e }, na);
 }
 function Q(e, t, n, r) {
 	var i = !0, o = !!(n & 8), s = !!(n & 16), c = r, l = !0, u = void 0, d = () => s && i ? (u ??= /* @__PURE__ */ Tt(r), G(u)) : (l && (l = !1, c = s ? Cr(r) : r), c);
@@ -2597,7 +2604,7 @@ function Q(e, t, n, r) {
 		return Qn && v || b.f & 16384 ? y.v : G(y);
 	});
 }
-function na(e) {
+function ra(e) {
 	He === null && me("onMount"), On(() => {
 		let t = Cr(e);
 		if (typeof t == "function") return t;
@@ -2608,7 +2615,7 @@ function na(e) {
 typeof window < "u" && ((window.__svelte ??= {}).v ??= /* @__PURE__ */ new Set()).add("5");
 //#endregion
 //#region node_modules/@lucide/svelte/dist/defaultAttributes.js
-var ra = {
+var ia = {
 	xmlns: "http://www.w3.org/2000/svg",
 	width: 24,
 	height: 24,
@@ -2618,10 +2625,10 @@ var ra = {
 	"stroke-width": 2,
 	"stroke-linecap": "round",
 	"stroke-linejoin": "round"
-}, ia = (e) => {
+}, aa = (e) => {
 	for (let t in e) if (t.startsWith("aria-") || t === "role" || t === "title") return !0;
 	return !1;
-}, aa = Symbol("lucide-context"), oa = () => We(aa), sa = /* @__PURE__ */ new Set([
+}, oa = Symbol("lucide-context"), sa = () => We(oa), ca = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy",
@@ -2632,13 +2639,13 @@ var ra = {
 	"absoluteStrokeWidth",
 	"iconNode",
 	"children"
-]), ca = /* @__PURE__ */ Xr("<svg><!><!></svg>");
-function la(e, t) {
+]), la = /* @__PURE__ */ Xr("<svg><!><!></svg>");
+function ua(e, t) {
 	N(t, !0);
-	let n = oa() ?? {}, r = Q(t, "color", 19, () => n.color ?? "currentColor"), i = Q(t, "size", 19, () => n.size ?? 24), a = Q(t, "strokeWidth", 19, () => n.strokeWidth ?? 2), o = Q(t, "absoluteStrokeWidth", 19, () => n.absoluteStrokeWidth ?? !1), s = Q(t, "iconNode", 19, () => []), c = /* @__PURE__ */ X(t, sa), l = /* @__PURE__ */ F(() => o() ? Number(a()) * 24 / Number(i()) : a());
-	var u = ca();
+	let n = sa() ?? {}, r = Q(t, "color", 19, () => n.color ?? "currentColor"), i = Q(t, "size", 19, () => n.size ?? 24), a = Q(t, "strokeWidth", 19, () => n.strokeWidth ?? 2), o = Q(t, "absoluteStrokeWidth", 19, () => n.absoluteStrokeWidth ?? !1), s = Q(t, "iconNode", 19, () => []), c = /* @__PURE__ */ X(t, ca), l = /* @__PURE__ */ F(() => o() ? Number(a()) * 24 / Number(i()) : a());
+	var u = la();
 	qi(u, (e) => ({
-		...ra,
+		...ia,
 		...e,
 		...c,
 		width: i(),
@@ -2651,7 +2658,7 @@ function la(e, t) {
 			t.name && `lucide-${t.name}`,
 			t.class
 		]
-	}), [() => !t.children && !ia(c) && { "aria-hidden": "true" }]);
+	}), [() => !t.children && !aa(c) && { "aria-hidden": "true" }]);
 	var d = z(u);
 	ui(d, 17, s, oi, (e, t) => {
 		var n = /* @__PURE__ */ F(() => h(G(t), 2));
@@ -2664,26 +2671,26 @@ function la(e, t) {
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/activity.svelte
-var ua = /* @__PURE__ */ new Set([
+var da = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function da(e, t) {
-	let n = /* @__PURE__ */ X(t, ua), r = [["path", { d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" }]];
-	la(e, Z({ name: "activity" }, () => n, { get iconNode() {
+function fa(e, t) {
+	let n = /* @__PURE__ */ X(t, da), r = [["path", { d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" }]];
+	ua(e, Z({ name: "activity" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/bug.svelte
-var fa = /* @__PURE__ */ new Set([
+var pa = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function pa(e, t) {
-	let n = /* @__PURE__ */ X(t, fa), r = [
+function ma(e, t) {
+	let n = /* @__PURE__ */ X(t, pa), r = [
 		["path", { d: "M12 20v-9" }],
 		["path", { d: "M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z" }],
 		["path", { d: "M14.12 3.88 16 2" }],
@@ -2696,19 +2703,19 @@ function pa(e, t) {
 		["path", { d: "m8 2 1.88 1.88" }],
 		["path", { d: "M9 7.13V6a3 3 0 1 1 6 0v1.13" }]
 	];
-	la(e, Z({ name: "bug" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "bug" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/calendar-clock.svelte
-var ma = /* @__PURE__ */ new Set([
+var ha = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function ha(e, t) {
-	let n = /* @__PURE__ */ X(t, ma), r = [
+function ga(e, t) {
+	let n = /* @__PURE__ */ X(t, ha), r = [
 		["path", { d: "M16 14v2.2l1.6 1" }],
 		["path", { d: "M16 2v3" }],
 		["path", { d: "M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338" }],
@@ -2720,19 +2727,19 @@ function ha(e, t) {
 			r: "6"
 		}]
 	];
-	la(e, Z({ name: "calendar-clock" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "calendar-clock" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/calendar-cog.svelte
-var ga = /* @__PURE__ */ new Set([
+var _a = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function _a(e, t) {
-	let n = /* @__PURE__ */ X(t, ga), r = [
+function va(e, t) {
+	let n = /* @__PURE__ */ X(t, _a), r = [
 		["path", { d: "m15.228 16.852-.923-.383" }],
 		["path", { d: "m15.228 19.148-.923.383" }],
 		["path", { d: "M16 2v3" }],
@@ -2751,19 +2758,19 @@ function _a(e, t) {
 			r: "3"
 		}]
 	];
-	la(e, Z({ name: "calendar-cog" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "calendar-cog" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/calendar-days.svelte
-var va = /* @__PURE__ */ new Set([
+var ya = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function ya(e, t) {
-	let n = /* @__PURE__ */ X(t, va), r = [
+function ba(e, t) {
+	let n = /* @__PURE__ */ X(t, ya), r = [
 		["path", { d: "M8 2v3" }],
 		["path", { d: "M16 2v3" }],
 		["rect", {
@@ -2781,19 +2788,19 @@ function ya(e, t) {
 		["path", { d: "M12 17h.01" }],
 		["path", { d: "M16 17h.01" }]
 	];
-	la(e, Z({ name: "calendar-days" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "calendar-days" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/circle-alert.svelte
-var ba = /* @__PURE__ */ new Set([
+var xa = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function xa(e, t) {
-	let n = /* @__PURE__ */ X(t, ba), r = [
+function Sa(e, t) {
+	let n = /* @__PURE__ */ X(t, xa), r = [
 		["circle", {
 			cx: "12",
 			cy: "12",
@@ -2812,53 +2819,53 @@ function xa(e, t) {
 			y2: "16"
 		}]
 	];
-	la(e, Z({ name: "circle-alert" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "circle-alert" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/circle-check.svelte
-var Sa = /* @__PURE__ */ new Set([
+var Ca = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Ca(e, t) {
-	let n = /* @__PURE__ */ X(t, Sa), r = [["circle", {
+function wa(e, t) {
+	let n = /* @__PURE__ */ X(t, Ca), r = [["circle", {
 		cx: "12",
 		cy: "12",
 		r: "10"
 	}], ["path", { d: "m9 12 2 2 4-4" }]];
-	la(e, Z({ name: "circle-check" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "circle-check" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/clock-3.svelte
-var wa = /* @__PURE__ */ new Set([
+var Ta = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Ta(e, t) {
-	let n = /* @__PURE__ */ X(t, wa), r = [["circle", {
+function Ea(e, t) {
+	let n = /* @__PURE__ */ X(t, Ta), r = [["circle", {
 		cx: "12",
 		cy: "12",
 		r: "10"
 	}], ["path", { d: "M12 6v6h4" }]];
-	la(e, Z({ name: "clock-3" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "clock-3" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/git-compare-arrows.svelte
-var Ea = /* @__PURE__ */ new Set([
+var Da = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Da(e, t) {
-	let n = /* @__PURE__ */ X(t, Ea), r = [
+function Oa(e, t) {
+	let n = /* @__PURE__ */ X(t, Da), r = [
 		["circle", {
 			cx: "5",
 			cy: "6",
@@ -2874,107 +2881,107 @@ function Da(e, t) {
 		["path", { d: "M12 18H7a2 2 0 0 1-2-2V9" }],
 		["path", { d: "m9 15 3 3-3 3" }]
 	];
-	la(e, Z({ name: "git-compare-arrows" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "git-compare-arrows" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/heart-pulse.svelte
-var Oa = /* @__PURE__ */ new Set([
+var ka = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function ka(e, t) {
-	let n = /* @__PURE__ */ X(t, Oa), r = [["path", { d: "M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" }], ["path", { d: "M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" }]];
-	la(e, Z({ name: "heart-pulse" }, () => n, { get iconNode() {
+function Aa(e, t) {
+	let n = /* @__PURE__ */ X(t, ka), r = [["path", { d: "M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" }], ["path", { d: "M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" }]];
+	ua(e, Z({ name: "heart-pulse" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/house.svelte
-var Aa = /* @__PURE__ */ new Set([
+var ja = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function ja(e, t) {
-	let n = /* @__PURE__ */ X(t, Aa), r = [["path", { d: "M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" }], ["path", { d: "M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" }]];
-	la(e, Z({ name: "house" }, () => n, { get iconNode() {
+function Ma(e, t) {
+	let n = /* @__PURE__ */ X(t, ja), r = [["path", { d: "M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" }], ["path", { d: "M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" }]];
+	ua(e, Z({ name: "house" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/list-checks.svelte
-var Ma = /* @__PURE__ */ new Set([
+var Na = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Na(e, t) {
-	let n = /* @__PURE__ */ X(t, Ma), r = [
+function Pa(e, t) {
+	let n = /* @__PURE__ */ X(t, Na), r = [
 		["path", { d: "M13 5h8" }],
 		["path", { d: "M13 12h8" }],
 		["path", { d: "M13 19h8" }],
 		["path", { d: "m3 17 2 2 4-4" }],
 		["path", { d: "m3 7 2 2 4-4" }]
 	];
-	la(e, Z({ name: "list-checks" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "list-checks" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/moon.svelte
-var Pa = /* @__PURE__ */ new Set([
+var Fa = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Fa(e, t) {
-	let n = /* @__PURE__ */ X(t, Pa), r = [["path", { d: "M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" }]];
-	la(e, Z({ name: "moon" }, () => n, { get iconNode() {
+function Ia(e, t) {
+	let n = /* @__PURE__ */ X(t, Fa), r = [["path", { d: "M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" }]];
+	ua(e, Z({ name: "moon" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/rotate-ccw.svelte
-var Ia = /* @__PURE__ */ new Set([
+var La = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function La(e, t) {
-	let n = /* @__PURE__ */ X(t, Ia), r = [["path", { d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" }], ["path", { d: "M3 3v5h5" }]];
-	la(e, Z({ name: "rotate-ccw" }, () => n, { get iconNode() {
+function Ra(e, t) {
+	let n = /* @__PURE__ */ X(t, La), r = [["path", { d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" }], ["path", { d: "M3 3v5h5" }]];
+	ua(e, Z({ name: "rotate-ccw" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/save.svelte
-var Ra = /* @__PURE__ */ new Set([
+var za = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function za(e, t) {
-	let n = /* @__PURE__ */ X(t, Ra), r = [
+function Ba(e, t) {
+	let n = /* @__PURE__ */ X(t, za), r = [
 		["path", { d: "M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" }],
 		["path", { d: "M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" }],
 		["path", { d: "M7 3v4a1 1 0 0 0 1 1h7" }]
 	];
-	la(e, Z({ name: "save" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "save" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/settings-2.svelte
-var Ba = /* @__PURE__ */ new Set([
+var Va = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Va(e, t) {
-	let n = /* @__PURE__ */ X(t, Ba), r = [
+function Ha(e, t) {
+	let n = /* @__PURE__ */ X(t, Va), r = [
 		["path", { d: "M14 17H5" }],
 		["path", { d: "M19 7h-9" }],
 		["circle", {
@@ -2988,32 +2995,32 @@ function Va(e, t) {
 			r: "3"
 		}]
 	];
-	la(e, Z({ name: "settings-2" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "settings-2" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/shield-check.svelte
-var Ha = /* @__PURE__ */ new Set([
+var Ua = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Ua(e, t) {
-	let n = /* @__PURE__ */ X(t, Ha), r = [["path", { d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" }], ["path", { d: "m9 12 2 2 4-4" }]];
-	la(e, Z({ name: "shield-check" }, () => n, { get iconNode() {
+function Wa(e, t) {
+	let n = /* @__PURE__ */ X(t, Ua), r = [["path", { d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" }], ["path", { d: "m9 12 2 2 4-4" }]];
+	ua(e, Z({ name: "shield-check" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/sun.svelte
-var Wa = /* @__PURE__ */ new Set([
+var Ga = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Ga(e, t) {
-	let n = /* @__PURE__ */ X(t, Wa), r = [
+function Ka(e, t) {
+	let n = /* @__PURE__ */ X(t, Ga), r = [
 		["circle", {
 			cx: "12",
 			cy: "12",
@@ -3028,19 +3035,19 @@ function Ga(e, t) {
 		["path", { d: "m6.34 17.66-1.41 1.41" }],
 		["path", { d: "m19.07 4.93-1.41 1.41" }]
 	];
-	la(e, Z({ name: "sun" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "sun" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/sunrise.svelte
-var Ka = /* @__PURE__ */ new Set([
+var qa = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function qa(e, t) {
-	let n = /* @__PURE__ */ X(t, Ka), r = [
+function Ja(e, t) {
+	let n = /* @__PURE__ */ X(t, qa), r = [
 		["path", { d: "M12 2v8" }],
 		["path", { d: "m4.93 10.93 1.41 1.41" }],
 		["path", { d: "M2 18h2" }],
@@ -3050,36 +3057,49 @@ function qa(e, t) {
 		["path", { d: "m8 6 4-4 4 4" }],
 		["path", { d: "M16 18a4 4 0 0 0-8 0" }]
 	];
-	la(e, Z({ name: "sunrise" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "sunrise" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region node_modules/@lucide/svelte/dist/icons/trash-2.svelte
-var Ja = /* @__PURE__ */ new Set([
+var Ya = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy"
 ]);
-function Ya(e, t) {
-	let n = /* @__PURE__ */ X(t, Ja), r = [
+function Xa(e, t) {
+	let n = /* @__PURE__ */ X(t, Ya), r = [
 		["path", { d: "M10 11v6" }],
 		["path", { d: "M14 11v6" }],
 		["path", { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" }],
 		["path", { d: "M3 6h18" }],
 		["path", { d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" }]
 	];
-	la(e, Z({ name: "trash-2" }, () => n, { get iconNode() {
+	ua(e, Z({ name: "trash-2" }, () => n, { get iconNode() {
+		return r;
+	} }));
+}
+//#endregion
+//#region node_modules/@lucide/svelte/dist/icons/undo-2.svelte
+var Za = /* @__PURE__ */ new Set([
+	"$$slots",
+	"$$events",
+	"$$legacy"
+]);
+function Qa(e, t) {
+	let n = /* @__PURE__ */ X(t, Za), r = [["path", { d: "M9 14 4 9l5-5" }], ["path", { d: "M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" }]];
+	ua(e, Z({ name: "undo-2" }, () => n, { get iconNode() {
 		return r;
 	} }));
 }
 //#endregion
 //#region src/lib/adapters.ts
-var Xa = class {
+var $a = class {
 	async subscribe(e) {
 		return () => void 0;
 	}
-}, Za = class extends Xa {
+}, eo = class extends $a {
 	hass;
 	kind = "ha-panel";
 	constructor(e) {
@@ -3098,6 +3118,13 @@ var Xa = class {
 			days: e
 		});
 	}
+	dayPhasePreview(e, t = null) {
+		let n = {
+			type: "benni_core_state/ux_day_phase_preview",
+			date: e
+		};
+		return t && (n.anchors = t), this.connection.sendMessagePromise(n);
+	}
 	command(e, t, n = {}) {
 		return this.connection.sendMessagePromise({
 			type: "benni_core_state/ux_command",
@@ -3112,7 +3139,7 @@ var Xa = class {
 			r?.contract === "benni_core_state.snapshot" && e(r);
 		}, { type: "benni_core_state/ux_subscribe" }) ?? (() => void 0) : () => void 0;
 	}
-}, Qa = class extends Xa {
+}, to = class extends $a {
 	baseUrl;
 	kind = "standalone";
 	constructor(e = "") {
@@ -3136,6 +3163,15 @@ var Xa = class {
 	projection(e) {
 		return this.request(`/api/benni_core_state/projection?days=${e}`);
 	}
+	dayPhasePreview(e, t = null) {
+		return this.request("/api/benni_core_state/day_phase_preview", {
+			method: "POST",
+			body: JSON.stringify(t ? {
+				date: e,
+				anchors: t
+			} : { date: e })
+		});
+	}
 	command(e, t, n = {}) {
 		return this.request("/api/benni_core_state/commands", {
 			method: "POST",
@@ -3147,12 +3183,12 @@ var Xa = class {
 		});
 	}
 };
-function $a(e) {
-	return e?.connection ? new Za(e) : new Qa();
+function no(e) {
+	return e?.connection ? new eo(e) : new to();
 }
 //#endregion
 //#region src/lib/contracts.ts
-var eo = {
+var ro = {
 	loading: "Lädt",
 	ready: "Aktuell",
 	empty: "Leer",
@@ -3163,12 +3199,12 @@ var eo = {
 	offline: "Offline",
 	error: "Fehler",
 	blocked: "Blockiert"
-}, to = "Unbekannt", no = "Keine aktuellen Daten", ro = "Nicht konfiguriert", io = {
+}, io = "Unbekannt", ao = "Keine aktuellen Daten", oo = "Nicht konfiguriert", so = {
 	awake: "Wach",
 	provisional_sleep: "Vorläufiger Schlafschutz",
 	sleep: "Schlaf",
 	waking: "Wachphase"
-}, ao = {
+}, co = {
 	scheduled: "Geplant",
 	awake: "Wach",
 	provisional_sleep: "Vorläufiger Schlafschutz",
@@ -3176,7 +3212,7 @@ var eo = {
 	waking: "Wachphase",
 	skipped: "Kein Weckvorgang",
 	inactive: "Nicht aktiv"
-}, oo = {
+}, lo = {
 	zuhause: "Zu Hause",
 	home: "Zu Hause",
 	bei_eltern: "Bei den Eltern",
@@ -3186,7 +3222,7 @@ var eo = {
 	leaving: "Verlässt das Haus",
 	uncertain: "Unklar",
 	stale: "Nicht aktuell"
-}, so = {
+}, uo = {
 	idle: "Ruhephase",
 	sleep: "Schlaf",
 	waking: "Wachphase",
@@ -3199,7 +3235,7 @@ var eo = {
 	entertainment: "Unterhaltung",
 	music: "Musik",
 	pc_active: "PC-Nutzung"
-}, co = {
+}, fo = {
 	early_night: "Frühe Nacht",
 	late_night: "Späte Nacht",
 	early_morning: "Früher Morgen",
@@ -3209,14 +3245,14 @@ var eo = {
 	late_afternoon: "Später Nachmittag",
 	evening: "Abend",
 	late_evening: "Später Abend"
-}, lo = {
+}, po = {
 	werktag: "Regulärer Werktag",
 	wochenende: "Wochenende",
 	frei: "Freier Tag"
-}, uo = {
+}, mo = {
 	weekday: "Werktag",
 	weekend: "Wochenende"
-}, fo = {
+}, ho = {
 	state_ready: "Core State liefert den aktuellen Status",
 	provisional_sleep_protection: "Schutzstatus vor bestätigtem Schlaf",
 	rule_wake: "Automatische Profilregel",
@@ -3226,19 +3262,19 @@ var eo = {
 	waking_timeout: "Wachphase endet nach dem 30-Minuten-Schutzfenster",
 	regular_wake_interaction: "Reguläre Wachinteraktion erkannt",
 	no_wake: "Für diesen Tag ist kein Weckvorgang vorgesehen",
-	no_current_data: no
-}, po = {
+	no_current_data: ao
+}, go = {
 	core_state: "Core State",
 	"internal:logic.compute_day_phase_starts": "Core State · Tagesrhythmus",
 	"internal:wake_planning": "Core State · Wake Planning",
 	"configured source": "Konfigurierte Quelle",
 	legacy_comparison: "Temporärer Legacy-Vergleich"
-}, mo = {
+}, _o = {
 	profile_weekday: "Automatische Werktagsregel",
 	profile_weekend: "Automatische Wochenendregel",
 	"rule:profile_weekday": "Automatische Werktagsregel",
 	"rule:profile_weekend": "Automatische Wochenendregel"
-}, ho = {
+}, vo = {
 	adapter_unavailable: "Core State ist für Änderungen nicht erreichbar.",
 	profile_invalid: "Das Profil enthält ungültige Werte.",
 	profile_not_found: "Das ausgewählte Profil ist nicht verfügbar.",
@@ -3247,93 +3283,108 @@ var eo = {
 	wake_window_invalid: "Das Weckfenster muss zwischen 0 und 120 Minuten liegen.",
 	minimum_sleep_invalid: "Die gewünschte Mindestschlafdauer muss eine positive Minutenzahl sein.",
 	provisional_lead_invalid: "Der Schutzvorlauf muss eine positive Minutenzahl sein.",
-	command_not_authorized: "Core State hat die Änderung nicht autorisiert."
+	command_not_authorized: "Core State hat die Änderung nicht autorisiert.",
+	"day_phase_config_invalid:time_invalid": "Mindestens eine Ankerzeit hat kein gültiges Format (HH:MM).",
+	"day_phase_config_invalid:order_invalid": "Die Phasen müssen in der Reihenfolge Morgen, Tag, Abend, Nacht mit Mindestabstand beginnen.",
+	"day_phase_config_invalid:night_overlaps_morning": "Die Nacht beginnt zu kurz vor dem nächsten Morgen.",
+	"day_phase_config_invalid:cross_day_overlap": "Bei einem Profilwechsel um Mitternacht würde die Nacht in den Morgen laufen.",
+	"day_phase_config_invalid:rollback_unavailable": "Es gibt keinen vorherigen Stand.",
+	"day_phase_config_invalid:model_invalid": "Unbekanntes Berechnungsmodell.",
+	day_phase_anchors_invalid: "Die Ankerzeiten konnten nicht gelesen werden."
+}, yo = {
+	morning: "Morgen",
+	day: "Tag",
+	evening: "Abend",
+	night: "Nacht"
 };
-function go(e, t, n = no) {
-	return !e || !e.trim() ? n : t[e] ?? to;
-}
-function _o(e) {
-	return go(e, eo, no);
-}
-function vo(e) {
-	return go(e, io);
-}
-function yo(e) {
-	return go(e, ao);
-}
 function bo(e) {
-	return go(e, oo);
+	return xo(e, yo);
 }
-function xo(e) {
-	return go(e, so);
+function xo(e, t, n = ao) {
+	return !e || !e.trim() ? n : t[e] ?? io;
 }
 function So(e) {
-	return go(e, co);
+	return xo(e, ro, ao);
 }
-function Co(e, t = {}) {
-	return t.vacation ? "Urlaub · Wochenendprofil" : t.holiday ? "Feiertag · Wochenendprofil" : go(e, lo);
+function Co(e) {
+	return xo(e, so);
 }
 function wo(e) {
-	return go(e, uo, ro);
+	return xo(e, co);
 }
 function To(e) {
-	return _o(e);
+	return xo(e, lo);
 }
 function Eo(e) {
-	return !e || !e.trim() ? no : po[e] ? po[e] : e.startsWith("internal:") ? "Core State" : e.startsWith("legacy") ? "Temporärer Legacy-Vergleich" : to;
+	return xo(e, uo);
 }
 function Do(e) {
-	return !e || !e.trim() ? "Keine aktuelle Entscheidung" : mo[e] ?? to;
+	return xo(e, fo);
 }
-function Oo(e, t) {
-	return t && mo[t] ? mo[t] : e && e.trim() && !e.includes("_") ? e : Do(t);
+function Oo(e, t = {}) {
+	return t.vacation ? "Urlaub · Wochenendprofil" : t.holiday ? "Feiertag · Wochenendprofil" : xo(e, po);
 }
 function ko(e) {
-	return !e || !e.trim() ? no : fo[e] ?? to;
+	return xo(e, mo, oo);
 }
 function Ao(e) {
-	return !e || !e.trim() ? "Die Änderung konnte nicht gespeichert werden." : ho[e] ?? "Core State konnte die Änderung nicht speichern.";
+	return So(e);
 }
 function jo(e) {
-	if (!e) return no;
+	return !e || !e.trim() ? ao : go[e] ? go[e] : e.startsWith("internal:") ? "Core State" : e.startsWith("legacy") ? "Temporärer Legacy-Vergleich" : io;
+}
+function Mo(e) {
+	return !e || !e.trim() ? "Keine aktuelle Entscheidung" : _o[e] ?? io;
+}
+function No(e, t) {
+	return t && _o[t] ? _o[t] : e && e.trim() && !e.includes("_") ? e : Mo(t);
+}
+function Po(e) {
+	return !e || !e.trim() ? ao : ho[e] ?? io;
+}
+function Fo(e) {
+	return !e || !e.trim() ? "Die Änderung konnte nicht gespeichert werden." : vo[e] ?? "Core State konnte die Änderung nicht speichern.";
+}
+function Io(e) {
+	if (!e) return ao;
 	let t = new Date(e);
-	return Number.isNaN(t.valueOf()) ? e.slice(0, 5) || to : new Intl.DateTimeFormat("de-DE", {
+	return Number.isNaN(t.valueOf()) ? e.slice(0, 5) || io : new Intl.DateTimeFormat("de-DE", {
 		hour: "2-digit",
 		minute: "2-digit",
 		timeZone: "Europe/Berlin"
 	}).format(t);
 }
-function Mo(e) {
+function Lo(e) {
 	let t = /* @__PURE__ */ new Date(`${e}T12:00:00+02:00`);
-	return Number.isNaN(t.valueOf()) ? to : new Intl.DateTimeFormat("de-DE", {
+	return Number.isNaN(t.valueOf()) ? io : new Intl.DateTimeFormat("de-DE", {
 		weekday: "short",
 		day: "2-digit",
 		month: "2-digit",
 		timeZone: "Europe/Berlin"
 	}).format(t);
 }
-function No(e) {
-	if (!e) return no;
+function Ro(e) {
+	if (!e) return ao;
 	let t = new Date(e);
-	return Number.isNaN(t.valueOf()) ? to : new Intl.DateTimeFormat("de-DE", {
+	return Number.isNaN(t.valueOf()) ? io : new Intl.DateTimeFormat("de-DE", {
 		dateStyle: "short",
 		timeStyle: "short",
 		timeZone: "Europe/Berlin"
 	}).format(t);
 }
-function Po(e) {
-	return e ? /^\d{2}:\d{2}$/.test(e) ? e : jo(e) : ro;
+function zo(e) {
+	return e ? /^\d{2}:\d{2}$/.test(e) ? e : Io(e) : oo;
 }
-function Fo(e) {
-	if (e == null) return ro;
-	if (!Number.isFinite(e)) return to;
+function Bo(e) {
+	if (e == null) return oo;
+	if (!Number.isFinite(e)) return io;
 	if (e < 60) return `${e} Min.`;
 	let t = Math.floor(e / 60), n = e % 60;
 	return n ? `${t} Std. ${n} Min.` : `${t} Std.`;
 }
 //#endregion
 //#region src/lib/store.ts
-var Io = class {
+var Vo = class {
 	state = {
 		snapshot: null,
 		projection: null,
@@ -3410,6 +3461,9 @@ var Io = class {
 			this.patch({ error: this.message(e) });
 		}
 	}
+	async dayPhasePreview(e, t = null) {
+		return this.adapter ? this.adapter.dayPhasePreview(e, t) : null;
+	}
 	async command(e, t = {}) {
 		if (!this.adapter) {
 			let t = {
@@ -3457,8 +3511,8 @@ var Io = class {
 	message(e) {
 		return e instanceof Error ? e.message : "Unbekannter Core-State-Fehler.";
 	}
-}, Lo = /* @__PURE__ */ K("<span class=\"chip orange\">Urlaub</span>"), Ro = /* @__PURE__ */ K("<span class=\"chip orange\">Feiertag</span>"), zo = /* @__PURE__ */ K("<span class=\"chip purple\">Wochenende</span>"), Bo = /* @__PURE__ */ K("<strong class=\"calendar-wake purple\"><!> </strong>"), Vo = /* @__PURE__ */ K("<strong class=\"calendar-wake orange\"><!> Kein Weckvorgang</strong>"), Ho = /* @__PURE__ */ K("<strong class=\"calendar-wake\"><!> Nicht aktiv</strong>"), Uo = /* @__PURE__ */ K("<article><div class=\"calendar-day-header\"><span class=\"calendar-date\"> </span> <!></div> <div class=\"day-context-list\"><span class=\"chip cyan\"> </span> <span class=\"chip\"> </span></div> <!> <p class=\"helper\"> <!> <!></p> <p class=\"helper\"> </p> <span class=\"data-status\"><!> </span></article>"), Wo = /* @__PURE__ */ K("<section class=\"table-card\" aria-labelledby=\"projection-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Core-State-Projektion</p> <h3 id=\"projection-heading\">Profil, Tageskontext und automatische Auswahl</h3></div> <span class=\"helper\"> </span></div> <div class=\"calendar-grid\"></div></section>"), Go = /* @__PURE__ */ K("<div class=\"empty-state\"><!> <h3>Keine Projektion verfügbar</h3> <p>Core State liefert die 14-Tage-Projektion erst, wenn die Datenquelle aktuell erreichbar ist.</p> <span class=\"data-status\"> </span></div>"), Ko = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Kalender</p> <h2>Die nächsten 14 Tage</h2> <p class=\"muted\">Kompakte Projektion aus Core State. Das Frontend entscheidet keine Regel und berechnet keinen Weckplan.</p></div> <span class=\"data-status\"> </span></div> <!>", 1);
-function qo(e, t) {
+}, Ho = /* @__PURE__ */ K("<span class=\"chip orange\">Urlaub</span>"), Uo = /* @__PURE__ */ K("<span class=\"chip orange\">Feiertag</span>"), Wo = /* @__PURE__ */ K("<span class=\"chip purple\">Wochenende</span>"), Go = /* @__PURE__ */ K("<strong class=\"calendar-wake purple\"><!> </strong>"), Ko = /* @__PURE__ */ K("<strong class=\"calendar-wake orange\"><!> Kein Weckvorgang</strong>"), qo = /* @__PURE__ */ K("<strong class=\"calendar-wake\"><!> Nicht aktiv</strong>"), Jo = /* @__PURE__ */ K("<article><div class=\"calendar-day-header\"><span class=\"calendar-date\"> </span> <!></div> <div class=\"day-context-list\"><span class=\"chip cyan\"> </span> <span class=\"chip\"> </span></div> <!> <p class=\"helper\"> <!> <!></p> <p class=\"helper\"> </p> <span class=\"data-status\"><!> </span></article>"), Yo = /* @__PURE__ */ K("<section class=\"table-card\" aria-labelledby=\"projection-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Core-State-Projektion</p> <h3 id=\"projection-heading\">Profil, Tageskontext und automatische Auswahl</h3></div> <span class=\"helper\"> </span></div> <div class=\"calendar-grid\"></div></section>"), Xo = /* @__PURE__ */ K("<div class=\"empty-state\"><!> <h3>Keine Projektion verfügbar</h3> <p>Core State liefert die 14-Tage-Projektion erst, wenn die Datenquelle aktuell erreichbar ist.</p> <span class=\"data-status\"> </span></div>"), Zo = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Kalender</p> <h2>Die nächsten 14 Tage</h2> <p class=\"muted\">Kompakte Projektion aus Core State. Das Frontend entscheidet keine Regel und berechnet keinen Weckplan.</p></div> <span class=\"data-status\"> </span></div> <!>", 1);
+function Qo(e, t) {
 	N(t, !0);
 	function n(e) {
 		return [
@@ -3469,21 +3523,21 @@ function qo(e, t) {
 			e.vacation ? "vacation" : ""
 		].filter(Boolean).join(" ");
 	}
-	var r = Ko(), i = B(r), a = V(z(i), 2), o = z(a);
+	var r = Zo(), i = B(r), a = V(z(i), 2), o = z(a);
 	j(a), j(i);
 	var s = V(i, 2), c = (e) => {
-		var r = Wo(), i = z(r), a = V(z(i), 2), o = z(a);
+		var r = Yo(), i = z(r), a = V(z(i), 2), o = z(a);
 		j(a), j(i);
 		var s = V(i, 2);
 		ui(s, 21, () => t.projection.days, (e) => e.date, (e, t) => {
-			var r = Uo(), i = z(r), a = z(i), o = z(a, !0);
+			var r = Jo(), i = z(r), a = z(i), o = z(a, !0);
 			j(a);
 			var s = V(a, 2), c = (e) => {
-				q(e, Lo());
+				q(e, Ho());
 			}, l = (e) => {
-				q(e, Ro());
+				q(e, Uo());
 			}, u = (e) => {
-				q(e, zo());
+				q(e, Wo());
 			};
 			Y(s, (e) => {
 				G(t).vacation ? e(c) : G(t).holiday ? e(l, 1) : G(t).profile.id === "weekend" && e(u, 2);
@@ -3493,16 +3547,16 @@ function qo(e, t) {
 			var m = V(f, 2), h = z(m);
 			j(m), j(d);
 			var g = V(d, 2), _ = (e) => {
-				var n = Bo(), r = z(n);
-				Ta(r, { size: 18 });
+				var n = Go(), r = z(n);
+				Ea(r, { size: 18 });
 				var i = V(r);
-				j(n), H((e) => J(i, ` ${e ?? ""}`), [() => Po(G(t).wake.wake_time)]), q(e, n);
+				j(n), H((e) => J(i, ` ${e ?? ""}`), [() => zo(G(t).wake.wake_time)]), q(e, n);
 			}, v = (e) => {
-				var t = Vo();
-				xa(z(t), { size: 18 }), M(), j(t), q(e, t);
+				var t = Ko();
+				Sa(z(t), { size: 18 }), M(), j(t), q(e, t);
 			}, y = (e) => {
-				var t = Ho();
-				xa(z(t), { size: 18 }), M(), j(t), q(e, t);
+				var t = qo();
+				Sa(z(t), { size: 18 }), M(), j(t), q(e, t);
 			};
 			Y(g, (e) => {
 				G(t).wake.wake_time ? e(_) : G(t).wake.state === "skipped" ? e(v, 1) : e(y, -1);
@@ -3522,7 +3576,7 @@ function qo(e, t) {
 			var E = V(b, 2), ee = z(E);
 			j(E);
 			var D = V(E, 2), te = z(D), ne = (e) => {
-				Ca(e, { size: 13 });
+				wa(e, { size: 13 });
 			};
 			Y(te, (e) => {
 				G(t).status === "ready" && e(ne);
@@ -3532,35 +3586,312 @@ function qo(e, t) {
 				Oi(r, 1, e), J(o, n), J(p, `Profil: ${i ?? ""}`), J(h, `Tageskontext: ${a ?? ""}`), J(x, `${s ?? ""} `), J(ee, `Auswahl: ${c ?? ""}`), Gi(D, "data-status", G(t).status), J(re, ` ${l ?? ""}`);
 			}, [
 				() => Si(n(G(t))),
-				() => Mo(G(t).date),
-				() => wo(G(t).profile.id),
-				() => Co(G(t).day_context, {
+				() => Lo(G(t).date),
+				() => ko(G(t).profile.id),
+				() => Oo(G(t).day_context, {
 					holiday: G(t).holiday,
 					vacation: G(t).vacation
 				}),
-				() => ko(G(t).wake.reason),
-				() => Do(G(t).wake.matched_rule ?? G(t).wake.decided_by),
-				() => To(G(t).status)
+				() => Po(G(t).wake.reason),
+				() => Mo(G(t).wake.matched_rule ?? G(t).wake.decided_by),
+				() => Ao(G(t).status)
 			]), q(e, r);
 		}), j(s), j(r), H(() => J(o, `UX-Vertrag v${t.projection.version ?? ""} · ${t.projection.horizon_days ?? ""} Tage`)), q(e, r);
 	}, l = (e) => {
-		var n = Go(), r = z(n);
-		ya(r, { size: 30 });
+		var n = Xo(), r = z(n);
+		ba(r, { size: 30 });
 		var i = V(r, 6), a = z(i);
 		j(i), j(n), H((e) => {
 			Gi(i, "data-status", t.status), J(a, `Datenlage: ${e ?? ""}`);
-		}, [() => _o(t.status)]), q(e, n);
+		}, [() => So(t.status)]), q(e, n);
 	};
 	Y(s, (e) => {
 		t.projection?.days?.length ? e(c) : e(l, -1);
 	}), H((e) => {
 		Gi(a, "data-status", t.projection?.status ?? t.status), J(o, `Datenlage: ${e ?? ""}`);
-	}, [() => To(t.projection?.status ?? t.status)]), q(e, r), P();
+	}, [() => Ao(t.projection?.status ?? t.status)]), q(e, r), P();
 }
 //#endregion
+//#region src/views/DayPhasesView.svelte
+var $o = /* @__PURE__ */ K("<div class=\"callout\" role=\"alert\">Die gespeicherte Tagesphasen-Konfiguration war ungültig. Core State nutzt sicher den bisherigen Algorithmus und\n        die Startwerte, bis eine gültige Konfiguration gespeichert wird.</div>"), es = /* @__PURE__ */ K("<div class=\"callout\" role=\"alert\">Das Akkordeon ist eingestellt, konnte aber nicht berechnet werden. Der bisherige Algorithmus bleibt als Rückfall aktiv.</div>"), ts = /* @__PURE__ */ K("<dt>Eingeschränkt</dt> <dd> </dd>", 1), ns = /* @__PURE__ */ K("<dl class=\"diagnostic-list\" style=\"margin-top: 12px;\"><dt>Hauptphase (Akkordeon)</dt> <dd> </dd> <dt>Tagesprofil des laufenden Zyklus</dt> <dd> </dd> <dt>Nächster Wechsel</dt> <dd> </dd> <!></dl>"), rs = /* @__PURE__ */ K("<button class=\"button secondary\" type=\"button\"><!> Zurück zum bisherigen Algorithmus</button>"), is = /* @__PURE__ */ K("<label class=\"inline-meta\"><input type=\"checkbox\"/> <span>Kompatibilitätsprüfung der Verbraucher ist abgeschlossen</span></label> <button class=\"button\" type=\"button\">Akkordeon für day_state aktivieren</button>", 1), as = /* @__PURE__ */ K("<th scope=\"col\"> </th>"), os = /* @__PURE__ */ K("<small class=\"anchor-error\"> </small>"), ss = /* @__PURE__ */ K("<td><input class=\"anchor-input\" type=\"time\" step=\"60\" required=\"\"/> <!></td>"), cs = /* @__PURE__ */ K("<tr><th scope=\"row\"><strong> </strong></th><!></tr>"), ls = /* @__PURE__ */ K("<div class=\"validation-error\" role=\"alert\"> </div>"), us = /* @__PURE__ */ K("<section class=\"table-card\" style=\"margin-top: 14px;\"><div class=\"section-header\"><div><p class=\"section-kicker\">Tagesprofil</p> <h3> </h3></div> <span class=\"helper\">Beginn der Hauptphase · Nacht nach Mitternacht (z. B. 00:30) gehört zum Vorabend</span></div> <div class=\"table-wrap\"><table class=\"rules-table anchor-table\"><thead><tr><th scope=\"col\">Stichtag</th><!></tr></thead><tbody></tbody></table></div> <!></section>"), ds = /* @__PURE__ */ K("<div class=\"callout info\" role=\"status\">Der gespeicherte Stand wurde zwischenzeitlich geändert. „Verwerfen“ lädt ihn neu.</div>"), fs = /* @__PURE__ */ K("<div class=\"inline-error\" role=\"alert\"> </div>"), ps = /* @__PURE__ */ K("<p class=\"muted\">Gilt an diesem Datum: <strong> </strong> </p>"), ms = /* @__PURE__ */ K("<small class=\"helper\"> </small>"), hs = /* @__PURE__ */ K("<td> <!></td>"), gs = /* @__PURE__ */ K("<tr><td><strong> </strong> <small class=\"helper\"> </small></td><td> </td><td> </td><td> </td></tr>"), _s = /* @__PURE__ */ K("<details style=\"margin-top: 12px;\"><summary> </summary> <div class=\"table-wrap\"><table class=\"rules-table\"><thead><tr><th scope=\"col\">Zustand</th><th scope=\"col\">Hauptphase</th><th scope=\"col\">Von</th><th scope=\"col\">Bis</th></tr></thead><tbody></tbody></table></div></details>"), vs = /* @__PURE__ */ K("<!> <div class=\"table-wrap\"><table class=\"rules-table\"><thead><tr><th scope=\"col\">Hauptphase</th><!></tr></thead><tbody></tbody></table></div> <!>", 1), ys = /* @__PURE__ */ K("<div class=\"skeleton\" aria-busy=\"true\"></div>"), bs = /* @__PURE__ */ K("<section class=\"form-card\" aria-labelledby=\"day-phase-model-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Berechnungsmodell für sensor.*_day_state</p> <h3 id=\"day-phase-model-heading\"> </h3></div> <span> </span></div> <!> <!> <!> <div class=\"action-row\" style=\"margin-top: 14px;\"><!> <span class=\"helper\">Der Vier-Phasen-Sensor rechnet immer mit; umgeschaltet wird nur der bestehende Neun-Phasen-Sensor.</span></div></section> <form aria-label=\"Ankerzeiten bearbeiten\"><!> <!> <!> <div class=\"action-row\" style=\"margin-top: 14px;\"><button class=\"button\" type=\"submit\"><!> Ankerzeiten speichern</button> <button class=\"button secondary\" type=\"button\">Verwerfen</button> <button class=\"button secondary\" type=\"button\">Startwerte ins Formular laden</button> <button class=\"button secondary\" type=\"button\"><!> Vorherigen Stand wiederherstellen</button> <span class=\"helper\">Gespeichert wird versioniert in Core State; ein Neustart stellt den Stand wieder her.</span></div></form> <section class=\"table-card\" style=\"margin-top: 14px;\" aria-labelledby=\"day-phase-preview-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\"> </p> <h3 id=\"day-phase-preview-heading\">Berechnete Phasen für ein Datum</h3></div> <label class=\"field\" style=\"min-width: 180px;\"><span class=\"field-label\">Datum</span> <input type=\"date\"/></label></div> <!></section>", 1), xs = /* @__PURE__ */ K("<div class=\"empty-state\">Diese Core-State-Version liefert noch keine Tagesphasen-Konfiguration.</div>"), Ss = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Tagesphasen</p> <h2>Saisonales Akkordeon · 32 Ankerzeiten</h2> <p class=\"muted\">Vier Hauptphasen je Tagesprofil und Stichtag. Dazwischen wird linear über die Kalendertage interpoliert.\n      Die neun bisherigen Tageszustände werden daraus abgeleitet.</p></div> <!></div> <!>", 1);
+function Cs(e, t) {
+	N(t, !0);
+	let n = /^([01]\d|2[0-3]):[0-5]\d$/;
+	function r() {
+		let e = /* @__PURE__ */ new Date();
+		return (/* @__PURE__ */ new Date(e.getTime() - e.getTimezoneOffset() * 6e4)).toISOString().slice(0, 10);
+	}
+	function i(e) {
+		return JSON.parse(JSON.stringify(e));
+	}
+	let a = /* @__PURE__ */ F(() => t.snapshot?.day_phase ?? null), o = /* @__PURE__ */ F(() => G(a) ? JSON.stringify(G(a).anchors) : null), s = /* @__PURE__ */ F(() => !!t.snapshot?.capabilities.edit_day_phases), c = /* @__PURE__ */ L(null), l = /* @__PURE__ */ L(null), u = /* @__PURE__ */ L(cn(r())), d = /* @__PURE__ */ L(null), f = /* @__PURE__ */ L(cn([])), p = /* @__PURE__ */ L(null), m = /* @__PURE__ */ L(!1), h = /* @__PURE__ */ F(() => G(c) ? JSON.stringify(G(c)) : null), g = /* @__PURE__ */ F(() => G(h) !== null && G(o) !== null && G(h) !== G(o)), _ = /* @__PURE__ */ F(() => G(g) && G(l) !== null && G(o) !== G(l));
+	On(() => {
+		!G(a) || G(o) === null || (G(c) === null || !G(g) && G(o) !== G(l)) && (R(c, i(G(a).anchors), !0), R(l, G(o), !0));
+	});
+	function v() {
+		if (!G(c) || !G(a)) return [];
+		let e = [];
+		for (let t of G(a).profiles) for (let r of G(a).seasons) for (let i of G(a).main_phases) {
+			let a = G(c)[t.id][r.id][i.id];
+			n.test(a ?? "") || e.push({
+				path: `${t.id}.${r.id}.${i.id}`,
+				code: "time_invalid",
+				message: `${i.label}: Bitte eine Uhrzeit im Format HH:MM eingeben.`
+			});
+		}
+		return e;
+	}
+	let y = null, b = 0;
+	async function x(e, n) {
+		let r = ++b;
+		try {
+			let i = await t.onPreview(e, n);
+			if (r !== b || !i) return;
+			R(f, i.errors ?? [], !0), R(p, null), i.valid && R(d, i, !0);
+		} catch (e) {
+			if (r !== b) return;
+			R(p, e instanceof Error ? e.message : "Vorschau nicht verfügbar.", !0);
+		}
+	}
+	On(() => {
+		let e = G(h), t = G(u), n = G(g);
+		if (e === null || !/^\d{4}-\d{2}-\d{2}$/.test(t)) return;
+		let r = v();
+		if (r.length) {
+			R(f, r, !0);
+			return;
+		}
+		return y && clearTimeout(y), y = setTimeout(() => {
+			x(t, n ? JSON.parse(e) : null);
+		}, 350), () => {
+			y && clearTimeout(y);
+		};
+	});
+	function S(e, t, n) {
+		return G(f).find((r) => r.path === `${e}.${t}.${n}`);
+	}
+	function C(e) {
+		return G(f).filter((t) => t.path.startsWith(`${e}.`));
+	}
+	async function w(e) {
+		e.preventDefault(), !(!G(c) || G(f).length) && await t.onCommand("day_phase.config.update", { anchors: G(c) });
+	}
+	function T() {
+		G(a) && (R(c, i(G(a).anchors), !0), R(l, G(o), !0));
+	}
+	function E() {
+		G(a) && R(c, i(G(a).defaults), !0);
+	}
+	async function ee(e) {
+		await t.onCommand("day_phase.model.set", { model: e }), R(m, !1);
+	}
+	function D(e) {
+		return G(a)?.seasons.find((t) => t.id === e)?.label ?? "–";
+	}
+	var te = Ss(), ne = B(te);
+	ga(V(z(ne), 2), {
+		size: 24,
+		color: "var(--cyan)"
+	}), j(ne);
+	var re = V(ne, 2), ie = (e) => {
+		var n = bs(), r = B(n), i = z(r), o = z(i), l = V(z(o), 2), h = z(l, !0);
+		j(l), j(o);
+		var v = V(o, 2);
+		let y;
+		var b = z(v, !0);
+		j(v), j(i);
+		var x = V(i, 2), te = (e) => {
+			q(e, $o());
+		};
+		Y(x, (e) => {
+			G(a).load_error && e(te);
+		});
+		var ne = V(x, 2), re = (e) => {
+			q(e, es());
+		};
+		Y(ne, (e) => {
+			G(a).model === "accordion" && G(a).active_model !== "accordion" && e(re);
+		});
+		var ie = V(ne, 2), ae = (e) => {
+			var t = ns(), n = V(z(t), 2), r = z(n);
+			j(n);
+			var i = V(n, 4), o = z(i);
+			j(i);
+			var s = V(i, 4), c = z(s);
+			j(s);
+			var l = V(s, 2), u = (e) => {
+				var t = ts(), n = V(B(t), 2), r = z(n, !0);
+				j(n), H((e) => J(r, e), [() => (G(a).current.degraded_reasons ?? []).join(", ")]), q(e, t);
+			};
+			Y(l, (e) => {
+				G(a).current.degraded && e(u);
+			}), j(t), H((e, t, n, i) => {
+				J(r, `${e ?? ""} · ${t ?? ""}${G(a).current.guard_hold ? " · gehalten (kein Rücksprung)" : ""}`), J(o, `${G(a).current.day_profile_label ?? "–" ?? ""} (${G(a).current.cycle_date ?? "–" ?? ""})`), J(c, `${n ?? ""} um ${i ?? ""}`);
+			}, [
+				() => bo(G(a).current.main_phase),
+				() => Do(G(a).current.sub_phase),
+				() => Do(G(a).current.next_phase),
+				() => Io(G(a).current.next_phase_at)
+			]), q(e, t);
+		};
+		Y(ie, (e) => {
+			G(a).current && e(ae);
+		});
+		var oe = V(ie, 2), se = z(oe), ce = (e) => {
+			var n = rs();
+			Qa(z(n), { size: 16 }), M(), j(n), H(() => n.disabled = t.pendingCommand !== null || !G(s)), Vr("click", n, () => ee("legacy")), q(e, n);
+		}, le = (e) => {
+			var n = is(), r = B(n), i = z(r);
+			Ui(i), M(2), j(r);
+			var a = V(r, 2);
+			H(() => {
+				i.disabled = !G(s), a.disabled = t.pendingCommand !== null || !G(s) || !G(m) || G(g);
+			}), Qi(i, () => G(m), (e) => R(m, e)), Vr("click", a, () => ee("accordion")), q(e, n);
+		};
+		Y(se, (e) => {
+			G(a).model === "accordion" ? e(ce) : e(le, -1);
+		}), M(2), j(oe), j(r);
+		var ue = V(r, 2), de = z(ue);
+		ui(de, 17, () => G(a).profiles, (e) => e.id, (e, t) => {
+			var n = us(), r = z(n), i = z(r), o = V(z(i), 2), l = z(o, !0);
+			j(o), j(i), M(2), j(r);
+			var u = V(r, 2), d = z(u), f = z(d), p = z(f);
+			ui(V(z(p)), 17, () => G(a).main_phases, (e) => e.id, (e, t) => {
+				var n = as(), r = z(n, !0);
+				j(n), H(() => J(r, G(t).label)), q(e, n);
+			}), j(p), j(f);
+			var m = V(f);
+			ui(m, 21, () => G(a).seasons, (e) => e.id, (e, n) => {
+				var r = cs(), i = z(r), o = z(i), l = z(o, !0);
+				j(o), j(i), ui(V(i), 17, () => G(a).main_phases, (e) => e.id, (e, r) => {
+					let i = /* @__PURE__ */ F(() => S(G(t).id, G(n).id, G(r).id));
+					var a = ss(), o = z(a);
+					Ui(o);
+					var l = V(o, 2), u = (e) => {
+						var t = os(), n = z(t, !0);
+						j(t), H(() => J(n, G(i).message)), q(e, t);
+					};
+					Y(l, (e) => {
+						G(i) && e(u);
+					}), j(a), H(() => {
+						o.disabled = !G(s), Gi(o, "aria-label", `${G(t).label} · ${G(n).label} · Beginn ${G(r).label}`), Gi(o, "aria-invalid", G(i) ? "true" : void 0), Gi(o, "title", G(i)?.message);
+					}), Zi(o, () => G(c)[G(t).id][G(n).id][G(r).id], (e) => G(c)[G(t).id][G(n).id][G(r).id] = e), q(e, a);
+				}), j(r), H(() => J(l, G(n).label)), q(e, r);
+			}), j(m), j(d), j(u), ui(V(u, 2), 17, () => C(G(t).id).filter((e) => e.path.split(".").length < 3), (e) => e.path + e.code, (e, t) => {
+				var n = ls(), r = z(n, !0);
+				j(n), H(() => J(r, G(t).message)), q(e, n);
+			}), j(n), H(() => {
+				Gi(n, "aria-labelledby", `anchors-${G(t).id}`), Gi(o, "id", `anchors-${G(t).id}`), J(l, G(t).label);
+			}), q(e, n);
+		});
+		var fe = V(de, 2), pe = (e) => {
+			var t = ls(), n = z(t);
+			j(t), H(() => J(n, `${G(f).length === 1 ? "Eine Eingabe ist ungültig." : `${G(f).length} Eingaben sind ungültig.`}
+        Gespeichert wird erst, wenn alle Ankerzeiten zusammenpassen.`)), q(e, t);
+		};
+		Y(fe, (e) => {
+			G(f).length && e(pe);
+		});
+		var me = V(fe, 2), he = (e) => {
+			q(e, ds());
+		};
+		Y(me, (e) => {
+			G(_) && e(he);
+		});
+		var ge = V(me, 2), _e = z(ge);
+		Ba(z(_e), { size: 16 }), M(), j(_e);
+		var ve = V(_e, 2), ye = V(ve, 2), be = V(ye, 2);
+		Ra(z(be), { size: 16 }), M(), j(be), M(2), j(ge), j(ue);
+		var xe = V(ue, 2), Se = z(xe), Ce = z(Se), we = z(Ce), Te = z(we, !0);
+		j(we), M(2), j(Ce);
+		var Ee = V(Ce, 2), O = V(z(Ee), 2);
+		Ui(O), j(Ee), j(Se);
+		var De = V(Se, 2), Oe = (e) => {
+			var t = fs(), n = z(t, !0);
+			j(t), H(() => J(n, G(p))), q(e, t);
+		}, ke = (e) => {
+			var t = vs(), n = B(t), r = (e) => {
+				var t = ps(), n = V(z(t)), r = z(n, !0);
+				j(n);
+				var i = V(n);
+				j(t), H((e, t) => {
+					J(r, G(d).applied.label), J(i, ` (${G(d).applied.reason_label ?? ""}).
+          Lage: ${e ?? ""} → ${t ?? ""}, Tag ${G(d).season?.elapsed_days ?? ""} von ${G(d).season?.interval_days ?? ""}.`);
+				}, [() => D(G(d).season?.from), () => D(G(d).season?.to)]), q(e, t);
+			};
+			Y(n, (e) => {
+				G(d).applied && e(r);
+			});
+			var i = V(n, 2), o = z(i), s = z(o), c = z(s);
+			ui(V(z(c)), 17, () => G(a).profiles, (e) => e.id, (e, t) => {
+				var n = as(), r = z(n, !0);
+				j(n), H(() => J(r, G(t).label)), q(e, n);
+			}), j(c), j(s);
+			var l = V(s);
+			ui(l, 23, () => G(a).main_phases, (e) => e.id, (e, t, n) => {
+				var r = cs(), i = z(r), o = z(i), s = z(o, !0);
+				j(o), j(i), ui(V(i), 17, () => G(a).profiles, (e) => e.id, (e, t) => {
+					let r = /* @__PURE__ */ F(() => G(d).profiles[G(t).id]?.main[G(n)]);
+					var i = hs();
+					let a;
+					var o = z(i), s = V(o), c = (e) => {
+						var t = ms(), n = z(t);
+						j(t), H((e, t) => J(n, `· ${e ?? ""} h ${t ?? ""} min`), [() => Math.floor(G(r).duration_minutes / 60), () => Math.round(G(r).duration_minutes % 60)]), q(e, t);
+					};
+					Y(s, (e) => {
+						G(r)?.duration_minutes !== void 0 && e(c);
+					}), j(i), H(() => {
+						a = Oi(i, 1, "", null, a, { "active-profile": G(d).applied?.profile === G(t).id }), J(o, `${G(r) ? `${G(r).start} – ${G(r).end}` : "–"} `);
+					}), q(e, i);
+				}), j(r), H(() => J(s, G(t).label)), q(e, r);
+			}), j(l), j(o), j(i);
+			var u = V(i, 2), f = (e) => {
+				var t = _s(), n = z(t), r = z(n);
+				j(n);
+				var i = V(n, 2), a = z(i), o = V(z(a));
+				ui(o, 21, () => G(d).applied.sub, (e) => e.id, (e, t) => {
+					var n = gs(), r = z(n), i = z(r), a = z(i, !0);
+					j(i);
+					var o = V(i, 2), s = z(o, !0);
+					j(o), j(r);
+					var c = V(r), l = z(c, !0);
+					j(c);
+					var u = V(c), d = z(u, !0);
+					j(u);
+					var f = V(u), p = z(f, !0);
+					j(f), j(n), H((e, n) => {
+						J(a, e), J(s, G(t).id), J(l, n), J(d, G(t).start), J(p, G(t).end);
+					}, [() => Do(G(t).id), () => bo(G(t).main)]), q(e, n);
+				}), j(o), j(a), j(i), j(t), H(() => J(r, `Abgeleitete neun Tageszustände (${G(d).applied.label ?? ""})`)), q(e, t);
+			};
+			Y(u, (e) => {
+				G(d).applied && e(f);
+			}), q(e, t);
+		}, Ae = (e) => {
+			q(e, ys());
+		};
+		Y(De, (e) => {
+			G(p) ? e(Oe) : G(d)?.profiles ? e(ke, 1) : e(Ae, -1);
+		}), j(xe), H((e) => {
+			J(h, G(a).active_model === "accordion" ? "Akkordeon aktiv" : "Bisheriger Algorithmus aktiv"), y = Oi(v, 1, "chip", null, y, {
+				cyan: G(a).active_model === "accordion",
+				orange: G(a).active_model !== "accordion"
+			}), J(b, e), _e.disabled = t.pendingCommand !== null || !G(s) || !G(g) || G(f).length > 0, ve.disabled = !G(g), ye.disabled = !G(s), be.disabled = t.pendingCommand !== null || !G(s) || !G(a).rollback_available || G(g), J(Te, G(g) ? "Vorschau mit ungespeicherten Änderungen" : "Vorschau");
+		}, [() => G(a).models.find((e) => e.id === G(a).active_model)?.label ?? G(a).active_model]), Br("submit", ue, w), Vr("click", ve, T), Vr("click", ye, E), Vr("click", be, () => t.onCommand("day_phase.config.rollback")), Zi(O, () => G(u), (e) => R(u, e)), q(e, n);
+	}, ae = (e) => {
+		q(e, xs());
+	}, oe = (e) => {
+		q(e, ys());
+	};
+	Y(re, (e) => {
+		G(a) && G(c) ? e(ie) : t.snapshot && !t.snapshot.day_phase ? e(ae, 1) : e(oe, -1);
+	}), q(e, te), P();
+}
+Hr(["click"]);
+//#endregion
 //#region src/views/DiagnosticsView.svelte
-var Jo = /* @__PURE__ */ K("<section class=\"card semantic-orange\" style=\"margin-top: 14px;\" aria-labelledby=\"legacy-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Temporär während Migration</p> <h3 id=\"legacy-heading\">Legacy-vs-Core-Vergleich</h3></div> <!></div> <p class=\"helper\">Diese Diagnose-Capability ist nur für Shadow-, Migrations- und Rollback-Nachweise sichtbar und kann nach dem Cutover vollständig verschwinden.</p> <details><summary>Technische Vergleichsdaten anzeigen</summary><pre class=\"diagnostic-pre\"> </pre></details></section>"), Yo = /* @__PURE__ */ K("<section class=\"grid two trace-grid\" aria-label=\"Decision Trace\"><article class=\"card trace-card semantic-cyan\"><div class=\"card-header\"><div><p class=\"section-kicker\">1 · Anwesenheit</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Quelle und technische Codes</summary><dl class=\"diagnostic-list\"><dt>Wirksamer Code</dt><dd> </dd><dt>Quelle</dt><dd> </dd></dl></details></article> <article class=\"card trace-card semantic-purple\"><div class=\"card-header\"><div><p class=\"section-kicker\">2 · Bio</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Quelle und technische Codes</summary><pre class=\"diagnostic-pre\"> </pre></details></article> <article class=\"card trace-card semantic-purple\"><div class=\"card-header\"><div><p class=\"section-kicker\">3 · Tagesphase und Tageskontext</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Quelle und technische Codes</summary><pre class=\"diagnostic-pre\"> </pre></details></article> <article class=\"card trace-card semantic-cyan\"><div class=\"card-header\"><div><p class=\"section-kicker\">4 · Aktivität</p><h3> </h3></div><!></div> <p class=\"trace-summary\">Core State bewertet die aktuelle Aktivität aus den autorisierten Kandidaten.</p> <span class=\"quality-line\"> </span> <details><summary>Entscheidung und Kandidaten</summary><pre class=\"diagnostic-pre\"> </pre></details></article> <article class=\"card trace-card semantic-orange\"><div class=\"card-header\"><div><p class=\"section-kicker\">5 · Weckplanung</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Weckfenster und technische Details</summary><pre class=\"diagnostic-pre\"> </pre></details></article></section> <section class=\"card\" style=\"margin-top: 14px;\" aria-labelledby=\"diag-overview-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Vertrag und Aktualität</p><h3 id=\"diag-overview-heading\">Gesamtstatus</h3></div><!></div> <dl class=\"diagnostic-list\"><dt>Datenstatus</dt><dd> </dd> <dt>Snapshot-Aktualität</dt><dd> </dd> <dt>Integration</dt><dd> </dd> <dt>UX-Vertrag</dt><dd> </dd> <dt>Timeline-Vertrag</dt><dd> </dd> <dt>Mapping-Vertrag</dt><dd> </dd> <dt>Berechtigung</dt><dd> </dd></dl></section> <!>", 1), Xo = /* @__PURE__ */ K("<div class=\"empty-state\"><!> <h3>Diagnose wartet auf Snapshot</h3> <p>Der technische Trace wird erst mit einer belastbaren Core-State-Antwort gefüllt.</p></div>"), Zo = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Diagnose</p> <h2>Core-State-Entscheidungsspur</h2> <p class=\"muted\">Zuerst verständliche Status- und Qualitätsinformationen; technische Quellen und Codes sind progressiv aufklappbar.</p></div> <span class=\"data-status\"> </span></div> <!>", 1);
-function Qo(e, t) {
+var ws = /* @__PURE__ */ K("<section class=\"card semantic-orange\" style=\"margin-top: 14px;\" aria-labelledby=\"legacy-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Temporär während Migration</p> <h3 id=\"legacy-heading\">Legacy-vs-Core-Vergleich</h3></div> <!></div> <p class=\"helper\">Diese Diagnose-Capability ist nur für Shadow-, Migrations- und Rollback-Nachweise sichtbar und kann nach dem Cutover vollständig verschwinden.</p> <details><summary>Technische Vergleichsdaten anzeigen</summary><pre class=\"diagnostic-pre\"> </pre></details></section>"), Ts = /* @__PURE__ */ K("<section class=\"grid two trace-grid\" aria-label=\"Decision Trace\"><article class=\"card trace-card semantic-cyan\"><div class=\"card-header\"><div><p class=\"section-kicker\">1 · Anwesenheit</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Quelle und technische Codes</summary><dl class=\"diagnostic-list\"><dt>Wirksamer Code</dt><dd> </dd><dt>Quelle</dt><dd> </dd></dl></details></article> <article class=\"card trace-card semantic-purple\"><div class=\"card-header\"><div><p class=\"section-kicker\">2 · Bio</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Quelle und technische Codes</summary><pre class=\"diagnostic-pre\"> </pre></details></article> <article class=\"card trace-card semantic-purple\"><div class=\"card-header\"><div><p class=\"section-kicker\">3 · Tagesphase und Tageskontext</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Quelle und technische Codes</summary><pre class=\"diagnostic-pre\"> </pre></details></article> <article class=\"card trace-card semantic-cyan\"><div class=\"card-header\"><div><p class=\"section-kicker\">4 · Aktivität</p><h3> </h3></div><!></div> <p class=\"trace-summary\">Core State bewertet die aktuelle Aktivität aus den autorisierten Kandidaten.</p> <span class=\"quality-line\"> </span> <details><summary>Entscheidung und Kandidaten</summary><pre class=\"diagnostic-pre\"> </pre></details></article> <article class=\"card trace-card semantic-orange\"><div class=\"card-header\"><div><p class=\"section-kicker\">5 · Weckplanung</p><h3> </h3></div><!></div> <p class=\"trace-summary\"> </p> <span class=\"quality-line\"> </span> <details><summary>Weckfenster und technische Details</summary><pre class=\"diagnostic-pre\"> </pre></details></article></section> <section class=\"card\" style=\"margin-top: 14px;\" aria-labelledby=\"diag-overview-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Vertrag und Aktualität</p><h3 id=\"diag-overview-heading\">Gesamtstatus</h3></div><!></div> <dl class=\"diagnostic-list\"><dt>Datenstatus</dt><dd> </dd> <dt>Snapshot-Aktualität</dt><dd> </dd> <dt>Integration</dt><dd> </dd> <dt>UX-Vertrag</dt><dd> </dd> <dt>Timeline-Vertrag</dt><dd> </dd> <dt>Mapping-Vertrag</dt><dd> </dd> <dt>Berechtigung</dt><dd> </dd></dl></section> <!>", 1), Es = /* @__PURE__ */ K("<div class=\"empty-state\"><!> <h3>Diagnose wartet auf Snapshot</h3> <p>Der technische Trace wird erst mit einer belastbaren Core-State-Antwort gefüllt.</p></div>"), Ds = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Diagnose</p> <h2>Core-State-Entscheidungsspur</h2> <p class=\"muted\">Zuerst verständliche Status- und Qualitätsinformationen; technische Quellen und Codes sind progressiv aufklappbar.</p></div> <span class=\"data-status\"> </span></div> <!>", 1);
+function Os(e, t) {
 	N(t, !0);
 	function n(e) {
 		return e && typeof e == "object" ? e : {};
@@ -3571,12 +3902,12 @@ function Qo(e, t) {
 	function i(e) {
 		return JSON.stringify(e, null, 2);
 	}
-	var a = Zo(), o = B(a), s = V(z(o), 2), c = z(s);
+	var a = Ds(), o = B(a), s = V(z(o), 2), c = z(s);
 	j(s), j(o);
 	var l = V(o, 2), u = (e) => {
 		let a = /* @__PURE__ */ F(() => t.snapshot.data.today), o = /* @__PURE__ */ F(() => t.snapshot.data.timeline), s = /* @__PURE__ */ F(() => t.snapshot.data.diagnostics), c = /* @__PURE__ */ F(() => n(G(s).wake)), l = /* @__PURE__ */ F(() => n(G(s).bio)), u = /* @__PURE__ */ F(() => n(G(s).activity));
-		var d = Yo(), f = B(d), p = z(f), m = z(p), h = z(m), g = V(z(h)), _ = z(g, !0);
-		j(g), j(h), ka(V(h), {
+		var d = Ts(), f = B(d), p = z(f), m = z(p), h = z(m), g = V(z(h)), _ = z(g, !0);
+		j(g), j(h), Aa(V(h), {
 			size: 19,
 			color: "var(--cyan)"
 		}), j(m);
@@ -3589,7 +3920,7 @@ function Qo(e, t) {
 		var E = V(w, 2), ee = z(E, !0);
 		j(E), j(C), j(S), j(p);
 		var D = V(p, 2), te = z(D), ne = z(te), re = V(z(ne)), ie = z(re, !0);
-		j(re), j(ne), Ua(V(ne), {
+		j(re), j(ne), Wa(V(ne), {
 			size: 19,
 			color: "var(--purple)"
 		}), j(te);
@@ -3600,7 +3931,7 @@ function Qo(e, t) {
 		var le = V(se, 2), ue = V(z(le)), de = z(ue, !0);
 		j(ue), j(le), j(D);
 		var fe = V(D, 2), pe = z(fe), me = z(pe), he = V(z(me)), ge = z(he, !0);
-		j(he), j(me), qa(V(me), {
+		j(he), j(me), Ja(V(me), {
 			size: 19,
 			color: "var(--purple)"
 		}), j(pe);
@@ -3611,7 +3942,7 @@ function Qo(e, t) {
 		var xe = V(ye, 2), Se = V(z(xe)), Ce = z(Se, !0);
 		j(Se), j(xe), j(fe);
 		var we = V(fe, 2), Te = z(we), Ee = z(Te), O = V(z(Ee)), De = z(O, !0);
-		j(O), j(Ee), da(V(Ee), {
+		j(O), j(Ee), fa(V(Ee), {
 			size: 19,
 			color: "var(--cyan)"
 		}), j(Te);
@@ -3620,7 +3951,7 @@ function Qo(e, t) {
 		var Ae = V(Oe, 2), je = V(z(Ae)), Me = z(je, !0);
 		j(je), j(Ae), j(we);
 		var Ne = V(we, 2), k = z(Ne), Pe = z(k), A = V(z(Pe)), Fe = z(A, !0);
-		j(A), j(Pe), ha(V(Pe), {
+		j(A), j(Pe), ga(V(Pe), {
 			size: 19,
 			color: "var(--orange)"
 		}), j(k);
@@ -3631,7 +3962,7 @@ function Qo(e, t) {
 		var ze = V(Le, 2), Be = V(z(ze)), Ve = z(Be, !0);
 		j(Be), j(ze), j(Ne), j(f);
 		var He = V(f, 2), Ue = z(He);
-		pa(V(z(Ue)), {
+		ma(V(z(Ue)), {
 			size: 19,
 			color: "var(--green)"
 		}), j(Ue);
@@ -3650,8 +3981,8 @@ function Qo(e, t) {
 		var tt = V($e, 3), nt = z(tt, !0);
 		j(tt), j(We), j(He);
 		var rt = V(He, 2), it = (e) => {
-			var t = Jo(), n = z(t);
-			Da(V(z(n), 2), {
+			var t = ws(), n = z(t);
+			Oa(V(z(n), 2), {
 				size: 20,
 				color: "var(--orange)"
 			}), j(n);
@@ -3663,59 +3994,59 @@ function Qo(e, t) {
 		}), H((e, n, r, i, o, c, l, u, d, f, p, m, h, g, v, b, S, C, w, E, D, te, ne, re, ae, se, le) => {
 			J(_, e), J(y, `Persönlicher Status: ${n ?? ""}.`), J(x, `Datenlage: ${r ?? ""} · Aktualisiert: ${i ?? ""}`), J(T, G(a).presence.effective || "Nicht konfiguriert"), J(ee, o), J(ie, c), J(oe, l), J(ce, `Datenlage: ${u ?? ""} · Aktualisiert: ${d ?? ""}`), J(de, f), J(ge, p), J(ve, `${m ?? ""}; nächster Phasenwechsel: ${h ?? ""}.`), J(be, `Datenlage: ${g ?? ""} · Backend-Projektion`), J(Ce, v), J(De, b), J(ke, `Datenlage: ${S ?? ""} · Aktualisiert: ${C ?? ""}`), J(Me, w), J(Fe, E), J(M, `${D ?? ""}. Entscheidung: ${te ?? ""}.`), J(Re, `Datenlage: ${ne ?? ""} · Quelle: ${re ?? ""}`), J(Ve, ae), J(Ke, se), J(P, le), J(Je, `Core State v${t.snapshot.integration_version ?? ""}`), J(Xe, `${t.snapshot.contract ?? ""} · v${t.snapshot.version ?? ""}`), J(Qe, `Core State · v${t.snapshot.data.timeline.version ?? ""}`), J(et, G(s).mapping_contract_version ? `Core State · v${G(s).mapping_contract_version}` : "Nicht konfiguriert"), J(nt, t.snapshot.permissions.command ? "Änderungen autorisiert" : "Nur Lesen");
 		}, [
-			() => bo(G(a).presence.effective || G(a).presence.personal),
-			() => bo(G(a).presence.personal),
-			() => To(G(a).data_status),
-			() => No(t.snapshot.updated_at),
-			() => Eo("core_state"),
-			() => vo(G(a).bio.state),
-			() => G(a).bio.provisional ? "Schutzstatus; noch keine bestätigte Schlafzeit." : ko(r(G(l).reason) ?? G(a).reason) + ".",
-			() => To(G(a).data_status),
-			() => No(t.snapshot.updated_at),
+			() => To(G(a).presence.effective || G(a).presence.personal),
+			() => To(G(a).presence.personal),
+			() => Ao(G(a).data_status),
+			() => Ro(t.snapshot.updated_at),
+			() => jo("core_state"),
+			() => Co(G(a).bio.state),
+			() => G(a).bio.provisional ? "Schutzstatus; noch keine bestätigte Schlafzeit." : Po(r(G(l).reason) ?? G(a).reason) + ".",
+			() => Ao(G(a).data_status),
+			() => Ro(t.snapshot.updated_at),
 			() => i({
 				state: G(a).bio.state,
 				provisional: G(a).bio.provisional,
 				diagnostics: G(l)
 			}),
-			() => So(G(o).active_phase),
-			() => Co(G(a).day_context.value, { holiday: G(a).day_context.holiday }),
-			() => No(G(o).next_change),
-			() => To(G(a).data_status),
+			() => Do(G(o).active_phase),
+			() => Oo(G(a).day_context.value, { holiday: G(a).day_context.holiday }),
+			() => Ro(G(o).next_change),
+			() => Ao(G(a).data_status),
 			() => i({
 				active_phase: G(o).active_phase,
 				day_context: G(a).day_context,
 				timeline_version: G(o).version
 			}),
-			() => xo(G(a).activity.state),
-			() => To(G(a).data_status),
-			() => No(t.snapshot.updated_at),
+			() => Eo(G(a).activity.state),
+			() => Ao(G(a).data_status),
+			() => Ro(t.snapshot.updated_at),
 			() => i(G(u)),
-			() => yo(G(a).wake.wake_state),
-			() => ko(G(a).wake.reason),
-			() => Do(G(a).wake.decided_by),
-			() => To(G(a).data_status),
-			() => Eo(r(G(c).source) ?? "internal:wake_planning"),
+			() => wo(G(a).wake.wake_state),
+			() => Po(G(a).wake.reason),
+			() => Mo(G(a).wake.decided_by),
+			() => Ao(G(a).data_status),
+			() => jo(r(G(c).source) ?? "internal:wake_planning"),
 			() => i({
 				wake: G(a).wake,
 				diagnostics: G(c)
 			}),
-			() => To(t.snapshot.status),
-			() => No(t.snapshot.updated_at)
+			() => Ao(t.snapshot.status),
+			() => Ro(t.snapshot.updated_at)
 		]), q(e, d);
 	}, d = (e) => {
-		var t = Xo();
-		pa(z(t), { size: 30 }), M(4), j(t), q(e, t);
+		var t = Es();
+		ma(z(t), { size: 30 }), M(4), j(t), q(e, t);
 	};
 	Y(l, (e) => {
 		t.snapshot?.data ? e(u) : e(d, -1);
 	}), H((e) => {
 		Gi(s, "data-status", t.snapshot?.status ?? t.status), J(c, `Datenlage: ${e ?? ""}`);
-	}, [() => To(t.snapshot?.status ?? t.status)]), q(e, a), P();
+	}, [() => Ao(t.snapshot?.status ?? t.status)]), q(e, a), P();
 }
 //#endregion
 //#region src/views/ProfilesRulesView.svelte
-var $o = /* @__PURE__ */ K("<button type=\"button\"><span class=\"section-kicker\"> </span> <h3> </h3> <dl class=\"profile-matrix-list\"><div><dt>E · Frühester möglicher Weckbeginn</dt><dd> </dd></div> <div><dt>L · Spätester Weckbeginn – harte Grenze</dt><dd> </dd></div> <div><dt>M · Gewünschte Mindestschlafdauer</dt><dd> </dd></div> <div><dt>A · Schutzvorlauf für vorsorglichen Schlaf</dt><dd> </dd></div></dl> <p class=\"helper\">Herkunft: persistente Core-State-Profilkonfiguration; E und L werden im Tagesstatus mit den aktuellen Backend-Grenzen ausgewiesen.</p></button>"), es = /* @__PURE__ */ K("<div class=\"validation-error\" role=\"alert\"> </div>"), ts = /* @__PURE__ */ K("<div class=\"action-row\"><button class=\"button secondary\" type=\"button\">Bearbeiten</button> <button class=\"button secondary danger\" type=\"button\"><!> Entfernen</button></div>"), ns = /* @__PURE__ */ K("<span class=\"helper\">Profilregel</span>"), rs = /* @__PURE__ */ K("<tr><td><strong> </strong></td><td> </td><td> </td><td> </td><td><!></td></tr>"), is = /* @__PURE__ */ K("<section class=\"profile-matrix\" aria-labelledby=\"profile-matrix-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Wirksame Profile</p> <h3 id=\"profile-matrix-heading\">Werktag und Wochenende</h3></div> <span class=\"chip purple\">Automatische Auswahl durch Core State</span></div> <div class=\"profile-grid\"></div></section> <section class=\"form-card\" style=\"margin-top: 14px;\" aria-labelledby=\"profile-edit-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Autorisierte Core-State-Änderung</p> <h3 id=\"profile-edit-heading\"> </h3></div> <span class=\"chip purple\">Keine manuelle Profilumschaltung</span></div> <!> <form class=\"form-grid\"><label class=\"field\"><span class=\"field-label\">Weckbeginn / Backend-Zielzeit (E/L-Fenster)</span> <input type=\"time\" required=\"\"/></label> <label class=\"field\"><span class=\"field-label\">Weckfenster zwischen E und L (Minuten)</span> <input type=\"number\" min=\"0\" max=\"120\" required=\"\"/></label> <label class=\"field\"><span class=\"field-label\">M · Gewünschte Mindestschlafdauer (Minuten)</span> <input type=\"number\" min=\"1\" max=\"1440\" placeholder=\"Nicht konfiguriert\"/> <small>Leer bleibt backendseitig nicht konfiguriert und wird nicht geraten.</small></label> <label class=\"field\"><span class=\"field-label\">A · Schutzvorlauf für vorsorglichen Schlaf (Minuten)</span> <input type=\"number\" min=\"1\" max=\"1440\" placeholder=\"Nicht konfiguriert\"/></label> <div class=\"field full action-row\"><button class=\"button\" type=\"submit\"><!> Profil speichern und synchronisieren</button> <span class=\"helper\">Warten, Erfolg, Fehler und anschließender Re-Sync kommen von Core State.</span></div></form></section> <section class=\"table-card\" style=\"margin-top: 14px;\" aria-labelledby=\"rules-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Automatische Regelarten</p> <h3 id=\"rules-heading\">Regelgewinner und Gültigkeit</h3></div> <!></div> <div class=\"table-wrap\"><table class=\"rules-table\"><thead><tr><th>Regel</th><th>Priorität</th><th>Gültigkeit</th><th>Aktion</th><th></th></tr></thead><tbody></tbody></table></div></section> <section class=\"form-card\" style=\"margin-top: 14px;\" aria-labelledby=\"rule-edit-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Automatische Regel bearbeiten</p> <h3 id=\"rule-edit-heading\">Wochentage oder Datumsbereiche</h3></div> <span class=\"helper\">Nur Core-State-Regeln, kein manueller Skip-, Zeit- oder Profil-Override.</span></div> <form class=\"form-grid\"><label class=\"field\"><span class=\"field-label\">Technischer Regelcode</span><input required=\"\" placeholder=\"z. B. school_cycle\"/></label> <label class=\"field\"><span class=\"field-label\">Verständlicher Regelname</span><input placeholder=\"z. B. Schulwoche\"/></label> <label class=\"field\"><span class=\"field-label\">Aktion</span><select><option>Wecken</option><option>Kein Weckvorgang</option></select></label> <label class=\"field\"><span class=\"field-label\">Weckzeit</span><input type=\"time\"/></label> <label class=\"field\"><span class=\"field-label\">Priorität</span><input type=\"number\" min=\"0\" max=\"1000\"/></label> <label class=\"field\"><span class=\"field-label\">Wochentage</span><input placeholder=\"0,1,2\"/><small>Montag 0 bis Sonntag 6.</small></label> <label class=\"field\"><span class=\"field-label\">Gültig ab</span><input type=\"date\"/></label> <label class=\"field\"><span class=\"field-label\">Gültig bis</span><input type=\"date\"/></label> <div class=\"field full action-row\"><button class=\"button\" type=\"submit\"><!> Regel speichern</button></div></form></section>", 1), as = /* @__PURE__ */ K("<div class=\"skeleton\" aria-busy=\"true\"></div>"), os = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Profile & Regeln</p> <h2>Schlaf- und Weckprofil-Matrix</h2> <p class=\"muted\">Genau zwei wirksame Profile. Feiertag und Urlaub wählen automatisch das Wochenendprofil; sie sind keine zusätzlichen Wertprofile.</p></div></div> <!>", 1);
-function ss(e, t) {
+var ks = /* @__PURE__ */ K("<button type=\"button\"><span class=\"section-kicker\"> </span> <h3> </h3> <dl class=\"profile-matrix-list\"><div><dt>E · Frühester möglicher Weckbeginn</dt><dd> </dd></div> <div><dt>L · Spätester Weckbeginn – harte Grenze</dt><dd> </dd></div> <div><dt>M · Gewünschte Mindestschlafdauer</dt><dd> </dd></div> <div><dt>A · Schutzvorlauf für vorsorglichen Schlaf</dt><dd> </dd></div></dl> <p class=\"helper\">Herkunft: persistente Core-State-Profilkonfiguration; E und L werden im Tagesstatus mit den aktuellen Backend-Grenzen ausgewiesen.</p></button>"), As = /* @__PURE__ */ K("<div class=\"validation-error\" role=\"alert\"> </div>"), js = /* @__PURE__ */ K("<div class=\"action-row\"><button class=\"button secondary\" type=\"button\">Bearbeiten</button> <button class=\"button secondary danger\" type=\"button\"><!> Entfernen</button></div>"), Ms = /* @__PURE__ */ K("<span class=\"helper\">Profilregel</span>"), Ns = /* @__PURE__ */ K("<tr><td><strong> </strong></td><td> </td><td> </td><td> </td><td><!></td></tr>"), Ps = /* @__PURE__ */ K("<section class=\"profile-matrix\" aria-labelledby=\"profile-matrix-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Wirksame Profile</p> <h3 id=\"profile-matrix-heading\">Werktag und Wochenende</h3></div> <span class=\"chip purple\">Automatische Auswahl durch Core State</span></div> <div class=\"profile-grid\"></div></section> <section class=\"form-card\" style=\"margin-top: 14px;\" aria-labelledby=\"profile-edit-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Autorisierte Core-State-Änderung</p> <h3 id=\"profile-edit-heading\"> </h3></div> <span class=\"chip purple\">Keine manuelle Profilumschaltung</span></div> <!> <form class=\"form-grid\"><label class=\"field\"><span class=\"field-label\">Weckbeginn / Backend-Zielzeit (E/L-Fenster)</span> <input type=\"time\" required=\"\"/></label> <label class=\"field\"><span class=\"field-label\">Weckfenster zwischen E und L (Minuten)</span> <input type=\"number\" min=\"0\" max=\"120\" required=\"\"/></label> <label class=\"field\"><span class=\"field-label\">M · Gewünschte Mindestschlafdauer (Minuten)</span> <input type=\"number\" min=\"1\" max=\"1440\" placeholder=\"Nicht konfiguriert\"/> <small>Leer bleibt backendseitig nicht konfiguriert und wird nicht geraten.</small></label> <label class=\"field\"><span class=\"field-label\">A · Schutzvorlauf für vorsorglichen Schlaf (Minuten)</span> <input type=\"number\" min=\"1\" max=\"1440\" placeholder=\"Nicht konfiguriert\"/></label> <div class=\"field full action-row\"><button class=\"button\" type=\"submit\"><!> Profil speichern und synchronisieren</button> <span class=\"helper\">Warten, Erfolg, Fehler und anschließender Re-Sync kommen von Core State.</span></div></form></section> <section class=\"table-card\" style=\"margin-top: 14px;\" aria-labelledby=\"rules-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Automatische Regelarten</p> <h3 id=\"rules-heading\">Regelgewinner und Gültigkeit</h3></div> <!></div> <div class=\"table-wrap\"><table class=\"rules-table\"><thead><tr><th>Regel</th><th>Priorität</th><th>Gültigkeit</th><th>Aktion</th><th></th></tr></thead><tbody></tbody></table></div></section> <section class=\"form-card\" style=\"margin-top: 14px;\" aria-labelledby=\"rule-edit-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Automatische Regel bearbeiten</p> <h3 id=\"rule-edit-heading\">Wochentage oder Datumsbereiche</h3></div> <span class=\"helper\">Nur Core-State-Regeln, kein manueller Skip-, Zeit- oder Profil-Override.</span></div> <form class=\"form-grid\"><label class=\"field\"><span class=\"field-label\">Technischer Regelcode</span><input required=\"\" placeholder=\"z. B. school_cycle\"/></label> <label class=\"field\"><span class=\"field-label\">Verständlicher Regelname</span><input placeholder=\"z. B. Schulwoche\"/></label> <label class=\"field\"><span class=\"field-label\">Aktion</span><select><option>Wecken</option><option>Kein Weckvorgang</option></select></label> <label class=\"field\"><span class=\"field-label\">Weckzeit</span><input type=\"time\"/></label> <label class=\"field\"><span class=\"field-label\">Priorität</span><input type=\"number\" min=\"0\" max=\"1000\"/></label> <label class=\"field\"><span class=\"field-label\">Wochentage</span><input placeholder=\"0,1,2\"/><small>Montag 0 bis Sonntag 6.</small></label> <label class=\"field\"><span class=\"field-label\">Gültig ab</span><input type=\"date\"/></label> <label class=\"field\"><span class=\"field-label\">Gültig bis</span><input type=\"date\"/></label> <div class=\"field full action-row\"><button class=\"button\" type=\"submit\"><!> Regel speichern</button></div></form></section>", 1), Fs = /* @__PURE__ */ K("<div class=\"skeleton\" aria-busy=\"true\"></div>"), Is = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Profile & Regeln</p> <h2>Schlaf- und Weckprofil-Matrix</h2> <p class=\"muted\">Genau zwei wirksame Profile. Feiertag und Urlaub wählen automatisch das Wochenendprofil; sie sind keine zusätzlichen Wertprofile.</p></div></div> <!>", 1);
+function Ls(e, t) {
 	N(t, !0);
 	let n = ["weekday", "weekend"], r = [
 		"Montag",
@@ -3781,11 +4112,11 @@ function ss(e, t) {
 			wake_time: G(g) === "wake" ? G(p) : null
 		} });
 	}
-	var E = os(), ee = V(B(E), 2), D = (e) => {
-		var r = is(), a = B(r), b = V(z(a), 2);
+	var E = Is(), ee = V(B(E), 2), D = (e) => {
+		var r = Ps(), a = B(r), b = V(z(a), 2);
 		ui(b, 20, () => n, (e) => e, (e, n) => {
 			let r = /* @__PURE__ */ F(() => t.snapshot.config.profiles[n]);
-			var a = $o();
+			var a = ks();
 			let o;
 			var s = z(a), c = z(s, !0);
 			j(s);
@@ -3801,17 +4132,17 @@ function ss(e, t) {
 			j(C), j(S), j(d), M(2), j(a), H((e, t, n, s, l) => {
 				o = Oi(a, 1, "profile-card", null, o, { active: G(i) === G(r).id }), Gi(a, "aria-pressed", G(i) === G(r).id), J(c, e), J(u, t), J(m, n), J(_, `Backend-Fenster ±${G(r).wake_window_minutes ?? ""} Min.`), J(x, s), J(w, l);
 			}, [
-				() => wo(G(r).id),
-				() => wo(G(r).id),
-				() => Po(G(r).wake_time),
-				() => Fo(G(r).minimum_sleep_minutes),
-				() => Fo(G(r).provisional_lead_minutes)
+				() => ko(G(r).id),
+				() => ko(G(r).id),
+				() => zo(G(r).wake_time),
+				() => Bo(G(r).minimum_sleep_minutes),
+				() => Bo(G(r).provisional_lead_minutes)
 			]), Vr("click", a, () => y(G(r).id)), q(e, a);
 		}), j(b), j(a);
 		var x = V(a, 2), E = z(x), ee = z(E), D = V(z(ee), 2), te = z(D);
 		j(D), j(ee), M(2), j(E);
 		var ne = V(E, 2), re = (e) => {
-			var t = es(), n = z(t, !0);
+			var t = As(), n = z(t, !0);
 			j(t), H(() => J(n, G(u))), q(e, t);
 		};
 		Y(ne, (e) => {
@@ -3826,15 +4157,15 @@ function ss(e, t) {
 		var de = V(le, 2), fe = V(z(de), 2);
 		Ui(fe), j(de);
 		var pe = V(de, 2), me = z(pe);
-		za(z(me), { size: 16 }), M(), j(me), M(2), j(pe), j(ie), j(x);
+		Ba(z(me), { size: 16 }), M(), j(me), M(2), j(pe), j(ie), j(x);
 		var he = V(x, 2), ge = z(he);
-		Na(V(z(ge), 2), {
+		Pa(V(z(ge), 2), {
 			size: 19,
 			color: "var(--cyan)"
 		}), j(ge);
 		var _e = V(ge, 2), ve = z(_e), ye = V(z(ve));
 		ui(ye, 21, () => t.snapshot.config.effective_rules ?? t.snapshot.config.rules, (e) => e.id, (e, n) => {
-			var r = rs(), i = z(r), a = z(i), o = z(a, !0);
+			var r = Ns(), i = z(r), a = z(i), o = z(a, !0);
 			j(a), j(i);
 			var s = V(i), c = z(s, !0);
 			j(s);
@@ -3843,21 +4174,21 @@ function ss(e, t) {
 			var d = V(l), f = z(d, !0);
 			j(d);
 			var p = V(d), m = z(p), h = (e) => {
-				var r = ts(), i = z(r), a = V(i, 2);
-				Ya(z(a), { size: 15 }), M(), j(a), j(r), H(() => {
+				var r = js(), i = z(r), a = V(i, 2);
+				Xa(z(a), { size: 15 }), M(), j(a), j(r), H(() => {
 					i.disabled = !t.snapshot.capabilities.edit_rules, a.disabled = t.pendingCommand !== null || !t.snapshot.capabilities.edit_rules;
 				}), Vr("click", i, () => C(G(n))), Vr("click", a, () => t.onCommand("wake.rule.remove", { rule_id: G(n).id })), q(e, r);
 			}, g = /* @__PURE__ */ F(() => !G(n).id.startsWith("profile_")), _ = (e) => {
-				q(e, ns());
+				q(e, Ms());
 			};
 			Y(m, (e) => {
 				G(g) ? e(h) : e(_, -1);
 			}), j(p), j(r), H((e, t, r) => {
 				J(o, e), J(c, G(n).priority), J(u, t), J(f, r);
 			}, [
-				() => Oo(G(n).name, G(n).id),
+				() => No(G(n).name, G(n).id),
 				() => w(G(n)),
-				() => G(n).action === "skip" ? "Kein Weckvorgang" : `Wecken um ${Po(G(n).wake_time)}`
+				() => G(n).action === "skip" ? "Kein Weckvorgang" : `Wecken um ${zo(G(n).wake_time)}`
 			]), q(e, r);
 		}), j(ye), j(ve), j(_e), j(he);
 		var be = V(he, 2), xe = V(z(be), 2), Se = z(xe), Ce = V(z(Se));
@@ -3879,11 +4210,11 @@ function ss(e, t) {
 		var Fe = V(Pe, 2), Ie = V(z(Fe));
 		Ui(Ie), j(Fe);
 		var Le = V(Fe, 2), Re = z(Le);
-		za(z(Re), { size: 16 }), M(), j(Re), j(Le), j(xe), j(be), H((e) => {
+		Ba(z(Re), { size: 16 }), M(), j(Re), j(Le), j(xe), j(be), H((e) => {
 			J(te, `${e ?? ""} bearbeiten`), Gi(oe, "aria-invalid", G(u) ? "true" : void 0), Gi(ce, "aria-invalid", G(u) ? "true" : void 0), Gi(ue, "aria-invalid", G(u) ? "true" : void 0), Gi(fe, "aria-invalid", G(u) ? "true" : void 0), me.disabled = t.pendingCommand !== null || !t.snapshot.capabilities.edit_profiles, Ae.disabled = G(g) === "skip", Re.disabled = t.pendingCommand !== null || !t.snapshot.capabilities.edit_rules;
-		}, [() => wo(G(i))]), Br("submit", ie, S), Zi(oe, () => G(o), (e) => R(o, e)), Zi(ce, () => G(s), (e) => R(s, e)), Zi(ue, () => G(c), (e) => R(c, e)), Zi(fe, () => G(l), (e) => R(l, e)), Br("submit", xe, T), Zi(Ce, () => G(d), (e) => R(d, e)), Zi(Te, () => G(f), (e) => R(f, e)), Ni(O, () => G(g), (e) => R(g, e)), Zi(Ae, () => G(p), (e) => R(p, e)), Zi(Me, () => G(h), (e) => R(h, e)), Zi(k, () => G(m), (e) => R(m, e)), Zi(A, () => G(_), (e) => R(_, e)), Zi(Ie, () => G(v), (e) => R(v, e)), q(e, r);
+		}, [() => ko(G(i))]), Br("submit", ie, S), Zi(oe, () => G(o), (e) => R(o, e)), Zi(ce, () => G(s), (e) => R(s, e)), Zi(ue, () => G(c), (e) => R(c, e)), Zi(fe, () => G(l), (e) => R(l, e)), Br("submit", xe, T), Zi(Ce, () => G(d), (e) => R(d, e)), Zi(Te, () => G(f), (e) => R(f, e)), Ni(O, () => G(g), (e) => R(g, e)), Zi(Ae, () => G(p), (e) => R(p, e)), Zi(Me, () => G(h), (e) => R(h, e)), Zi(k, () => G(m), (e) => R(m, e)), Zi(A, () => G(_), (e) => R(_, e)), Zi(Ie, () => G(v), (e) => R(v, e)), q(e, r);
 	}, te = (e) => {
-		q(e, as());
+		q(e, Fs());
 	};
 	Y(ee, (e) => {
 		t.snapshot?.config ? e(D) : e(te, -1);
@@ -3892,8 +4223,8 @@ function ss(e, t) {
 Hr(["click"]);
 //#endregion
 //#region src/views/SettingsView.svelte
-var cs = /* @__PURE__ */ K("<section class=\"card\" style=\"margin-top: 14px;\" aria-labelledby=\"migration-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Migration</p> <h3 id=\"migration-heading\">Versionierte Übernahme</h3></div> <span class=\"chip orange\"> </span></div> <p class=\"helper\"> </p> <div class=\"action-row\"><button class=\"button secondary danger\" type=\"button\"><!> Core-State-Migration zurücksetzen</button></div></section>"), ls = /* @__PURE__ */ K("<section class=\"form-card\" aria-labelledby=\"settings-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Konfiguration</p> <h3 id=\"settings-heading\">Kalender, Konflikte und Floor</h3></div> <span class=\"chip cyan\"> </span></div> <form class=\"form-grid\"><label class=\"field\"><span class=\"field-label\">Weck-Kalenderquelle</span> <input placeholder=\"calendar.core_state_wake\"/> <small>Nur externe Quelle lesen; Core State schreibt nicht in den Kalender.</small></label> <label class=\"field\"><span class=\"field-label\">Feiertags-/Urlaubsquelle</span> <input placeholder=\"calendar.core_state_holidays\"/> <small>Feiertag und Urlaub stufen Werktag automatisch auf Wochenende.</small></label> <label class=\"field full\"><span class=\"field-label\">Manuelle Feiertags-/Urlaubsintervalle</span> <textarea placeholder=\"2026-12-24..2026-12-31\"></textarea> <small>Ein Datum oder Intervall pro Zeile. Samstag bleibt Wochenende.</small></label> <label class=\"field\"><span class=\"field-label\">Weckfenster bei Kalenderkonflikt</span> <select><option>Warnen, Regelzeit beibehalten</option><option>Für frühen Termin früher wecken</option><option>Konflikt ignorieren</option></select></label> <label class=\"field\"><span class=\"field-label\">Routine-Dauer (Minuten)</span> <input type=\"number\" min=\"0\" max=\"1440\"/></label> <label class=\"field\"><span class=\"field-label\">Absoluter Weck-Floor</span> <input type=\"time\" required=\"\"/> <small>Unabhängig von Tagesphase, Tageskontext und Sonnenaufgang.</small></label> <label class=\"field full\"><span class=\"field-label\">Kalender-Markierungen</span> <input placeholder=\"no-wake schlaf aus\"/> <small>Belegte automatische Skip-Titel; keine manuelle Skip-Aktion.</small></label> <label class=\"field full\"><span class=\"field-label\">Weckmuster</span> <input/> <small>Backend validiert das Muster und redigiert Ereignistexte aus der Diagnose.</small></label> <div class=\"field full action-row\"><button class=\"button\" type=\"submit\"><!> Einstellungen speichern</button></div></form></section> <!>", 1), us = /* @__PURE__ */ K("<div class=\"skeleton\" aria-busy=\"true\"></div>"), ds = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Einstellungen</p> <h2>Core-State-eigene Quellen und Grenzen</h2> <p class=\"muted\">Diese Werte werden persistiert, versioniert validiert und ausschließlich von Core State ausgewertet.</p></div> <!></div> <!>", 1);
-function fs(e, t) {
+var Rs = /* @__PURE__ */ K("<section class=\"card\" style=\"margin-top: 14px;\" aria-labelledby=\"migration-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Migration</p> <h3 id=\"migration-heading\">Versionierte Übernahme</h3></div> <span class=\"chip orange\"> </span></div> <p class=\"helper\"> </p> <div class=\"action-row\"><button class=\"button secondary danger\" type=\"button\"><!> Core-State-Migration zurücksetzen</button></div></section>"), zs = /* @__PURE__ */ K("<section class=\"form-card\" aria-labelledby=\"settings-heading\"><div class=\"card-header\"><div><p class=\"section-kicker\">Konfiguration</p> <h3 id=\"settings-heading\">Kalender, Konflikte und Floor</h3></div> <span class=\"chip cyan\"> </span></div> <form class=\"form-grid\"><label class=\"field\"><span class=\"field-label\">Weck-Kalenderquelle</span> <input placeholder=\"calendar.core_state_wake\"/> <small>Nur externe Quelle lesen; Core State schreibt nicht in den Kalender.</small></label> <label class=\"field\"><span class=\"field-label\">Feiertags-/Urlaubsquelle</span> <input placeholder=\"calendar.core_state_holidays\"/> <small>Feiertag und Urlaub stufen Werktag automatisch auf Wochenende.</small></label> <label class=\"field full\"><span class=\"field-label\">Manuelle Feiertags-/Urlaubsintervalle</span> <textarea placeholder=\"2026-12-24..2026-12-31\"></textarea> <small>Ein Datum oder Intervall pro Zeile. Samstag bleibt Wochenende.</small></label> <label class=\"field\"><span class=\"field-label\">Weckfenster bei Kalenderkonflikt</span> <select><option>Warnen, Regelzeit beibehalten</option><option>Für frühen Termin früher wecken</option><option>Konflikt ignorieren</option></select></label> <label class=\"field\"><span class=\"field-label\">Routine-Dauer (Minuten)</span> <input type=\"number\" min=\"0\" max=\"1440\"/></label> <label class=\"field\"><span class=\"field-label\">Absoluter Weck-Floor</span> <input type=\"time\" required=\"\"/> <small>Unabhängig von Tagesphase, Tageskontext und Sonnenaufgang.</small></label> <label class=\"field full\"><span class=\"field-label\">Kalender-Markierungen</span> <input placeholder=\"no-wake schlaf aus\"/> <small>Belegte automatische Skip-Titel; keine manuelle Skip-Aktion.</small></label> <label class=\"field full\"><span class=\"field-label\">Weckmuster</span> <input/> <small>Backend validiert das Muster und redigiert Ereignistexte aus der Diagnose.</small></label> <div class=\"field full action-row\"><button class=\"button\" type=\"submit\"><!> Einstellungen speichern</button></div></form></section> <!>", 1), Bs = /* @__PURE__ */ K("<div class=\"skeleton\" aria-busy=\"true\"></div>"), Vs = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Einstellungen</p> <h2>Core-State-eigene Quellen und Grenzen</h2> <p class=\"muted\">Diese Werte werden persistiert, versioniert validiert und ausschließlich von Core State ausgewertet.</p></div> <!></div> <!>", 1);
+function Hs(e, t) {
 	N(t, !0);
 	let n = /* @__PURE__ */ L(!1), r = /* @__PURE__ */ L(""), i = /* @__PURE__ */ L(""), a = /* @__PURE__ */ L(""), o = /* @__PURE__ */ L(""), s = /* @__PURE__ */ L(""), c = /* @__PURE__ */ L(60), l = /* @__PURE__ */ L("warn_only"), u = /* @__PURE__ */ L("06:00");
 	function d() {
@@ -3915,13 +4246,13 @@ function fs(e, t) {
 			wake_floor: G(u)
 		} });
 	}
-	var p = ds(), m = B(p);
-	_a(V(z(m), 2), {
+	var p = Vs(), m = B(p);
+	va(V(z(m), 2), {
 		size: 24,
 		color: "var(--cyan)"
 	}), j(m);
 	var h = V(m, 2), g = (e) => {
-		var n = ls(), d = B(n), p = z(d), m = V(z(p), 2), h = z(m);
+		var n = zs(), d = B(n), p = z(d), m = V(z(p), 2), h = z(m);
 		j(m), j(p);
 		var g = V(p, 2), _ = z(g), v = V(z(_), 2);
 		Ui(v), M(2), j(_);
@@ -3944,14 +4275,14 @@ function fs(e, t) {
 		var oe = V(ie, 2), se = V(z(oe), 2);
 		Ui(se), M(2), j(oe);
 		var ce = V(oe, 2), le = z(ce);
-		za(z(le), { size: 16 }), M(), j(le), j(ce), j(g), j(d);
+		Ba(z(le), { size: 16 }), M(), j(le), j(ce), j(g), j(d);
 		var ue = V(d, 2), de = (e) => {
-			var n = cs(), r = z(n), i = V(z(r), 2), a = z(i, !0);
+			var n = Rs(), r = z(n), i = V(z(r), 2), a = z(i, !0);
 			j(i), j(r);
 			var o = V(r, 2), s = z(o);
 			j(o);
 			var c = V(o, 2), l = z(c);
-			La(z(l), { size: 16 }), M(), j(l), j(c), j(n), H(() => {
+			Ra(z(l), { size: 16 }), M(), j(l), j(c), j(n), H(() => {
 				J(a, t.snapshot.config.migration.status === "completed" ? "Abgeschlossen" : t.snapshot.config.migration.status === "pending" ? "Ausstehend" : "Unbekannt"), J(s, `Quelle: ${t.snapshot.config.migration.source ? "Temporärer Migrationsvergleich" : "Core State"}. Die alte Quelle wird nicht verändert; Rollback stellt das vorherige Core-State-Dokument wieder her.`), l.disabled = t.pendingCommand !== null || !t.snapshot.capabilities.edit_settings;
 			}), Vr("click", l, () => t.onCommand("wake.config.rollback")), q(e, n);
 		};
@@ -3961,7 +4292,7 @@ function fs(e, t) {
 			J(h, `Konfigurationsvertrag v${t.snapshot.config.contract_version ?? ""}`), le.disabled = t.pendingCommand !== null || !t.snapshot.capabilities.edit_settings;
 		}), Br("submit", g, f), Zi(v, () => G(r), (e) => R(r, e)), Zi(b, () => G(i), (e) => R(i, e)), Zi(S, () => G(a), (e) => R(a, e)), Ni(w, () => G(l), (e) => R(l, e)), Zi(te, () => G(c), (e) => R(c, e)), Zi(re, () => G(u), (e) => R(u, e)), Zi(ae, () => G(o), (e) => R(o, e)), Zi(se, () => G(s), (e) => R(s, e)), q(e, n);
 	}, _ = (e) => {
-		q(e, us());
+		q(e, Bs());
 	};
 	Y(h, (e) => {
 		t.snapshot?.config ? e(g) : e(_, -1);
@@ -3970,7 +4301,7 @@ function fs(e, t) {
 Hr(["click"]);
 //#endregion
 //#region src/lib/ui/Button.svelte
-var ps = /* @__PURE__ */ new Set([
+var Us = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy",
@@ -3978,10 +4309,10 @@ var ps = /* @__PURE__ */ new Set([
 	"class",
 	"children",
 	"type"
-]), ms = /* @__PURE__ */ K("<button><!></button>");
-function hs(e, t) {
-	let n = Q(t, "variant", 3, "default"), r = Q(t, "class", 3, ""), i = Q(t, "type", 3, "button"), a = /* @__PURE__ */ X(t, ps);
-	var o = ms();
+]), Ws = /* @__PURE__ */ K("<button><!></button>");
+function Gs(e, t) {
+	let n = Q(t, "variant", 3, "default"), r = Q(t, "class", 3, ""), i = Q(t, "type", 3, "button"), a = /* @__PURE__ */ X(t, Us);
+	var o = Ws();
 	qi(o, () => ({
 		...a,
 		type: i(),
@@ -3990,26 +4321,26 @@ function hs(e, t) {
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/is.js
-function gs(e) {
+function Ks(e) {
 	return typeof e == "object" && !!e;
 }
-var _s = [
+var qs = [
 	"string",
 	"number",
 	"bigint",
 	"boolean"
 ];
-function vs(e) {
-	return e == null || _s.includes(typeof e) ? !0 : Array.isArray(e) ? e.every((e) => vs(e)) : typeof e == "object" && Object.getPrototypeOf(e) === Object.prototype;
+function Js(e) {
+	return e == null || qs.includes(typeof e) ? !0 : Array.isArray(e) ? e.every((e) => Js(e)) : typeof e == "object" && Object.getPrototypeOf(e) === Object.prototype;
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/box/box-extras.svelte.js
-var ys = Symbol("box"), bs = Symbol("is-writable");
+var Ys = Symbol("box"), Xs = Symbol("is-writable");
 function $(e, t) {
 	let n = /* @__PURE__ */ F(e);
 	return t ? {
-		[ys]: !0,
-		[bs]: !0,
+		[Ys]: !0,
+		[Xs]: !0,
 		get current() {
 			return G(n);
 		},
@@ -4017,20 +4348,20 @@ function $(e, t) {
 			t(e);
 		}
 	} : {
-		[ys]: !0,
+		[Ys]: !0,
 		get current() {
 			return e();
 		}
 	};
 }
-function xs(e) {
-	return gs(e) && ys in e;
+function Zs(e) {
+	return Ks(e) && Ys in e;
 }
-function Ss(e) {
+function Qs(e) {
 	let t = /* @__PURE__ */ L(cn(e));
 	return {
-		[ys]: !0,
-		[bs]: !0,
+		[Ys]: !0,
+		[Xs]: !0,
 		get current() {
 			return G(t);
 		},
@@ -4041,7 +4372,7 @@ function Ss(e) {
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/compose-handlers.js
-function Cs(...e) {
+function $s(...e) {
 	return function(t) {
 		for (let n of e) if (n) {
 			if (t.defaultPrevented) return;
@@ -4051,16 +4382,16 @@ function Cs(...e) {
 }
 //#endregion
 //#region node_modules/inline-style-parser/esm/index.mjs
-var ws = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g, Ts = /\n/g, Es = /^\s*/, Ds = /^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/, Os = /^:\s*/, ks = /^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/, As = /^[;\s]*/, js = /^\s+|\s+$/g, Ms = "\n", Ns = "/", Ps = "*", Fs = "", Is = "comment", Ls = "declaration";
-function Rs(e, t) {
+var ec = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g, tc = /\n/g, nc = /^\s*/, rc = /^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/, ic = /^:\s*/, ac = /^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/, oc = /^[;\s]*/, sc = /^\s+|\s+$/g, cc = "\n", lc = "/", uc = "*", dc = "", fc = "comment", pc = "declaration";
+function mc(e, t) {
 	if (typeof e != "string") throw TypeError("First argument must be a string");
 	if (!e) return [];
 	t ||= {};
 	var n = 1, r = 1;
 	function i(e) {
-		var t = e.match(Ts);
+		var t = e.match(tc);
 		t && (n += t.length);
-		var i = e.lastIndexOf(Ms);
+		var i = e.lastIndexOf(cc);
 		r = ~i ? e.length - i : r + e.length;
 	}
 	function a() {
@@ -4091,7 +4422,7 @@ function Rs(e, t) {
 		}
 	}
 	function l() {
-		c(Es);
+		c(nc);
 	}
 	function u(e) {
 		var t;
@@ -4100,26 +4431,26 @@ function Rs(e, t) {
 	}
 	function d() {
 		var t = a();
-		if (Ns == e.charAt(0) && Ps == e.charAt(1)) {
-			for (var n = 2; Fs != e.charAt(n) && (Ps != e.charAt(n) || Ns != e.charAt(n + 1));) ++n;
-			if (n += 2, Fs === e.charAt(n - 1)) return s("End of comment missing");
+		if (lc == e.charAt(0) && uc == e.charAt(1)) {
+			for (var n = 2; dc != e.charAt(n) && (uc != e.charAt(n) || lc != e.charAt(n + 1));) ++n;
+			if (n += 2, dc === e.charAt(n - 1)) return s("End of comment missing");
 			var o = e.slice(2, n - 2);
 			return r += 2, i(o), e = e.slice(n), r += 2, t({
-				type: Is,
+				type: fc,
 				comment: o
 			});
 		}
 	}
 	function f() {
-		var e = a(), t = c(Ds);
+		var e = a(), t = c(rc);
 		if (t) {
-			if (d(), !c(Os)) return s("property missing ':'");
-			var n = c(ks), r = e({
-				type: Ls,
-				property: zs(t[0].replace(ws, Fs)),
-				value: n ? zs(n[0].replace(ws, Fs)) : Fs
+			if (d(), !c(ic)) return s("property missing ':'");
+			var n = c(ac), r = e({
+				type: pc,
+				property: hc(t[0].replace(ec, dc)),
+				value: n ? hc(n[0].replace(ec, dc)) : dc
 			});
-			return c(As), r;
+			return c(oc), r;
 		}
 	}
 	function p() {
@@ -4130,15 +4461,15 @@ function Rs(e, t) {
 	}
 	return l(), p();
 }
-function zs(e) {
-	return e ? e.replace(js, Fs) : Fs;
+function hc(e) {
+	return e ? e.replace(sc, dc) : dc;
 }
 //#endregion
 //#region node_modules/style-to-object/esm/index.mjs
-function Bs(e, t) {
+function gc(e, t) {
 	let n = null;
 	if (!e || typeof e != "string") return n;
-	let r = Rs(e), i = typeof t == "function";
+	let r = mc(e), i = typeof t == "function";
 	return r.forEach((e) => {
 		if (e.type !== "declaration") return;
 		let { property: r, value: a } = e;
@@ -4147,24 +4478,24 @@ function Bs(e, t) {
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/strings.js
-var Vs = /\d/, Hs = [
+var _c = /\d/, vc = [
 	"-",
 	"_",
 	"/",
 	"."
 ];
-function Us(e = "") {
-	if (!Vs.test(e)) return e !== e.toLowerCase();
+function yc(e = "") {
+	if (!_c.test(e)) return e !== e.toLowerCase();
 }
-function Ws(e) {
+function bc(e) {
 	let t = [], n = "", r, i;
 	for (let a of e) {
-		let e = Hs.includes(a);
+		let e = vc.includes(a);
 		if (e === !0) {
 			t.push(n), n = "", r = void 0;
 			continue;
 		}
-		let o = Us(a);
+		let o = yc(a);
 		if (i === !1) {
 			if (r === !1 && o === !0) {
 				t.push(n), n = a, r = o;
@@ -4180,79 +4511,79 @@ function Ws(e) {
 	}
 	return t.push(n), t;
 }
-function Gs(e) {
-	return e ? Ws(e).map((e) => qs(e)).join("") : "";
+function xc(e) {
+	return e ? bc(e).map((e) => Cc(e)).join("") : "";
 }
-function Ks(e) {
-	return Js(Gs(e || ""));
+function Sc(e) {
+	return wc(xc(e || ""));
 }
-function qs(e) {
+function Cc(e) {
 	return e ? e[0].toUpperCase() + e.slice(1) : "";
 }
-function Js(e) {
+function wc(e) {
 	return e ? e[0].toLowerCase() + e.slice(1) : "";
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/css-to-style-obj.js
-function Ys(e) {
+function Tc(e) {
 	if (!e) return {};
 	let t = {};
 	function n(e, n) {
 		if (e.startsWith("-moz-") || e.startsWith("-webkit-") || e.startsWith("-ms-") || e.startsWith("-o-")) {
-			t[Gs(e)] = n;
+			t[xc(e)] = n;
 			return;
 		}
 		if (e.startsWith("--")) {
 			t[e] = n;
 			return;
 		}
-		t[Ks(e)] = n;
+		t[Sc(e)] = n;
 	}
-	return Bs(e, n), t;
+	return gc(e, n), t;
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/execute-callbacks.js
-function Xs(...e) {
+function Ec(...e) {
 	return (...t) => {
 		for (let n of e) typeof n == "function" && n(...t);
 	};
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/style-to-css.js
-function Zs(e, t) {
+function Dc(e, t) {
 	let n = RegExp(e, "g");
 	return (e) => {
 		if (typeof e != "string") throw TypeError(`expected an argument of type string, but got ${typeof e}`);
 		return e.match(n) ? e.replace(n, t) : e;
 	};
 }
-var Qs = Zs(/[A-Z]/, (e) => `-${e.toLowerCase()}`);
-function $s(e) {
+var Oc = Dc(/[A-Z]/, (e) => `-${e.toLowerCase()}`);
+function kc(e) {
 	if (!e || typeof e != "object" || Array.isArray(e)) throw TypeError(`expected an argument of type object, but got ${typeof e}`);
-	return Object.keys(e).map((t) => `${Qs(t)}: ${e[t]};`).join("\n");
+	return Object.keys(e).map((t) => `${Oc(t)}: ${e[t]};`).join("\n");
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/style.js
-function ec(e = {}) {
-	return $s(e).replace("\n", " ");
+function Ac(e = {}) {
+	return kc(e).replace("\n", " ");
 }
-var tc = new Set(/* @__PURE__ */ "onabort.onanimationcancel.onanimationend.onanimationiteration.onanimationstart.onauxclick.onbeforeinput.onbeforetoggle.onblur.oncancel.oncanplay.oncanplaythrough.onchange.onclick.onclose.oncompositionend.oncompositionstart.oncompositionupdate.oncontextlost.oncontextmenu.oncontextrestored.oncopy.oncuechange.oncut.ondblclick.ondrag.ondragend.ondragenter.ondragleave.ondragover.ondragstart.ondrop.ondurationchange.onemptied.onended.onerror.onfocus.onfocusin.onfocusout.onformdata.ongotpointercapture.oninput.oninvalid.onkeydown.onkeypress.onkeyup.onload.onloadeddata.onloadedmetadata.onloadstart.onlostpointercapture.onmousedown.onmouseenter.onmouseleave.onmousemove.onmouseout.onmouseover.onmouseup.onpaste.onpause.onplay.onplaying.onpointercancel.onpointerdown.onpointerenter.onpointerleave.onpointermove.onpointerout.onpointerover.onpointerup.onprogress.onratechange.onreset.onresize.onscroll.onscrollend.onsecuritypolicyviolation.onseeked.onseeking.onselect.onselectionchange.onselectstart.onslotchange.onstalled.onsubmit.onsuspend.ontimeupdate.ontoggle.ontouchcancel.ontouchend.ontouchmove.ontouchstart.ontransitioncancel.ontransitionend.ontransitionrun.ontransitionstart.onvolumechange.onwaiting.onwebkitanimationend.onwebkitanimationiteration.onwebkitanimationstart.onwebkittransitionend.onwheel".split("."));
+var jc = new Set(/* @__PURE__ */ "onabort.onanimationcancel.onanimationend.onanimationiteration.onanimationstart.onauxclick.onbeforeinput.onbeforetoggle.onblur.oncancel.oncanplay.oncanplaythrough.onchange.onclick.onclose.oncompositionend.oncompositionstart.oncompositionupdate.oncontextlost.oncontextmenu.oncontextrestored.oncopy.oncuechange.oncut.ondblclick.ondrag.ondragend.ondragenter.ondragleave.ondragover.ondragstart.ondrop.ondurationchange.onemptied.onended.onerror.onfocus.onfocusin.onfocusout.onformdata.ongotpointercapture.oninput.oninvalid.onkeydown.onkeypress.onkeyup.onload.onloadeddata.onloadedmetadata.onloadstart.onlostpointercapture.onmousedown.onmouseenter.onmouseleave.onmousemove.onmouseout.onmouseover.onmouseup.onpaste.onpause.onplay.onplaying.onpointercancel.onpointerdown.onpointerenter.onpointerleave.onpointermove.onpointerout.onpointerover.onpointerup.onprogress.onratechange.onreset.onresize.onscroll.onscrollend.onsecuritypolicyviolation.onseeked.onseeking.onselect.onselectionchange.onselectstart.onslotchange.onstalled.onsubmit.onsuspend.ontimeupdate.ontoggle.ontouchcancel.ontouchend.ontouchmove.ontouchstart.ontransitioncancel.ontransitionend.ontransitionrun.ontransitionstart.onvolumechange.onwaiting.onwebkitanimationend.onwebkitanimationiteration.onwebkitanimationstart.onwebkittransitionend.onwheel".split("."));
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/merge-props.js
-function nc(e) {
-	return tc.has(e);
+function Mc(e) {
+	return jc.has(e);
 }
-function rc(...e) {
+function Nc(...e) {
 	let t = { ...e[0] };
 	for (let n = 1; n < e.length; n++) {
 		let r = e[n];
 		if (r) {
 			for (let e of Object.keys(r)) {
 				let n = t[e], i = r[e], a = typeof n == "function", o = typeof i == "function";
-				if (a && typeof o && nc(e)) t[e] = Cs(n, i);
-				else if (a && o) t[e] = Xs(n, i);
+				if (a && typeof o && Mc(e)) t[e] = $s(n, i);
+				else if (a && o) t[e] = Ec(n, i);
 				else if (e === "class") {
-					let r = vs(n), a = vs(i);
+					let r = Js(n), a = Js(i);
 					r && a ? t[e] = xi(n, i) : r ? t[e] = xi(n) : a && (t[e] = xi(i));
 				} else if (e === "style") {
 					let r = typeof n == "object", a = typeof i == "object", o = typeof n == "string", s = typeof i == "string";
@@ -4261,17 +4592,17 @@ function rc(...e) {
 						...i
 					};
 					else if (r && s) {
-						let r = Ys(i);
+						let r = Tc(i);
 						t[e] = {
 							...n,
 							...r
 						};
 					} else if (o && a) t[e] = {
-						...Ys(n),
+						...Tc(n),
 						...i
 					};
 					else if (o && s) {
-						let r = Ys(n), a = Ys(i);
+						let r = Tc(n), a = Tc(i);
 						t[e] = {
 							...r,
 							...a
@@ -4285,15 +4616,15 @@ function rc(...e) {
 			}
 		}
 	}
-	return typeof t.style == "object" && (t.style = ec(t.style).replaceAll("\n", " ")), t.hidden === !1 && (t.hidden = void 0, delete t.hidden), t.disabled === !1 && (t.disabled = void 0, delete t.disabled), t;
+	return typeof t.style == "object" && (t.style = Ac(t.style).replaceAll("\n", " ")), t.hidden === !1 && (t.hidden = void 0, delete t.hidden), t.disabled === !1 && (t.disabled = void 0, delete t.disabled), t;
 }
 //#endregion
 //#region node_modules/runed/dist/internal/configurable-globals.js
-var ic = typeof window < "u" ? window : void 0;
+var Pc = typeof window < "u" ? window : void 0;
 typeof window < "u" && window.document, typeof window < "u" && window.navigator, typeof window < "u" && window.location;
 //#endregion
 //#region node_modules/runed/dist/internal/utils/dom.js
-function ac(e) {
+function Fc(e) {
 	let t = e.activeElement;
 	for (; t?.shadowRoot;) {
 		let e = t.shadowRoot.activeElement;
@@ -4304,7 +4635,7 @@ function ac(e) {
 }
 //#endregion
 //#region node_modules/svelte/src/reactivity/map.js
-var oc = class extends Map {
+var Ic = class extends Map {
 	#e = /* @__PURE__ */ new Map();
 	#t = /* @__PURE__ */ L(0);
 	#n = /* @__PURE__ */ L(0);
@@ -4394,7 +4725,7 @@ new class {
 	#e;
 	#t;
 	constructor(e = {}) {
-		let { window: t = ic, document: n = t?.document } = e;
+		let { window: t = Pc, document: n = t?.document } = e;
 		t !== void 0 && (this.#e = n, this.#t = _t((e) => {
 			let n = zr(t, "focusin", e), r = zr(t, "focusout", e);
 			return () => {
@@ -4403,17 +4734,17 @@ new class {
 		}));
 	}
 	get current() {
-		return this.#t?.(), this.#e ? ac(this.#e) : null;
+		return this.#t?.(), this.#e ? Fc(this.#e) : null;
 	}
 }();
 //#endregion
 //#region node_modules/runed/dist/internal/utils/is.js
-function sc(e) {
+function Lc(e) {
 	return typeof e == "function";
 }
 //#endregion
 //#region node_modules/runed/dist/utilities/context/context.js
-var cc = class {
+var Rc = class {
 	#e;
 	#t;
 	constructor(e) {
@@ -4440,7 +4771,7 @@ var cc = class {
 };
 //#endregion
 //#region node_modules/runed/dist/utilities/watch/watch.svelte.js
-function lc(e, t) {
+function zc(e, t) {
 	switch (e) {
 		case "post":
 			On(t);
@@ -4448,9 +4779,9 @@ function lc(e, t) {
 		case "pre": An(t);
 	}
 }
-function uc(e, t, n, r = {}) {
+function Bc(e, t, n, r = {}) {
 	let { lazy: i = !1 } = r, a = !i, o = Array.isArray(e) ? [] : void 0;
-	lc(t, () => {
+	zc(t, () => {
 		let t = Array.isArray(e) ? e.map((e) => e()) : e();
 		if (!a) {
 			a = !0, o = t;
@@ -4460,21 +4791,21 @@ function uc(e, t, n, r = {}) {
 		return o = t, r;
 	});
 }
-function dc(e, t, n) {
-	uc(e, "post", t, n);
+function Vc(e, t, n) {
+	Bc(e, "post", t, n);
 }
-function fc(e, t, n) {
-	uc(e, "pre", t, n);
+function Hc(e, t, n) {
+	Bc(e, "pre", t, n);
 }
-dc.pre = fc;
+Vc.pre = Hc;
 //#endregion
 //#region node_modules/runed/dist/internal/utils/get.js
-function pc(e) {
-	return sc(e) ? e() : e;
+function Uc(e) {
+	return Lc(e) ? e() : e;
 }
 //#endregion
 //#region node_modules/runed/dist/utilities/element-size/element-size.svelte.js
-var mc = class {
+var Wc = class {
 	#e = {
 		width: 0,
 		height: 0
@@ -4486,7 +4817,7 @@ var mc = class {
 	#a = /* @__PURE__ */ F(() => (G(this.#s)?.(), this.getSize().width));
 	#o = /* @__PURE__ */ F(() => (G(this.#s)?.(), this.getSize().height));
 	#s = /* @__PURE__ */ F(() => {
-		let e = pc(this.#r);
+		let e = Uc(this.#r);
 		if (e) return _t((t) => {
 			if (!this.#i) return;
 			let n = new this.#i.ResizeObserver((e) => {
@@ -4503,13 +4834,13 @@ var mc = class {
 		});
 	});
 	constructor(e, t = { box: "border-box" }) {
-		this.#i = t.window ?? ic, this.#n = t, this.#r = e, this.#e = {
+		this.#i = t.window ?? Pc, this.#n = t, this.#r = e, this.#e = {
 			width: 0,
 			height: 0
 		};
 	}
 	calculateSize() {
-		let e = pc(this.#r);
+		let e = Uc(this.#r);
 		if (!e || !this.#i) return;
 		let t = e.offsetWidth, n = e.offsetHeight;
 		if (this.#n.box === "border-box") return {
@@ -4537,49 +4868,49 @@ var mc = class {
 };
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/on-destroy-effect.svelte.js
-function hc(e) {
+function Gc(e) {
 	On(() => () => {
 		e();
 	});
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/on-mount-effect.svelte.js
-function gc(e) {
+function Kc(e) {
 	On(() => Cr(() => e()));
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/after-sleep.js
-function _c(e, t) {
+function qc(e, t) {
 	return setTimeout(t, e);
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/after-tick.js
-function vc(e) {
+function Jc(e) {
 	br().then(e);
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/dom.js
-var yc = 1, bc = 9, xc = 11;
-function Sc(e) {
-	return gs(e) && e.nodeType === yc && typeof e.nodeName == "string";
+var Yc = 1, Xc = 9, Zc = 11;
+function Qc(e) {
+	return Ks(e) && e.nodeType === Yc && typeof e.nodeName == "string";
 }
-function Cc(e) {
-	return gs(e) && e.nodeType === bc;
+function $c(e) {
+	return Ks(e) && e.nodeType === Xc;
 }
-function wc(e) {
-	return gs(e) && e.constructor?.name === "VisualViewport";
+function el(e) {
+	return Ks(e) && e.constructor?.name === "VisualViewport";
 }
-function Tc(e) {
-	return gs(e) && e.nodeType !== void 0;
+function tl(e) {
+	return Ks(e) && e.nodeType !== void 0;
 }
-function Ec(e) {
-	return Tc(e) && e.nodeType === xc && "host" in e;
+function nl(e) {
+	return tl(e) && e.nodeType === Zc && "host" in e;
 }
-function Dc(e, t) {
-	if (!e || !t || !Sc(e) || !Sc(t)) return !1;
+function rl(e, t) {
+	if (!e || !t || !Qc(e) || !Qc(t)) return !1;
 	let n = t.getRootNode?.();
 	if (e === t || e.contains(t)) return !0;
-	if (n && Ec(n)) {
+	if (n && nl(n)) {
 		let n = t;
 		for (; n;) {
 			if (e === n) return !0;
@@ -4588,13 +4919,13 @@ function Dc(e, t) {
 	}
 	return !1;
 }
-function Oc(e) {
-	return Cc(e) ? e : wc(e) ? e.document : e?.ownerDocument ?? document;
+function il(e) {
+	return $c(e) ? e : el(e) ? e.document : e?.ownerDocument ?? document;
 }
-function kc(e) {
-	return Ec(e) ? kc(e.host) : Cc(e) ? e.defaultView ?? window : Sc(e) ? e.ownerDocument?.defaultView ?? window : window;
+function al(e) {
+	return nl(e) ? al(e.host) : $c(e) ? e.defaultView ?? window : Qc(e) ? e.ownerDocument?.defaultView ?? window : window;
 }
-function Ac(e) {
+function ol(e) {
 	let t = e.activeElement;
 	for (; t?.shadowRoot;) {
 		let e = t.shadowRoot.activeElement;
@@ -4605,7 +4936,7 @@ function Ac(e) {
 }
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/dom-context.svelte.js
-var jc = class {
+var sl = class {
 	element;
 	#e = /* @__PURE__ */ F(() => this.element.current ? this.element.current.getRootNode() ?? document : document);
 	get root() {
@@ -4617,9 +4948,9 @@ var jc = class {
 	constructor(e) {
 		this.element = typeof e == "function" ? $(e) : e;
 	}
-	getDocument = () => Oc(this.root);
+	getDocument = () => il(this.root);
 	getWindow = () => this.getDocument().defaultView ?? window;
-	getActiveElement = () => Ac(this.root);
+	getActiveElement = () => ol(this.root);
 	isActiveElement = (e) => e === this.getActiveElement();
 	getElementById(e) {
 		return this.root.getElementById(e);
@@ -4631,8 +4962,8 @@ var jc = class {
 };
 //#endregion
 //#region node_modules/svelte-toolbelt/dist/utils/attach-ref.js
-function Mc(e, t) {
-	return { [wr()]: (n) => xs(e) ? (e.current = n, Cr(() => t?.(n)), () => {
+function cl(e, t) {
+	return { [wr()]: (n) => Zs(e) ? (e.current = n, Cr(() => t?.(n)), () => {
 		"isConnected" in n && n.isConnected || (e.current = null, t?.(null));
 	}) : (e(n), Cr(() => t?.(n)), () => {
 		"isConnected" in n && n.isConnected || (e(null), t?.(null));
@@ -4640,13 +4971,13 @@ function Mc(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/attrs.js
-function Nc(e) {
+function ll(e) {
 	return e ? "" : void 0;
 }
-function Pc(e) {
+function ul(e) {
 	return e === "starting" ? { "data-starting-style": "" } : e === "ending" ? { "data-ending-style": "" } : {};
 }
-var Fc = class {
+var dl = class {
 	#e;
 	#t;
 	attrs;
@@ -4660,8 +4991,8 @@ var Fc = class {
 		return `[${this.getAttr(e, t)}]`;
 	}
 };
-function Ic(e) {
-	let t = new Fc(e);
+function fl(e) {
+	let t = new dl(e);
 	return {
 		...t.attrs,
 		selector: t.selector,
@@ -4670,34 +5001,34 @@ function Ic(e) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/is.js
-var Lc = typeof document < "u", Rc = zc();
-function zc() {
-	return Lc && window?.navigator?.userAgent && (/iP(ad|hone|od)/.test(window.navigator.userAgent) || window?.navigator?.maxTouchPoints > 2 && /iPad|Macintosh/.test(window?.navigator.userAgent));
+var pl = typeof document < "u", ml = hl();
+function hl() {
+	return pl && window?.navigator?.userAgent && (/iP(ad|hone|od)/.test(window.navigator.userAgent) || window?.navigator?.maxTouchPoints > 2 && /iPad|Macintosh/.test(window?.navigator.userAgent));
 }
-function Bc(e) {
+function gl(e) {
 	return e instanceof HTMLElement;
 }
-function Vc(e) {
+function _l(e) {
 	return e instanceof Element;
 }
-function Hc(e) {
+function vl(e) {
 	return e instanceof Element || e instanceof SVGElement;
 }
-function Uc(e) {
+function yl(e) {
 	return e.matches(":focus-visible");
 }
-function Wc(e) {
+function bl(e) {
 	return e !== null;
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/animations-complete.js
-var Gc = class {
+var xl = class {
 	#e;
 	#t = null;
 	#n = null;
 	#r = 0;
 	constructor(e) {
-		this.#e = e, hc(() => this.#i());
+		this.#e = e, Gc(() => this.#i());
 	}
 	#i() {
 		this.#t !== null && (window.cancelAnimationFrame(this.#t), this.#t = null), this.#n?.disconnect(), this.#n = null, this.#r++;
@@ -4758,9 +5089,9 @@ var Gc = class {
 		let t = () => {
 			e();
 		};
-		this.#e.afterTick ? vc(t) : t();
+		this.#e.afterTick ? Jc(t) : t();
 	}
-}, Kc = class {
+}, Sl = class {
 	#e;
 	#t;
 	#n;
@@ -4769,10 +5100,10 @@ var Gc = class {
 	#a = !1;
 	#o = null;
 	constructor(e) {
-		this.#e = e, R(this.#r, e.open.current, !0), this.#t = e.enabled ?? !0, this.#n = new Gc({
+		this.#e = e, R(this.#r, e.open.current, !0), this.#t = e.enabled ?? !0, this.#n = new xl({
 			ref: this.#e.ref,
 			afterTick: this.#e.open
-		}), hc(() => this.#s()), dc(() => this.#e.open.current, (e) => {
+		}), Gc(() => this.#s()), Vc(() => this.#e.open.current, (e) => {
 			if (!this.#a) {
 				this.#a = !0;
 				return;
@@ -4804,15 +5135,15 @@ var Gc = class {
 };
 //#endregion
 //#region node_modules/bits-ui/dist/internal/noop.js
-function qc() {}
+function Cl() {}
 //#endregion
 //#region node_modules/bits-ui/dist/internal/create-id.js
-function Jc(e, t) {
+function wl(e, t) {
 	return t === void 0 ? `bits-${e}` : `bits-${e}-${t}`;
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/events.js
-var Yc = class {
+var Tl = class {
 	eventName;
 	options;
 	constructor(e, t = {
@@ -4839,7 +5170,7 @@ var Yc = class {
 };
 //#endregion
 //#region node_modules/bits-ui/dist/internal/debounce.js
-function Xc(e, t = 500) {
+function El(e, t = 500) {
 	let n = null, r = (...r) => {
 		n !== null && clearTimeout(n), n = setTimeout(() => {
 			e(...r);
@@ -4851,21 +5182,21 @@ function Xc(e, t = 500) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/elements.js
-function Zc(e, t) {
+function Dl(e, t) {
 	return e === t || e.contains(t);
 }
-function Qc(e) {
+function Ol(e) {
 	return e?.ownerDocument ?? document;
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/dom.js
-function $c(e, t) {
+function kl(e, t) {
 	let { clientX: n, clientY: r } = e, i = t.getBoundingClientRect();
 	return n < i.left || n > i.right || r < i.top || r > i.bottom;
 }
 //#endregion
 //#region node_modules/tabbable/dist/index.esm.js
-var el = [
+var Al = [
 	"input:not([inert]):not([inert] *)",
 	"select:not([inert]):not([inert] *)",
 	"textarea:not([inert]):not([inert] *)",
@@ -4878,36 +5209,36 @@ var el = [
 	"[contenteditable]:not([contenteditable=\"false\"]):not([inert]):not([inert] *)",
 	"details>summary:first-of-type:not([inert]):not([inert] *)",
 	"details:not([inert]):not([inert] *)"
-], tl = /* #__PURE__ */ el.join(","), nl = typeof Element > "u", rl = nl ? function() {} : Element.prototype.matches || Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector, il = !nl && Element.prototype.getRootNode ? function(e) {
+], jl = /* #__PURE__ */ Al.join(","), Ml = typeof Element > "u", Nl = Ml ? function() {} : Element.prototype.matches || Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector, Pl = !Ml && Element.prototype.getRootNode ? function(e) {
 	return e?.getRootNode?.call(e);
 } : function(e) {
 	return e?.ownerDocument;
-}, al = function(e, t) {
+}, Fl = function(e, t) {
 	t === void 0 && (t = !0);
 	var n = e?.getAttribute?.call(e, "inert");
-	return n === "" || n === "true" || t && e && (typeof e.closest == "function" ? e.closest("[inert]") : al(e.parentNode));
-}, ol = function(e) {
+	return n === "" || n === "true" || t && e && (typeof e.closest == "function" ? e.closest("[inert]") : Fl(e.parentNode));
+}, Il = function(e) {
 	var t = e?.getAttribute?.call(e, "contenteditable");
 	return t === "" || t === "true";
-}, sl = function(e, t, n) {
-	if (al(e)) return [];
-	var r = Array.prototype.slice.apply(e.querySelectorAll(tl));
-	return t && rl.call(e, tl) && r.unshift(e), r = r.filter(n), r;
-}, cl = function(e, t, n) {
+}, Ll = function(e, t, n) {
+	if (Fl(e)) return [];
+	var r = Array.prototype.slice.apply(e.querySelectorAll(jl));
+	return t && Nl.call(e, jl) && r.unshift(e), r = r.filter(n), r;
+}, Rl = function(e, t, n) {
 	for (var r = [], i = Array.from(e); i.length;) {
 		var a = i.shift();
-		if (!al(a, !1)) {
+		if (!Fl(a, !1)) {
 			if (a.tagName === "SLOT") {
-				var o = a.assignedElements(), s = cl(o.length ? o : a.children, !0, n);
+				var o = a.assignedElements(), s = Rl(o.length ? o : a.children, !0, n);
 				n.flatten ? r.push.apply(r, s) : r.push({
 					scopeParent: a,
 					candidates: s
 				});
 			} else {
-				rl.call(a, tl) && n.filter(a) && (t || !e.includes(a)) && r.push(a);
-				var c = a.shadowRoot || typeof n.getShadowRoot == "function" && n.getShadowRoot(a), l = !al(c, !1) && (!n.shadowRootFilter || n.shadowRootFilter(a));
+				Nl.call(a, jl) && n.filter(a) && (t || !e.includes(a)) && r.push(a);
+				var c = a.shadowRoot || typeof n.getShadowRoot == "function" && n.getShadowRoot(a), l = !Fl(c, !1) && (!n.shadowRootFilter || n.shadowRootFilter(a));
 				if (c && l) {
-					var u = cl(c === !0 ? a.children : c.children, !0, n);
+					var u = Rl(c === !0 ? a.children : c.children, !0, n);
 					n.flatten ? r.push.apply(r, u) : r.push({
 						scopeParent: a,
 						candidates: u
@@ -4917,29 +5248,29 @@ var el = [
 		}
 	}
 	return r;
-}, ll = function(e) {
+}, zl = function(e) {
 	return !isNaN(parseInt(e.getAttribute("tabindex"), 10));
-}, ul = function(e) {
+}, Bl = function(e) {
 	if (!e) throw Error("No node provided");
-	return e.tabIndex < 0 && (/^(AUDIO|VIDEO|DETAILS)$/.test(e.tagName) || ol(e)) && !ll(e) ? 0 : e.tabIndex;
-}, dl = function(e, t) {
-	var n = ul(e);
-	return n < 0 && t && !ll(e) ? 0 : n;
-}, fl = function(e, t) {
+	return e.tabIndex < 0 && (/^(AUDIO|VIDEO|DETAILS)$/.test(e.tagName) || Il(e)) && !zl(e) ? 0 : e.tabIndex;
+}, Vl = function(e, t) {
+	var n = Bl(e);
+	return n < 0 && t && !zl(e) ? 0 : n;
+}, Hl = function(e, t) {
 	return e.tabIndex === t.tabIndex ? e.documentOrder - t.documentOrder : e.tabIndex - t.tabIndex;
-}, pl = function(e) {
+}, Ul = function(e) {
 	return e.tagName === "INPUT";
-}, ml = function(e) {
-	return pl(e) && e.type === "hidden";
-}, hl = function(e) {
+}, Wl = function(e) {
+	return Ul(e) && e.type === "hidden";
+}, Gl = function(e) {
 	return e.tagName === "DETAILS" && Array.prototype.slice.apply(e.children).some(function(e) {
 		return e.tagName === "SUMMARY";
 	});
-}, gl = function(e, t) {
+}, Kl = function(e, t) {
 	for (var n = 0; n < e.length; n++) if (e[n].checked && e[n].form === t) return e[n];
-}, _l = function(e) {
+}, ql = function(e) {
 	if (!e.name) return !0;
-	var t = e.form || il(e), n = function(e) {
+	var t = e.form || Pl(e), n = function(e) {
 		return t.querySelectorAll("input[type=\"radio\"][name=\"" + e + "\"]");
 	}, r;
 	if (typeof window < "u" && window.CSS !== void 0 && typeof window.CSS.escape == "function") r = n(window.CSS.escape(e.name));
@@ -4948,26 +5279,26 @@ var el = [
 	} catch (e) {
 		return console.error("Looks like you have a radio button with a name attribute containing invalid CSS selector characters and need the CSS.escape polyfill: %s", e.message), !1;
 	}
-	var i = gl(r, e.form);
+	var i = Kl(r, e.form);
 	return !i || i === e;
-}, vl = function(e) {
-	return pl(e) && e.type === "radio";
-}, yl = function(e) {
-	return vl(e) && !_l(e);
-}, bl = function(e) {
-	var t = e && il(e), n = t?.host, r = !1;
+}, Jl = function(e) {
+	return Ul(e) && e.type === "radio";
+}, Yl = function(e) {
+	return Jl(e) && !ql(e);
+}, Xl = function(e) {
+	var t = e && Pl(e), n = t?.host, r = !1;
 	if (t && t !== e) {
 		var i, a, o;
 		for (r = !!((i = n) != null && (a = i.ownerDocument) != null && a.contains(n) || e != null && (o = e.ownerDocument) != null && o.contains(e)); !r && n;) {
 			var s, c;
-			t = il(n), n = t?.host, r = !!((s = n) != null && (c = s.ownerDocument) != null && c.contains(n));
+			t = Pl(n), n = t?.host, r = !!((s = n) != null && (c = s.ownerDocument) != null && c.contains(n));
 		}
 	}
 	return r;
-}, xl = function(e) {
+}, Zl = function(e) {
 	var t = e.getBoundingClientRect(), n = t.width, r = t.height;
 	return n === 0 && r === 0;
-}, Sl = function(e, t) {
+}, Ql = function(e, t) {
 	var n = t.displayCheck, r = t.getShadowRoot;
 	if (n === "full-native" && "checkVisibility" in e) return !e.checkVisibility({
 		checkOpacity: !1,
@@ -4978,44 +5309,44 @@ var el = [
 	});
 	var i = getComputedStyle(e).visibility;
 	if (i === "hidden" || i === "collapse") return !0;
-	var a = rl.call(e, "details>summary:first-of-type") ? e.parentElement : e;
-	if (rl.call(a, "details:not([open]) *")) return !0;
+	var a = Nl.call(e, "details>summary:first-of-type") ? e.parentElement : e;
+	if (Nl.call(a, "details:not([open]) *")) return !0;
 	if (!n || n === "full" || n === "full-native" || n === "legacy-full") {
 		if (typeof r == "function") {
 			for (var o = e; e;) {
-				var s = e.parentElement, c = il(e);
-				if (s && !s.shadowRoot && r(s) === !0) return xl(e);
+				var s = e.parentElement, c = Pl(e);
+				if (s && !s.shadowRoot && r(s) === !0) return Zl(e);
 				e = e.assignedSlot ? e.assignedSlot : !s && c !== e.ownerDocument ? c.host : s;
 			}
 			e = o;
 		}
-		if (bl(e)) return !e.getClientRects().length;
+		if (Xl(e)) return !e.getClientRects().length;
 		if (n !== "legacy-full") return !0;
-	} else if (n === "non-zero-area") return xl(e);
+	} else if (n === "non-zero-area") return Zl(e);
 	return !1;
-}, Cl = function(e) {
+}, $l = function(e) {
 	if (/^(INPUT|BUTTON|SELECT|TEXTAREA)$/.test(e.tagName)) for (var t = e.parentElement; t;) {
 		if (t.tagName === "FIELDSET" && t.disabled) {
 			for (var n = 0; n < t.children.length; n++) {
 				var r = t.children.item(n);
-				if (r.tagName === "LEGEND") return rl.call(t, "fieldset[disabled] *") ? !0 : !r.contains(e);
+				if (r.tagName === "LEGEND") return Nl.call(t, "fieldset[disabled] *") ? !0 : !r.contains(e);
 			}
 			return !0;
 		}
 		t = t.parentElement;
 	}
 	return !1;
-}, wl = function(e, t) {
-	return !(t.disabled || ml(t) || Sl(t, e) || hl(t) || Cl(t));
-}, Tl = function(e, t) {
-	return !(yl(t) || ul(t) < 0 || !wl(e, t));
-}, El = function(e) {
+}, eu = function(e, t) {
+	return !(t.disabled || Wl(t) || Ql(t, e) || Gl(t) || $l(t));
+}, tu = function(e, t) {
+	return !(Yl(t) || Bl(t) < 0 || !eu(e, t));
+}, nu = function(e) {
 	var t = parseInt(e.getAttribute("tabindex"), 10);
 	return !!(isNaN(t) || t >= 0);
-}, Dl = function(e) {
+}, ru = function(e) {
 	var t = [], n = [];
 	return e.forEach(function(e, r) {
-		var i = !!e.scopeParent, a = i ? e.scopeParent : e, o = dl(a, i), s = i ? Dl(e.candidates) : a;
+		var i = !!e.scopeParent, a = i ? e.scopeParent : e, o = Vl(a, i), s = i ? ru(e.candidates) : a;
 		o === 0 ? i ? t.push.apply(t, s) : t.push(a) : n.push({
 			documentOrder: r,
 			tabIndex: o,
@@ -5023,32 +5354,32 @@ var el = [
 			isScope: i,
 			content: s
 		});
-	}), n.sort(fl).reduce(function(e, t) {
+	}), n.sort(Hl).reduce(function(e, t) {
 		return t.isScope ? e.push.apply(e, t.content) : e.push(t.content), e;
 	}, []).concat(t);
-}, Ol = function(e, t) {
-	return t ||= {}, Dl(t.getShadowRoot ? cl([e], t.includeContainer, {
-		filter: Tl.bind(null, t),
+}, iu = function(e, t) {
+	return t ||= {}, ru(t.getShadowRoot ? Rl([e], t.includeContainer, {
+		filter: tu.bind(null, t),
 		flatten: !1,
 		getShadowRoot: t.getShadowRoot,
-		shadowRootFilter: El
-	}) : sl(e, t.includeContainer, Tl.bind(null, t)));
-}, kl = function(e, t) {
-	return t ||= {}, t.getShadowRoot ? cl([e], t.includeContainer, {
-		filter: wl.bind(null, t),
+		shadowRootFilter: nu
+	}) : Ll(e, t.includeContainer, tu.bind(null, t)));
+}, au = function(e, t) {
+	return t ||= {}, t.getShadowRoot ? Rl([e], t.includeContainer, {
+		filter: eu.bind(null, t),
 		flatten: !0,
 		getShadowRoot: t.getShadowRoot
-	}) : sl(e, t.includeContainer, wl.bind(null, t));
-}, Al = /* #__PURE__ */ el.concat("iframe:not([inert]):not([inert] *)").join(","), jl = function(e, t) {
+	}) : Ll(e, t.includeContainer, eu.bind(null, t));
+}, ou = /* #__PURE__ */ Al.concat("iframe:not([inert]):not([inert] *)").join(","), su = function(e, t) {
 	if (t ||= {}, !e) throw Error("No node provided");
-	return rl.call(e, Al) !== !1 && wl(t, e);
-}, Ml = "data-context-menu-trigger", Nl = "data-context-menu-content";
+	return Nl.call(e, ou) !== !1 && eu(t, e);
+}, cu = "data-context-menu-trigger", lu = "data-context-menu-content";
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/dismissible-layer/use-dismissable-layer.svelte.js
-new cc("Menu.Root"), new cc("Menu.Root | Menu.Sub"), new cc("Menu.Content"), new cc("Menu.Group | Menu.RadioGroup"), new cc("Menu.RadioGroup"), new cc("Menu.CheckboxGroup"), new Yc("bitsmenuopen", {
+new Rc("Menu.Root"), new Rc("Menu.Root | Menu.Sub"), new Rc("Menu.Content"), new Rc("Menu.Group | Menu.RadioGroup"), new Rc("Menu.RadioGroup"), new Rc("Menu.CheckboxGroup"), new Tl("bitsmenuopen", {
 	bubbles: !1,
 	cancelable: !0
-}), Ic({
+}), fl({
 	component: "menu",
 	parts: [
 		"trigger",
@@ -5066,7 +5397,7 @@ new cc("Menu.Root"), new cc("Menu.Root | Menu.Sub"), new cc("Menu.Content"), new
 		"arrow"
 	]
 }), globalThis.bitsDismissableLayers ??= /* @__PURE__ */ new Map();
-var Pl = class e {
+var uu = class e {
 	static create(t) {
 		return new e(t);
 	}
@@ -5078,46 +5409,46 @@ var Pl = class e {
 	#i = !1;
 	#a = void 0;
 	#o;
-	#s = qc;
+	#s = Cl;
 	constructor(e) {
 		this.opts = e, this.#t = e.interactOutsideBehavior, this.#e = e.onInteractOutside, this.#o = e.onFocusOutside, On(() => {
-			this.#a = Qc(this.opts.ref.current);
+			this.#a = Ol(this.opts.ref.current);
 		});
-		let t = qc, n = () => {
+		let t = Cl, n = () => {
 			this.#g(), globalThis.bitsDismissableLayers.delete(this), this.#d.destroy(), t();
 		};
-		dc([() => this.opts.enabled.current, () => this.opts.ref.current], () => {
-			if (!(!this.opts.enabled.current || !this.opts.ref.current)) return _c(1, () => {
+		Vc([() => this.opts.enabled.current, () => this.opts.ref.current], () => {
+			if (!(!this.opts.enabled.current || !this.opts.ref.current)) return qc(1, () => {
 				this.opts.ref.current && (globalThis.bitsDismissableLayers.set(this, this.#t), t(), t = this.#l());
 			}), n;
-		}), hc(() => {
+		}), Gc(() => {
 			this.#g.destroy(), globalThis.bitsDismissableLayers.delete(this), this.#d.destroy(), this.#s(), t();
 		});
 	}
 	#c = (e) => {
-		e.defaultPrevented || this.opts.ref.current && vc(() => {
+		e.defaultPrevented || this.opts.ref.current && Jc(() => {
 			!this.opts.ref.current || this.#h(e.target) || e.target && !this.#i && this.#o.current?.(e);
 		});
 	};
 	#l() {
-		return Xs(zr(this.#a, "pointerdown", Xs(this.#f, this.#m), { capture: !0 }), zr(this.#a, "pointerdown", Xs(this.#p, this.#d)), zr(this.#a, "focusin", this.#c));
+		return Ec(zr(this.#a, "pointerdown", Ec(this.#f, this.#m), { capture: !0 }), zr(this.#a, "pointerdown", Ec(this.#p, this.#d)), zr(this.#a, "focusin", this.#c));
 	}
 	#u = (e) => {
 		let t = e;
-		t.defaultPrevented && (t = Rl(e)), this.#e.current(e);
+		t.defaultPrevented && (t = mu(e)), this.#e.current(e);
 	};
-	#d = Xc((e) => {
+	#d = El((e) => {
 		if (!this.opts.ref.current) {
 			this.#s();
 			return;
 		}
-		let t = this.opts.isValidEvent.current(e, this.opts.ref.current) || Ll(e, this.opts.ref.current);
+		let t = this.opts.isValidEvent.current(e, this.opts.ref.current) || pu(e, this.opts.ref.current);
 		if (!this.#r || this.#_() || !t) {
 			this.#s();
 			return;
 		}
 		let n = e;
-		if (n.defaultPrevented && (n = Rl(n)), this.#t.current !== "close" && this.#t.current !== "defer-otherwise-close") {
+		if (n.defaultPrevented && (n = mu(n)), this.#t.current !== "close" && this.#t.current !== "defer-otherwise-close") {
 			this.#s();
 			return;
 		}
@@ -5130,10 +5461,10 @@ var Pl = class e {
 		this.#n[e.type] = !1;
 	};
 	#m = () => {
-		this.opts.ref.current && (this.#r = Il(this.opts.ref.current));
+		this.opts.ref.current && (this.#r = fu(this.opts.ref.current));
 	};
-	#h = (e) => this.opts.ref.current ? Zc(this.opts.ref.current, e) : !1;
-	#g = Xc(() => {
+	#h = (e) => this.opts.ref.current ? Dl(this.opts.ref.current, e) : !1;
+	#g = El(() => {
 		for (let e in this.#n) this.#n[e] = !1;
 		this.#r = !1;
 	}, 20);
@@ -5151,22 +5482,22 @@ var Pl = class e {
 		onblurcapture: this.#y
 	};
 };
-function Fl(e = [...globalThis.bitsDismissableLayers]) {
+function du(e = [...globalThis.bitsDismissableLayers]) {
 	return e.findLast(([e, { current: t }]) => t === "close" || t === "ignore");
 }
-function Il(e) {
-	let t = [...globalThis.bitsDismissableLayers], n = Fl(t);
+function fu(e) {
+	let t = [...globalThis.bitsDismissableLayers], n = du(t);
 	if (n) return n[0].opts.ref.current === e;
 	let [r] = t[0];
 	return r.opts.ref.current === e;
 }
-function Ll(e, t) {
+function pu(e, t) {
 	let n = e.target;
-	if (!Hc(n)) return !1;
-	let r = !!n.closest(`[${Ml}]`), i = !!t.closest(`[${Nl}]`);
-	return "button" in e && e.button > 0 && !r ? !1 : "button" in e && e.button === 0 && r && i ? !0 : r && i ? !1 : Qc(n).documentElement.contains(n) && !Zc(t, n) && $c(e, t);
+	if (!vl(n)) return !1;
+	let r = !!n.closest(`[${cu}]`), i = !!t.closest(`[${lu}]`);
+	return "button" in e && e.button > 0 && !r ? !1 : "button" in e && e.button === 0 && r && i ? !0 : r && i ? !1 : Ol(n).documentElement.contains(n) && !Dl(t, n) && kl(e, t);
 }
-function Rl(e) {
+function mu(e) {
 	let t = e.currentTarget, n = e.target, r;
 	r = e instanceof PointerEvent ? new PointerEvent(e.type, e) : new PointerEvent("pointerdown", e);
 	let i = !1;
@@ -5176,9 +5507,9 @@ function Rl(e) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/dismissible-layer/dismissible-layer.svelte
-function zl(e, t) {
+function hu(e, t) {
 	N(t, !0);
-	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "onInteractOutside", 3, qc), i = Q(t, "onFocusOutside", 3, qc), a = Q(t, "isValidEvent", 3, () => !1), o = Pl.create({
+	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "onInteractOutside", 3, Cl), i = Q(t, "onFocusOutside", 3, Cl), a = Q(t, "isValidEvent", 3, () => !1), o = uu.create({
 		id: $(() => t.id),
 		interactOutsideBehavior: $(() => n()),
 		onInteractOutside: $(() => r()),
@@ -5193,29 +5524,29 @@ function zl(e, t) {
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/escape-layer/use-escape-layer.svelte.js
 globalThis.bitsEscapeLayers ??= /* @__PURE__ */ new Map();
-var Bl = class e {
+var gu = class e {
 	static create(t) {
 		return new e(t);
 	}
 	opts;
 	domContext;
 	constructor(e) {
-		this.opts = e, this.domContext = new jc(this.opts.ref);
-		let t = qc;
-		dc(() => e.enabled.current, (n) => (n && (globalThis.bitsEscapeLayers.set(this, e.escapeKeydownBehavior), t = this.#e()), () => {
+		this.opts = e, this.domContext = new sl(this.opts.ref);
+		let t = Cl;
+		Vc(() => e.enabled.current, (n) => (n && (globalThis.bitsEscapeLayers.set(this, e.escapeKeydownBehavior), t = this.#e()), () => {
 			t(), globalThis.bitsEscapeLayers.delete(this);
 		}));
 	}
 	#e = () => zr(this.domContext.getDocument(), "keydown", this.#t, { passive: !1 });
 	#t = (e) => {
-		if (e.key !== "Escape" || !Vl(this)) return;
+		if (e.key !== "Escape" || !_u(this)) return;
 		let t = new KeyboardEvent(e.type, e);
 		e.preventDefault();
 		let n = this.opts.escapeKeydownBehavior.current;
 		(n === "close" || n === "defer-otherwise-close") && this.opts.onEscapeKeydown.current(t);
 	};
 };
-function Vl(e) {
+function _u(e) {
 	let t = [...globalThis.bitsEscapeLayers], n = t.findLast(([e, { current: t }]) => t === "close" || t === "ignore");
 	if (n) return n[0] === e;
 	let [r] = t[0];
@@ -5223,10 +5554,10 @@ function Vl(e) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/escape-layer/escape-layer.svelte
-function Hl(e, t) {
+function vu(e, t) {
 	N(t, !0);
-	let n = Q(t, "escapeKeydownBehavior", 3, "close"), r = Q(t, "onEscapeKeydown", 3, qc);
-	Bl.create({
+	let n = Q(t, "escapeKeydownBehavior", 3, "close"), r = Q(t, "onEscapeKeydown", 3, Cl);
+	gu.create({
 		escapeKeydownBehavior: $(() => n()),
 		onEscapeKeydown: $(() => r()),
 		enabled: $(() => t.enabled),
@@ -5237,9 +5568,9 @@ function Hl(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/focus-scope/focus-scope-manager.js
-var Ul = class e {
+var yu = class e {
 	static instance;
-	#e = Ss([]);
+	#e = Qs([]);
 	#t = /* @__PURE__ */ new WeakMap();
 	#n = /* @__PURE__ */ new WeakMap();
 	static getInstance() {
@@ -5277,10 +5608,10 @@ var Ul = class e {
 	clearPreFocusMemory(e) {
 		this.#n.delete(e);
 	}
-}, Wl = class e {
+}, bu = class e {
 	#e = !1;
 	#t = null;
-	#n = Ul.getInstance();
+	#n = yu.getInstance();
 	#r = [];
 	#i;
 	constructor(e) {
@@ -5341,7 +5672,7 @@ var Ul = class e {
 				if (e.contains(n)) this.#n.setFocusMemory(this, n);
 				else {
 					let n = this.#n.getFocusMemory(this);
-					if (n && e.contains(n) && jl(n)) t.preventDefault(), n.focus();
+					if (n && e.contains(n) && su(n)) t.preventDefault(), n.focus();
 					else {
 						let t = this.#u(), n = this.#d()[0];
 						(t || n || e).focus();
@@ -5368,7 +5699,7 @@ var Ul = class e {
 		}), this.#r.push(() => n.disconnect());
 	}
 	#l() {
-		return this.#t ? Ol(this.#t, {
+		return this.#t ? iu(this.#t, {
 			includeContainer: !1,
 			getShadowRoot: !0
 		}) : [];
@@ -5377,16 +5708,16 @@ var Ul = class e {
 		return this.#l()[0] || null;
 	}
 	#d() {
-		return this.#t ? kl(this.#t, {
+		return this.#t ? au(this.#t, {
 			includeContainer: !1,
 			getShadowRoot: !0
 		}) : [];
 	}
 	static use(t) {
 		let n = null;
-		return dc([() => t.ref.current, () => t.enabled.current], ([r, i]) => {
+		return Vc([() => t.ref.current, () => t.enabled.current], ([r, i]) => {
 			r && i ? (n ||= new e(t), n.mount(r)) : n &&= (n.unmount(), null);
-		}), hc(() => {
+		}), Gc(() => {
 			n?.unmount();
 		}), { get props() {
 			return { tabindex: -1 };
@@ -5395,9 +5726,9 @@ var Ul = class e {
 };
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/focus-scope/focus-scope.svelte
-function Gl(e, t) {
+function xu(e, t) {
 	N(t, !0);
-	let n = Q(t, "enabled", 3, !1), r = Q(t, "trapFocus", 3, !1), i = Q(t, "loop", 3, !1), a = Q(t, "onCloseAutoFocus", 3, qc), o = Q(t, "onOpenAutoFocus", 3, qc), s = Wl.use({
+	let n = Q(t, "enabled", 3, !1), r = Q(t, "trapFocus", 3, !1), i = Q(t, "loop", 3, !1), a = Q(t, "onCloseAutoFocus", 3, Cl), o = Q(t, "onOpenAutoFocus", 3, Cl), s = bu.use({
 		enabled: $(() => n()),
 		trap: $(() => r()),
 		loop: i(),
@@ -5410,22 +5741,22 @@ function Gl(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/text-selection-layer/use-text-selection-layer.svelte.js
-var Kl = () => {};
+var Su = () => {};
 globalThis.bitsTextSelectionLayers ??= /* @__PURE__ */ new Map();
-var ql = class e {
+var Cu = class e {
 	static create(t) {
 		return new e(t);
 	}
 	opts;
 	domContext;
-	#e = qc;
+	#e = Cl;
 	#t = !1;
-	#n = Kl;
-	#r = Kl;
+	#n = Su;
+	#r = Su;
 	constructor(e) {
-		this.opts = e, this.domContext = new jc(e.ref);
-		let t = qc;
-		dc(() => [
+		this.opts = e, this.domContext = new sl(e.ref);
+		let t = Cl;
+		Vc(() => [
 			this.opts.enabled.current,
 			this.opts.onPointerDown.current,
 			this.opts.onPointerUp.current
@@ -5434,29 +5765,29 @@ var ql = class e {
 		}));
 	}
 	#i() {
-		return Xs(zr(this.domContext.getDocument(), "pointerdown", this.#o), zr(this.domContext.getDocument(), "pointerup", Cs(this.#s, this.#a)));
+		return Ec(zr(this.domContext.getDocument(), "pointerdown", this.#o), zr(this.domContext.getDocument(), "pointerup", $s(this.#s, this.#a)));
 	}
 	#a = (e) => {
 		this.#r(e);
 	};
 	#o = (e) => {
 		let t = this.opts.ref.current, n = e.target;
-		!Bc(t) || !Bc(n) || !this.#t || !Zl(this) || !Dc(t, n) || (this.#n(e), !e.defaultPrevented && (this.#e = Yl(t, this.domContext.getDocument().body)));
+		!gl(t) || !gl(n) || !this.#t || !Du(this) || !rl(t, n) || (this.#n(e), !e.defaultPrevented && (this.#e = Tu(t, this.domContext.getDocument().body)));
 	};
 	#s = () => {
-		this.#e(), this.#e = qc;
+		this.#e(), this.#e = Cl;
 	};
-}, Jl = (e) => e.style.userSelect || e.style.webkitUserSelect;
-function Yl(e, t) {
-	let n = Jl(t), r = Jl(e);
-	return Xl(t, "none"), Xl(e, "text"), () => {
-		Xl(t, n), Xl(e, r);
+}, wu = (e) => e.style.userSelect || e.style.webkitUserSelect;
+function Tu(e, t) {
+	let n = wu(t), r = wu(e);
+	return Eu(t, "none"), Eu(e, "text"), () => {
+		Eu(t, n), Eu(e, r);
 	};
 }
-function Xl(e, t) {
+function Eu(e, t) {
 	e.style.userSelect = t, e.style.webkitUserSelect = t;
 }
-function Zl(e) {
+function Du(e) {
 	let t = [...globalThis.bitsTextSelectionLayers];
 	if (!t.length) return !1;
 	let n = t.at(-1);
@@ -5464,10 +5795,10 @@ function Zl(e) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/text-selection-layer/text-selection-layer.svelte
-function Ql(e, t) {
+function Ou(e, t) {
 	N(t, !0);
-	let n = Q(t, "preventOverflowTextSelection", 3, !0), r = Q(t, "onPointerDown", 3, qc), i = Q(t, "onPointerUp", 3, qc);
-	ql.create({
+	let n = Q(t, "preventOverflowTextSelection", 3, !0), r = Q(t, "onPointerDown", 3, Cl), i = Q(t, "onPointerUp", 3, Cl);
+	Cu.create({
 		id: $(() => t.id),
 		onPointerDown: $(() => r()),
 		onPointerUp: $(() => i()),
@@ -5480,12 +5811,12 @@ function Ql(e, t) {
 //#endregion
 //#region node_modules/bits-ui/dist/internal/use-id.js
 globalThis.bitsIdCounter ??= { current: 0 };
-function $l(e = "bits") {
+function ku(e = "bits") {
 	return globalThis.bitsIdCounter.current++, `${e}-${globalThis.bitsIdCounter.current}`;
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/shared-state.svelte.js
-var eu = class {
+var Au = class {
 	#e;
 	#t = 0;
 	#n = /* @__PURE__ */ L();
@@ -5503,58 +5834,58 @@ var eu = class {
 			this.#i();
 		}), G(this.#n);
 	}
-}, tu = new oc(), nu = /* @__PURE__ */ L(null), ru = null, iu = null, au = !1, ou = $(() => {
-	for (let e of tu.values()) if (e) return !0;
+}, ju = new Ic(), Mu = /* @__PURE__ */ L(null), Nu = null, Pu = null, Fu = !1, Iu = $(() => {
+	for (let e of ju.values()) if (e) return !0;
 	return !1;
-}), su = null, cu = new eu(() => {
+}), Lu = null, Ru = new Au(() => {
 	function e() {
-		document.body.setAttribute("style", G(nu) ?? ""), document.body.style.removeProperty("--scrollbar-width"), Rc && ru?.(), R(nu, null);
+		document.body.setAttribute("style", G(Mu) ?? ""), document.body.style.removeProperty("--scrollbar-width"), ml && Nu?.(), R(Mu, null);
 	}
 	function t() {
-		iu !== null && (window.clearTimeout(iu), iu = null);
+		Pu !== null && (window.clearTimeout(Pu), Pu = null);
 	}
 	function n(e, n) {
-		t(), au = !0, su = Date.now();
-		let r = su, i = () => {
-			iu = null, su === r && (uu(tu) ? au = !1 : (au = !1, n()));
+		t(), Fu = !0, Lu = Date.now();
+		let r = Lu, i = () => {
+			Pu = null, Lu === r && (Bu(ju) ? Fu = !1 : (Fu = !1, n()));
 		}, a = e === null ? 24 : e;
-		iu = window.setTimeout(i, a);
+		Pu = window.setTimeout(i, a);
 	}
 	function r() {
-		G(nu) === null && tu.size === 0 && !au && R(nu, document.body.getAttribute("style"), !0);
+		G(Mu) === null && ju.size === 0 && !Fu && R(Mu, document.body.getAttribute("style"), !0);
 	}
-	return dc(() => ou.current, () => {
-		if (!ou.current) return;
-		r(), au = !1;
+	return Vc(() => Iu.current, () => {
+		if (!Iu.current) return;
+		r(), Fu = !1;
 		let e = getComputedStyle(document.documentElement), t = getComputedStyle(document.body), n = e.scrollbarGutter?.includes("stable") || t.scrollbarGutter?.includes("stable"), i = window.innerWidth - document.documentElement.clientWidth, a = {
 			padding: Number.parseInt(t.paddingRight ?? "0", 10) + i,
 			margin: Number.parseInt(t.marginRight ?? "0", 10)
 		};
-		i > 0 && !n && (document.body.style.paddingRight = `${a.padding}px`, document.body.style.marginRight = `${a.margin}px`, document.body.style.setProperty("--scrollbar-width", `${i}px`)), document.body.style.overflow = "hidden", Rc && (ru = zr(document, "touchmove", (e) => {
+		i > 0 && !n && (document.body.style.paddingRight = `${a.padding}px`, document.body.style.marginRight = `${a.margin}px`, document.body.style.setProperty("--scrollbar-width", `${i}px`)), document.body.style.overflow = "hidden", ml && (Nu = zr(document, "touchmove", (e) => {
 			e.target === document.documentElement && (e.touches.length > 1 || e.preventDefault());
-		}, { passive: !1 })), vc(() => {
+		}, { passive: !1 })), Jc(() => {
 			document.body.style.pointerEvents = "none", document.body.style.overflow = "hidden";
 		});
-	}), hc(() => () => {
-		ru?.();
+	}), Gc(() => () => {
+		Nu?.();
 	}), {
 		get lockMap() {
-			return tu;
+			return ju;
 		},
 		resetBodyStyle: e,
 		scheduleCleanupIfNoNewLocks: n,
 		cancelPendingCleanup: t,
 		ensureInitialStyleCaptured: r
 	};
-}), lu = class {
-	#e = $l();
+}), zu = class {
+	#e = ku();
 	#t;
 	#n = () => null;
 	#r;
 	locked;
 	constructor(e, t = () => null) {
-		this.#t = e, this.#n = t, this.#r = cu.get(), this.#r && (this.#r.cancelPendingCleanup(), this.#r.ensureInitialStyleCaptured(), this.#r.lockMap.set(this.#e, this.#t ?? !1), this.locked = $(() => this.#r.lockMap.get(this.#e) ?? !1, (e) => this.#r.lockMap.set(this.#e, e)), hc(() => {
-			if (this.#r.lockMap.delete(this.#e), uu(this.#r.lockMap)) return;
+		this.#t = e, this.#n = t, this.#r = Ru.get(), this.#r && (this.#r.cancelPendingCleanup(), this.#r.ensureInitialStyleCaptured(), this.#r.lockMap.set(this.#e, this.#t ?? !1), this.locked = $(() => this.#r.lockMap.get(this.#e) ?? !1, (e) => this.#r.lockMap.set(this.#e, e)), Gc(() => {
+			if (this.#r.lockMap.delete(this.#e), Bu(this.#r.lockMap)) return;
 			let e = this.#n();
 			this.#r.scheduleCleanupIfNoNewLocks(e, () => {
 				this.#r.resetBodyStyle();
@@ -5562,93 +5893,93 @@ var eu = class {
 		}));
 	}
 };
-function uu(e) {
+function Bu(e) {
 	for (let [t, n] of e) if (n) return !0;
 	return !1;
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/scroll-lock/scroll-lock.svelte
-function du(e, t) {
+function Vu(e, t) {
 	N(t, !0);
 	let n = Q(t, "preventScroll", 3, !0), r = Q(t, "restoreScrollDelay", 3, null);
-	n() && new lu(n(), () => r()), P();
+	n() && new zu(n(), () => r()), P();
 }
 //#endregion
 //#region node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
-var fu = [
+var Hu = [
 	"top",
 	"right",
 	"bottom",
 	"left"
-], pu = Math.min, mu = Math.max, hu = Math.round, gu = Math.floor, _u = (e) => ({
+], Uu = Math.min, Wu = Math.max, Gu = Math.round, Ku = Math.floor, qu = (e) => ({
 	x: e,
 	y: e
-}), vu = {
+}), Ju = {
 	left: "right",
 	right: "left",
 	bottom: "top",
 	top: "bottom"
 };
-function yu(e, t, n) {
-	return mu(e, pu(t, n));
+function Yu(e, t, n) {
+	return Wu(e, Uu(t, n));
 }
-function bu(e, t) {
+function Xu(e, t) {
 	return typeof e == "function" ? e(t) : e;
 }
-function xu(e) {
+function Zu(e) {
 	return e.split("-")[0];
 }
-function Su(e) {
+function Qu(e) {
 	return e.split("-")[1];
 }
-function Cu(e) {
+function $u(e) {
 	return e === "x" ? "y" : "x";
 }
-function wu(e) {
+function ed(e) {
 	return e === "y" ? "height" : "width";
 }
-function Tu(e) {
+function td(e) {
 	let t = e[0];
 	return t === "t" || t === "b" ? "y" : "x";
 }
-function Eu(e) {
-	return Cu(Tu(e));
+function nd(e) {
+	return $u(td(e));
 }
-function Du(e, t, n) {
+function rd(e, t, n) {
 	n === void 0 && (n = !1);
-	let r = Su(e), i = Eu(e), a = wu(i), o = i === "x" ? r === (n ? "end" : "start") ? "right" : "left" : r === "start" ? "bottom" : "top";
-	return t.reference[a] > t.floating[a] && (o = Iu(o)), [o, Iu(o)];
+	let r = Qu(e), i = nd(e), a = ed(i), o = i === "x" ? r === (n ? "end" : "start") ? "right" : "left" : r === "start" ? "bottom" : "top";
+	return t.reference[a] > t.floating[a] && (o = fd(o)), [o, fd(o)];
 }
-function Ou(e) {
-	let t = Iu(e);
+function id(e) {
+	let t = fd(e);
 	return [
-		ku(e),
+		ad(e),
 		t,
-		ku(t)
+		ad(t)
 	];
 }
-function ku(e) {
+function ad(e) {
 	return e.includes("start") ? e.replace("start", "end") : e.replace("end", "start");
 }
-var Au = ["left", "right"], ju = ["right", "left"], Mu = ["top", "bottom"], Nu = ["bottom", "top"];
-function Pu(e, t, n) {
+var od = ["left", "right"], sd = ["right", "left"], cd = ["top", "bottom"], ld = ["bottom", "top"];
+function ud(e, t, n) {
 	switch (e) {
 		case "top":
-		case "bottom": return n ? t ? ju : Au : t ? Au : ju;
+		case "bottom": return n ? t ? sd : od : t ? od : sd;
 		case "left":
-		case "right": return t ? Mu : Nu;
+		case "right": return t ? cd : ld;
 		default: return [];
 	}
 }
-function Fu(e, t, n, r) {
-	let i = Su(e), a = Pu(xu(e), n === "start", r);
-	return i && (a = a.map((e) => e + "-" + i), t && (a = a.concat(a.map(ku)))), a;
+function dd(e, t, n, r) {
+	let i = Qu(e), a = ud(Zu(e), n === "start", r);
+	return i && (a = a.map((e) => e + "-" + i), t && (a = a.concat(a.map(ad)))), a;
 }
-function Iu(e) {
-	let t = xu(e);
-	return vu[t] + e.slice(t.length);
+function fd(e) {
+	let t = Zu(e);
+	return Ju[t] + e.slice(t.length);
 }
-function Lu(e) {
+function pd(e) {
 	return {
 		top: e.top ?? 0,
 		right: e.right ?? 0,
@@ -5656,15 +5987,15 @@ function Lu(e) {
 		left: e.left ?? 0
 	};
 }
-function Ru(e) {
+function md(e) {
 	return typeof e == "number" ? {
 		top: e,
 		right: e,
 		bottom: e,
 		left: e
-	} : Lu(e);
+	} : pd(e);
 }
-function zu(e) {
+function hd(e) {
 	let { x: t, y: n, width: r, height: i } = e;
 	return {
 		width: r,
@@ -5679,8 +6010,8 @@ function zu(e) {
 }
 //#endregion
 //#region node_modules/@floating-ui/core/dist/floating-ui.core.mjs
-function Bu(e, t, n) {
-	let { reference: r, floating: i } = e, a = Tu(t), o = Eu(t), s = wu(o), c = xu(t), l = a === "y", u = r.x + r.width / 2 - i.width / 2, d = r.y + r.height / 2 - i.height / 2, f = r[s] / 2 - i[s] / 2, p;
+function gd(e, t, n) {
+	let { reference: r, floating: i } = e, a = td(t), o = nd(t), s = ed(o), c = Zu(t), l = a === "y", u = r.x + r.width / 2 - i.width / 2, d = r.y + r.height / 2 - i.height / 2, f = r[s] / 2 - i[s] / 2, p;
 	switch (c) {
 		case "top":
 			p = {
@@ -5711,12 +6042,12 @@ function Bu(e, t, n) {
 			y: r.y
 		};
 	}
-	let m = Su(t);
+	let m = Qu(t);
 	return m && (p[o] += f * (m === "end" ? 1 : -1) * (n && l ? -1 : 1)), p;
 }
-async function Vu(e, t) {
+async function _d(e, t) {
 	t === void 0 && (t = {});
-	let { x: n, y: r, platform: i, rects: a, elements: o, strategy: s } = e, { boundary: c = "clippingAncestors", rootBoundary: l = "viewport", elementContext: u = "floating", altBoundary: d = !1, padding: f = 0 } = bu(t, e), p = Ru(f), m = o[d ? u === "floating" ? "reference" : "floating" : u], h = zu(await i.getClippingRect({
+	let { x: n, y: r, platform: i, rects: a, elements: o, strategy: s } = e, { boundary: c = "clippingAncestors", rootBoundary: l = "viewport", elementContext: u = "floating", altBoundary: d = !1, padding: f = 0 } = Xu(t, e), p = md(f), m = o[d ? u === "floating" ? "reference" : "floating" : u], h = hd(await i.getClippingRect({
 		element: await (i.isElement == null ? void 0 : i.isElement(m)) ?? !0 ? m : m.contextElement || await (i.getDocumentElement == null ? void 0 : i.getDocumentElement(o.floating)),
 		boundary: c,
 		rootBoundary: l,
@@ -5729,7 +6060,7 @@ async function Vu(e, t) {
 	} : a.reference, _ = await (i.getOffsetParent == null ? void 0 : i.getOffsetParent(o.floating)), v = await (i.isElement == null ? void 0 : i.isElement(_)) && await (i.getScale == null ? void 0 : i.getScale(_)) || {
 		x: 1,
 		y: 1
-	}, y = zu(i.convertOffsetParentRelativeRectToViewportRelativeRect ? await i.convertOffsetParentRelativeRectToViewportRelativeRect({
+	}, y = hd(i.convertOffsetParentRelativeRectToViewportRelativeRect ? await i.convertOffsetParentRelativeRectToViewportRelativeRect({
 		elements: o,
 		rect: g,
 		offsetParent: _,
@@ -5742,15 +6073,15 @@ async function Vu(e, t) {
 		right: (y.right - h.right + p.right) / v.x
 	};
 }
-var Hu = 50, Uu = async (e, t, n) => {
+var vd = 50, yd = async (e, t, n) => {
 	let { placement: r = "bottom", strategy: i = "absolute", middleware: a = [], platform: o } = n, s = o.detectOverflow ? o : {
 		...o,
-		detectOverflow: Vu
+		detectOverflow: _d
 	}, c = await (o.isRTL == null ? void 0 : o.isRTL(t)), l = await o.getElementRects({
 		reference: e,
 		floating: t,
 		strategy: i
-	}), { x: u, y: d } = Bu(l, r, c), f = r, p = 0, m = {};
+	}), { x: u, y: d } = gd(l, r, c), f = r, p = 0, m = {};
 	for (let n = 0; n < a.length; n++) {
 		let h = a[n];
 		if (!h) continue;
@@ -5771,11 +6102,11 @@ var Hu = 50, Uu = async (e, t, n) => {
 		u = v ?? u, d = y ?? d, m[g] = {
 			...m[g],
 			...b
-		}, x && p < Hu && (p++, typeof x == "object" && (x.placement && (f = x.placement), x.rects && (l = x.rects === !0 ? await o.getElementRects({
+		}, x && p < vd && (p++, typeof x == "object" && (x.placement && (f = x.placement), x.rects && (l = x.rects === !0 ? await o.getElementRects({
 			reference: e,
 			floating: t,
 			strategy: i
-		}) : x.rects), {x: u, y: d} = Bu(l, f, c)), n = -1);
+		}) : x.rects), {x: u, y: d} = gd(l, f, c)), n = -1);
 	}
 	return {
 		x: u,
@@ -5784,18 +6115,18 @@ var Hu = 50, Uu = async (e, t, n) => {
 		strategy: i,
 		middlewareData: m
 	};
-}, Wu = (e) => ({
+}, bd = (e) => ({
 	name: "arrow",
 	options: e,
 	async fn(t) {
-		let { x: n, y: r, placement: i, rects: a, platform: o, elements: s, middlewareData: c } = t, { element: l, padding: u = 0 } = bu(e, t) || {};
+		let { x: n, y: r, placement: i, rects: a, platform: o, elements: s, middlewareData: c } = t, { element: l, padding: u = 0 } = Xu(e, t) || {};
 		if (l == null) return {};
-		let d = Ru(u), f = {
+		let d = md(u), f = {
 			x: n,
 			y: r
-		}, p = Eu(i), m = wu(p), h = await o.getDimensions(l), g = p === "y", _ = g ? "top" : "left", v = g ? "bottom" : "right", y = g ? "clientHeight" : "clientWidth", b = a.reference[m] + a.reference[p] - f[p] - a.floating[m], x = f[p] - a.reference[p], S = await (o.getOffsetParent == null ? void 0 : o.getOffsetParent(l)), C = S ? S[y] : 0;
+		}, p = nd(i), m = ed(p), h = await o.getDimensions(l), g = p === "y", _ = g ? "top" : "left", v = g ? "bottom" : "right", y = g ? "clientHeight" : "clientWidth", b = a.reference[m] + a.reference[p] - f[p] - a.floating[m], x = f[p] - a.reference[p], S = await (o.getOffsetParent == null ? void 0 : o.getOffsetParent(l)), C = S ? S[y] : 0;
 		(!C || !await (o.isElement == null ? void 0 : o.isElement(S))) && (C = s.floating[y] || a.floating[m]);
-		let w = b / 2 - x / 2, T = C / 2 - h[m] / 2 - 1, E = pu(d[_], T), ee = pu(d[v], T), D = C - h[m] - ee, te = C / 2 - h[m] / 2 + w, ne = yu(E, te, D), re = !c.arrow && Su(i) != null && te !== ne && a.reference[m] / 2 - (te < E ? E : ee) - h[m] / 2 < 0, ie = re ? te < E ? te - E : te - D : 0;
+		let w = b / 2 - x / 2, T = C / 2 - h[m] / 2 - 1, E = Uu(d[_], T), ee = Uu(d[v], T), D = C - h[m] - ee, te = C / 2 - h[m] / 2 + w, ne = Yu(E, te, D), re = !c.arrow && Qu(i) != null && te !== ne && a.reference[m] / 2 - (te < E ? E : ee) - h[m] / 2 < 0, ie = re ? te < E ? te - E : te - D : 0;
 		return {
 			[p]: f[p] + ie,
 			data: {
@@ -5806,19 +6137,19 @@ var Hu = 50, Uu = async (e, t, n) => {
 			reset: re
 		};
 	}
-}), Gu = function(e) {
+}), xd = function(e) {
 	return e === void 0 && (e = {}), {
 		name: "flip",
 		options: e,
 		async fn(t) {
 			var n;
-			let { placement: r, middlewareData: i, rects: a, initialPlacement: o, platform: s, elements: c } = t, { mainAxis: l = !0, crossAxis: u = !0, fallbackPlacements: d, fallbackStrategy: f = "bestFit", fallbackAxisSideDirection: p = "none", flipAlignment: m = !0, ...h } = bu(e, t);
+			let { placement: r, middlewareData: i, rects: a, initialPlacement: o, platform: s, elements: c } = t, { mainAxis: l = !0, crossAxis: u = !0, fallbackPlacements: d, fallbackStrategy: f = "bestFit", fallbackAxisSideDirection: p = "none", flipAlignment: m = !0, ...h } = Xu(e, t);
 			if ((n = i.arrow) != null && n.alignmentOffset) return {};
-			let g = xu(r), _ = Tu(o), v = xu(o) === o, y = await (s.isRTL == null ? void 0 : s.isRTL(c.floating)), b = d || (v || !m ? [Iu(o)] : Ou(o)), x = p !== "none";
-			!d && x && b.push(...Fu(o, m, p, y));
+			let g = Zu(r), _ = td(o), v = Zu(o) === o, y = await (s.isRTL == null ? void 0 : s.isRTL(c.floating)), b = d || (v || !m ? [fd(o)] : id(o)), x = p !== "none";
+			!d && x && b.push(...dd(o, m, p, y));
 			let S = [o, ...b], C = await s.detectOverflow(t, h), w = [], T = i.flip?.overflows || [];
 			if (l && w.push(C[g]), u) {
-				let e = Du(r, a, y);
+				let e = rd(r, a, y);
 				w.push(C[e[0]], C[e[1]]);
 			}
 			if (T = [...T, {
@@ -5826,7 +6157,7 @@ var Hu = 50, Uu = async (e, t, n) => {
 				overflows: w
 			}], !w.every((e) => e <= 0)) {
 				let e = (i.flip?.index || 0) + 1, t = S[e];
-				if (t && (u !== "alignment" || _ === Tu(t) || T.every((e) => Tu(e.placement) !== _ || e.overflows[0] > 0))) return {
+				if (t && (u !== "alignment" || _ === td(t) || T.every((e) => td(e.placement) !== _ || e.overflows[0] > 0))) return {
 					data: {
 						index: e,
 						overflows: T
@@ -5838,7 +6169,7 @@ var Hu = 50, Uu = async (e, t, n) => {
 					case "bestFit": {
 						let e = T.filter((e) => {
 							if (x) {
-								let t = Tu(e.placement);
+								let t = td(e.placement);
 								return t === _ || t === "y";
 							}
 							return !0;
@@ -5854,7 +6185,7 @@ var Hu = 50, Uu = async (e, t, n) => {
 		}
 	};
 };
-function Ku(e, t) {
+function Sd(e, t) {
 	return {
 		top: e.top - t.height,
 		right: e.right - t.width,
@@ -5862,43 +6193,43 @@ function Ku(e, t) {
 		left: e.left - t.width
 	};
 }
-function qu(e) {
-	return fu.some((t) => e[t] >= 0);
+function Cd(e) {
+	return Hu.some((t) => e[t] >= 0);
 }
-var Ju = function(e) {
+var wd = function(e) {
 	return e === void 0 && (e = {}), {
 		name: "hide",
 		options: e,
 		async fn(t) {
-			let { rects: n, platform: r } = t, { strategy: i = "referenceHidden", ...a } = bu(e, t);
+			let { rects: n, platform: r } = t, { strategy: i = "referenceHidden", ...a } = Xu(e, t);
 			switch (i) {
 				case "referenceHidden": {
-					let e = Ku(await r.detectOverflow(t, {
+					let e = Sd(await r.detectOverflow(t, {
 						...a,
 						elementContext: "reference"
 					}), n.reference);
 					return { data: {
 						referenceHiddenOffsets: e,
-						referenceHidden: qu(e)
+						referenceHidden: Cd(e)
 					} };
 				}
 				case "escaped": {
-					let e = Ku(await r.detectOverflow(t, {
+					let e = Sd(await r.detectOverflow(t, {
 						...a,
 						altBoundary: !0
 					}), n.floating);
 					return { data: {
 						escapedOffsets: e,
-						escaped: qu(e)
+						escaped: Cd(e)
 					} };
 				}
 				default: return {};
 			}
 		}
 	};
-}, Yu = /*#__PURE__*/ new Set(["left", "top"]);
-async function Xu(e, t) {
-	let { placement: n, platform: r, elements: i } = e, a = await (r.isRTL == null ? void 0 : r.isRTL(i.floating)), o = xu(n), s = Su(n), c = Tu(n) === "y", l = Yu.has(o) ? -1 : 1, u = a && c ? -1 : 1, d = bu(t, e), { mainAxis: f, crossAxis: p, alignmentAxis: m } = typeof d == "number" ? {
+}, Td = /*#__PURE__*/ new Set(["left", "top"]);
+async function Ed(e, t) {
+	let { placement: n, platform: r, elements: i } = e, a = await (r.isRTL == null ? void 0 : r.isRTL(i.floating)), o = Zu(n), s = Qu(n), c = td(n) === "y", l = Td.has(o) ? -1 : 1, u = a && c ? -1 : 1, d = Xu(t, e), { mainAxis: f, crossAxis: p, alignmentAxis: m } = typeof d == "number" ? {
 		mainAxis: d,
 		crossAxis: 0,
 		alignmentAxis: null
@@ -5915,13 +6246,13 @@ async function Xu(e, t) {
 		y: p * u
 	};
 }
-var Zu = function(e) {
+var Dd = function(e) {
 	return e === void 0 && (e = 0), {
 		name: "offset",
 		options: e,
 		async fn(t) {
 			var n;
-			let { x: r, y: i, placement: a, middlewareData: o } = t, s = await Xu(t, e);
+			let { x: r, y: i, placement: a, middlewareData: o } = t, s = await Ed(t, e);
 			return a === o.offset?.placement && (n = o.arrow) != null && n.alignmentOffset ? {} : {
 				x: r + s.x,
 				y: i + s.y,
@@ -5932,7 +6263,7 @@ var Zu = function(e) {
 			};
 		}
 	};
-}, Qu = function(e) {
+}, Od = function(e) {
 	return e === void 0 && (e = {}), {
 		name: "shift",
 		options: e,
@@ -5943,10 +6274,10 @@ var Zu = function(e) {
 					x: t,
 					y: n
 				};
-			} }, ...l } = bu(e, t), u = {
+			} }, ...l } = Xu(e, t), u = {
 				x: n,
 				y: r
-			}, d = await a.detectOverflow(t, l), f = Tu(i), p = Cu(f), m = u[p], h = u[f], g = (e, t) => yu(t + d[e === "y" ? "top" : "left"], t, t - d[e === "y" ? "bottom" : "right"]);
+			}, d = await a.detectOverflow(t, l), f = td(i), p = $u(f), m = u[p], h = u[f], g = (e, t) => Yu(t + d[e === "y" ? "top" : "left"], t, t - d[e === "y" ? "bottom" : "right"]);
 			o && (m = g(p, m)), s && (h = g(f, h));
 			let _ = c.fn({
 				...t,
@@ -5966,14 +6297,14 @@ var Zu = function(e) {
 			};
 		}
 	};
-}, $u = function(e) {
+}, kd = function(e) {
 	return e === void 0 && (e = {}), {
 		options: e,
 		fn(t) {
-			let { x: n, y: r, placement: i, rects: a, middlewareData: o } = t, { offset: s = 0, mainAxis: c = !0, crossAxis: l = !0 } = bu(e, t), u = {
+			let { x: n, y: r, placement: i, rects: a, middlewareData: o } = t, { offset: s = 0, mainAxis: c = !0, crossAxis: l = !0 } = Xu(e, t), u = {
 				x: n,
 				y: r
-			}, d = Tu(i), f = Cu(d), p = u[f], m = u[d], h = bu(s, t), g = typeof h == "number" ? {
+			}, d = td(i), f = $u(d), p = u[f], m = u[d], h = Xu(s, t), g = typeof h == "number" ? {
 				mainAxis: h,
 				crossAxis: 0
 			} : {
@@ -5985,7 +6316,7 @@ var Zu = function(e) {
 				p < t ? p = t : p > n && (p = n);
 			}
 			if (l) {
-				let e = f === "y" ? "width" : "height", t = Yu.has(xu(i)), n = a.reference[d] - a.floating[e] + (t && o.offset?.[d] || 0) + (t ? 0 : g.crossAxis), r = a.reference[d] + a.reference[e] + (t ? 0 : o.offset?.[d] || 0) - (t ? g.crossAxis : 0);
+				let e = f === "y" ? "width" : "height", t = Td.has(Zu(i)), n = a.reference[d] - a.floating[e] + (t && o.offset?.[d] || 0) + (t ? 0 : g.crossAxis), r = a.reference[d] + a.reference[e] + (t ? 0 : o.offset?.[d] || 0) - (t ? g.crossAxis : 0);
 				m < n ? m = n : m > r && (m = r);
 			}
 			return {
@@ -5994,15 +6325,15 @@ var Zu = function(e) {
 			};
 		}
 	};
-}, ed = function(e) {
+}, Ad = function(e) {
 	return e === void 0 && (e = {}), {
 		name: "size",
 		options: e,
 		async fn(t) {
-			let { placement: n, rects: r, platform: i, elements: a } = t, { apply: o = () => {}, ...s } = bu(e, t), c = await i.detectOverflow(t, s), l = xu(n), u = Su(n), d = Tu(n) === "y", { width: f, height: p } = r.floating, m, h;
+			let { placement: n, rects: r, platform: i, elements: a } = t, { apply: o = () => {}, ...s } = Xu(e, t), c = await i.detectOverflow(t, s), l = Zu(n), u = Qu(n), d = td(n) === "y", { width: f, height: p } = r.floating, m, h;
 			l === "top" || l === "bottom" ? (m = l, h = u === (await (i.isRTL == null ? void 0 : i.isRTL(a.floating)) ? "start" : "end") ? "left" : "right") : (h = l, m = u === "end" ? "top" : "bottom");
-			let g = p - c.top - c.bottom, _ = f - c.left - c.right, v = pu(p - c[m], g), y = pu(f - c[h], _), b = t.middlewareData.shift, x = !b, S = v, C = y;
-			b != null && b.enabled.x && (C = _), b != null && b.enabled.y && (S = g), x && !u && (d ? C = f - 2 * mu(c.left, c.right) : S = p - 2 * mu(c.top, c.bottom)), await o({
+			let g = p - c.top - c.bottom, _ = f - c.left - c.right, v = Uu(p - c[m], g), y = Uu(f - c[h], _), b = t.middlewareData.shift, x = !b, S = v, C = y;
+			b != null && b.enabled.x && (C = _), b != null && b.enabled.y && (S = g), x && !u && (d ? C = f - 2 * Wu(c.left, c.right) : S = p - 2 * Wu(c.top, c.bottom)), await o({
 				...t,
 				availableWidth: C,
 				availableHeight: S
@@ -6014,39 +6345,39 @@ var Zu = function(e) {
 };
 //#endregion
 //#region node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
-function td() {
+function jd() {
 	return typeof window < "u";
 }
-function nd(e) {
-	return ad(e) ? (e.nodeName || "").toLowerCase() : "#document";
+function Md(e) {
+	return Fd(e) ? (e.nodeName || "").toLowerCase() : "#document";
 }
-function rd(e) {
+function Nd(e) {
 	var t;
 	return (e == null || (t = e.ownerDocument) == null ? void 0 : t.defaultView) || window;
 }
-function id(e) {
-	return ((ad(e) ? e.ownerDocument : e.document) || window.document)?.documentElement;
+function Pd(e) {
+	return ((Fd(e) ? e.ownerDocument : e.document) || window.document)?.documentElement;
 }
-function ad(e) {
-	return td() ? e instanceof Node || e instanceof rd(e).Node : !1;
+function Fd(e) {
+	return jd() ? e instanceof Node || e instanceof Nd(e).Node : !1;
 }
-function od(e) {
-	return td() ? e instanceof Element || e instanceof rd(e).Element : !1;
+function Id(e) {
+	return jd() ? e instanceof Element || e instanceof Nd(e).Element : !1;
 }
-function sd(e) {
-	return td() ? e instanceof HTMLElement || e instanceof rd(e).HTMLElement : !1;
+function Ld(e) {
+	return jd() ? e instanceof HTMLElement || e instanceof Nd(e).HTMLElement : !1;
 }
-function cd(e) {
-	return !td() || typeof ShadowRoot > "u" ? !1 : e instanceof ShadowRoot || e instanceof rd(e).ShadowRoot;
+function Rd(e) {
+	return !jd() || typeof ShadowRoot > "u" ? !1 : e instanceof ShadowRoot || e instanceof Nd(e).ShadowRoot;
 }
-function ld(e) {
-	let { overflow: t, overflowX: n, overflowY: r, display: i } = bd(e);
+function zd(e) {
+	let { overflow: t, overflowX: n, overflowY: r, display: i } = Xd(e);
 	return /auto|scroll|overlay|hidden|clip/.test(t + r + n) && i !== "inline" && i !== "contents";
 }
-function ud(e) {
-	return /^(table|td|th)$/.test(nd(e));
+function Bd(e) {
+	return /^(table|td|th)$/.test(Md(e));
 }
-function dd(e) {
+function Vd(e) {
 	try {
 		if (e.matches(":popover-open")) return !0;
 	} catch {}
@@ -6056,31 +6387,31 @@ function dd(e) {
 		return !1;
 	}
 }
-var fd = /transform|translate|scale|rotate|perspective|filter/, pd = /paint|layout|strict|content/, md = (e) => !!e && e !== "none", hd;
-function gd(e) {
-	let t = od(e) ? bd(e) : e;
-	return md(t.transform) || md(t.translate) || md(t.scale) || md(t.rotate) || md(t.perspective) || !vd() && (md(t.backdropFilter) || md(t.filter)) || fd.test(t.willChange || "") || pd.test(t.contain || "");
+var Hd = /transform|translate|scale|rotate|perspective|filter/, Ud = /paint|layout|strict|content/, Wd = (e) => !!e && e !== "none", Gd;
+function Kd(e) {
+	let t = Id(e) ? Xd(e) : e;
+	return Wd(t.transform) || Wd(t.translate) || Wd(t.scale) || Wd(t.rotate) || Wd(t.perspective) || !Jd() && (Wd(t.backdropFilter) || Wd(t.filter)) || Hd.test(t.willChange || "") || Ud.test(t.contain || "");
 }
-function _d(e) {
-	let t = Sd(e);
-	for (; sd(t) && !yd(t);) {
-		if (gd(t)) return t;
-		if (dd(t)) return null;
-		t = Sd(t);
+function qd(e) {
+	let t = Qd(e);
+	for (; Ld(t) && !Yd(t);) {
+		if (Kd(t)) return t;
+		if (Vd(t)) return null;
+		t = Qd(t);
 	}
 	return null;
 }
-function vd() {
-	return hd ??= typeof CSS < "u" && CSS.supports && CSS.supports("-webkit-backdrop-filter", "none"), hd;
+function Jd() {
+	return Gd ??= typeof CSS < "u" && CSS.supports && CSS.supports("-webkit-backdrop-filter", "none"), Gd;
 }
-function yd(e) {
-	return /^(html|body|#document)$/.test(nd(e));
+function Yd(e) {
+	return /^(html|body|#document)$/.test(Md(e));
 }
-function bd(e) {
-	return rd(e).getComputedStyle(e);
+function Xd(e) {
+	return Nd(e).getComputedStyle(e);
 }
-function xd(e) {
-	return od(e) ? {
+function Zd(e) {
+	return Id(e) ? {
 		scrollLeft: e.scrollLeft,
 		scrollTop: e.scrollTop
 	} : {
@@ -6088,102 +6419,102 @@ function xd(e) {
 		scrollTop: e.scrollY
 	};
 }
-function Sd(e) {
-	if (nd(e) === "html") return e;
-	let t = e.assignedSlot || e.parentNode || cd(e) && e.host || id(e);
-	return cd(t) ? t.host : t;
+function Qd(e) {
+	if (Md(e) === "html") return e;
+	let t = e.assignedSlot || e.parentNode || Rd(e) && e.host || Pd(e);
+	return Rd(t) ? t.host : t;
 }
-function Cd(e) {
-	let t = Sd(e);
-	return yd(t) ? (e.ownerDocument || e).body : sd(t) && ld(t) ? t : Cd(t);
+function $d(e) {
+	let t = Qd(e);
+	return Yd(t) ? (e.ownerDocument || e).body : Ld(t) && zd(t) ? t : $d(t);
 }
-function wd(e, t, n) {
+function ef(e, t, n) {
 	t === void 0 && (t = []), n === void 0 && (n = !0);
-	let r = Cd(e), i = r === e.ownerDocument?.body, a = rd(r);
+	let r = $d(e), i = r === e.ownerDocument?.body, a = Nd(r);
 	if (i) {
-		let e = Td(a);
-		return t.concat(a, a.visualViewport || [], ld(r) ? r : [], e && n ? wd(e) : []);
+		let e = tf(a);
+		return t.concat(a, a.visualViewport || [], zd(r) ? r : [], e && n ? ef(e) : []);
 	}
-	return t.concat(r, wd(r, [], n));
+	return t.concat(r, ef(r, [], n));
 }
-function Td(e) {
+function tf(e) {
 	return e.parent && Object.getPrototypeOf(e.parent) ? e.frameElement : null;
 }
 //#endregion
 //#region node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs
-function Ed(e) {
-	let t = bd(e), n = parseFloat(t.width) || 0, r = parseFloat(t.height) || 0, i = sd(e), a = i ? e.offsetWidth : n, o = i ? e.offsetHeight : r, s = hu(n) !== a || hu(r) !== o;
+function nf(e) {
+	let t = Xd(e), n = parseFloat(t.width) || 0, r = parseFloat(t.height) || 0, i = Ld(e), a = i ? e.offsetWidth : n, o = i ? e.offsetHeight : r, s = Gu(n) !== a || Gu(r) !== o;
 	return s && (n = a, r = o), {
 		width: n,
 		height: r,
 		$: s
 	};
 }
-function Dd(e) {
-	return od(e) ? e : e.contextElement;
+function rf(e) {
+	return Id(e) ? e : e.contextElement;
 }
-function Od(e) {
-	let t = Dd(e);
-	if (!sd(t)) return _u(1);
-	let n = t.getBoundingClientRect(), { width: r, height: i, $: a } = Ed(t), o = (a ? hu(n.width) : n.width) / r, s = (a ? hu(n.height) : n.height) / i;
+function af(e) {
+	let t = rf(e);
+	if (!Ld(t)) return qu(1);
+	let n = t.getBoundingClientRect(), { width: r, height: i, $: a } = nf(t), o = (a ? Gu(n.width) : n.width) / r, s = (a ? Gu(n.height) : n.height) / i;
 	return (!o || !Number.isFinite(o)) && (o = 1), (!s || !Number.isFinite(s)) && (s = 1), {
 		x: o,
 		y: s
 	};
 }
-var kd = /*#__PURE__*/ _u(0);
-function Ad(e) {
-	let t = rd(e);
-	return !vd() || !t.visualViewport ? kd : {
+var of = /*#__PURE__*/ qu(0);
+function sf(e) {
+	let t = Nd(e);
+	return !Jd() || !t.visualViewport ? of : {
 		x: t.visualViewport.offsetLeft,
 		y: t.visualViewport.offsetTop
 	};
 }
-function jd(e, t, n) {
-	return t === void 0 && (t = !1), !!n && t && n === rd(e);
+function cf(e, t, n) {
+	return t === void 0 && (t = !1), !!n && t && n === Nd(e);
 }
-function Md(e, t, n, r) {
+function lf(e, t, n, r) {
 	t === void 0 && (t = !1), n === void 0 && (n = !1);
-	let i = e.getBoundingClientRect(), a = Dd(e), o = _u(1);
-	t && (r ? od(r) && (o = Od(r)) : o = Od(e));
-	let s = jd(a, n, r) ? Ad(a) : _u(0), c = (i.left + s.x) / o.x, l = (i.top + s.y) / o.y, u = i.width / o.x, d = i.height / o.y;
+	let i = e.getBoundingClientRect(), a = rf(e), o = qu(1);
+	t && (r ? Id(r) && (o = af(r)) : o = af(e));
+	let s = cf(a, n, r) ? sf(a) : qu(0), c = (i.left + s.x) / o.x, l = (i.top + s.y) / o.y, u = i.width / o.x, d = i.height / o.y;
 	if (a && r) {
-		let e = rd(a), t = od(r) ? rd(r) : r, n = e, i = Td(n);
+		let e = Nd(a), t = Id(r) ? Nd(r) : r, n = e, i = tf(n);
 		for (; i && t !== n;) {
-			let e = Od(i), t = i.getBoundingClientRect(), r = bd(i), a = t.left + (i.clientLeft + parseFloat(r.paddingLeft)) * e.x, o = t.top + (i.clientTop + parseFloat(r.paddingTop)) * e.y;
-			c *= e.x, l *= e.y, u *= e.x, d *= e.y, c += a, l += o, n = rd(i), i = Td(n);
+			let e = af(i), t = i.getBoundingClientRect(), r = Xd(i), a = t.left + (i.clientLeft + parseFloat(r.paddingLeft)) * e.x, o = t.top + (i.clientTop + parseFloat(r.paddingTop)) * e.y;
+			c *= e.x, l *= e.y, u *= e.x, d *= e.y, c += a, l += o, n = Nd(i), i = tf(n);
 		}
 	}
-	return zu({
+	return hd({
 		width: u,
 		height: d,
 		x: c,
 		y: l
 	});
 }
-function Nd(e, t) {
-	let n = xd(e).scrollLeft;
-	return t ? t.left + n : Md(id(e)).left + n;
+function uf(e, t) {
+	let n = Zd(e).scrollLeft;
+	return t ? t.left + n : lf(Pd(e)).left + n;
 }
-function Pd(e, t) {
+function df(e, t) {
 	let n = e.getBoundingClientRect();
 	return {
-		x: n.left + t.scrollLeft - Nd(e, n),
+		x: n.left + t.scrollLeft - uf(e, n),
 		y: n.top + t.scrollTop
 	};
 }
-function Fd(e) {
-	let { elements: t, rect: n, offsetParent: r, strategy: i } = e, a = i === "fixed", o = id(r), s = t ? dd(t.floating) : !1;
+function ff(e) {
+	let { elements: t, rect: n, offsetParent: r, strategy: i } = e, a = i === "fixed", o = Pd(r), s = t ? Vd(t.floating) : !1;
 	if (r === o || s && a) return n;
 	let c = {
 		scrollLeft: 0,
 		scrollTop: 0
-	}, l = _u(1), u = _u(0), d = sd(r);
-	if ((d || !a) && ((nd(r) !== "body" || ld(o)) && (c = xd(r)), d)) {
-		let e = Md(r);
-		l = Od(r), u.x = e.x + r.clientLeft, u.y = e.y + r.clientTop;
+	}, l = qu(1), u = qu(0), d = Ld(r);
+	if ((d || !a) && ((Md(r) !== "body" || zd(o)) && (c = Zd(r)), d)) {
+		let e = lf(r);
+		l = af(r), u.x = e.x + r.clientLeft, u.y = e.y + r.clientTop;
 	}
-	let f = o && !d && !a ? Pd(o, c) : _u(0);
+	let f = o && !d && !a ? df(o, c) : qu(0);
 	return {
 		width: n.width * l.x,
 		height: n.height * l.y,
@@ -6191,29 +6522,29 @@ function Fd(e) {
 		y: n.y * l.y - c.scrollTop * l.y + u.y + f.y
 	};
 }
-function Id(e) {
+function pf(e) {
 	return e.getClientRects ? Array.from(e.getClientRects()) : [];
 }
-function Ld(e) {
-	let t = xd(e), n = e.ownerDocument.body, r = mu(e.scrollWidth, e.clientWidth, n.scrollWidth, n.clientWidth), i = mu(e.scrollHeight, e.clientHeight, n.scrollHeight, n.clientHeight), a = -t.scrollLeft + Nd(e), o = -t.scrollTop;
-	return bd(n).direction === "rtl" && (a += mu(e.clientWidth, n.clientWidth) - r), {
+function mf(e) {
+	let t = Zd(e), n = e.ownerDocument.body, r = Wu(e.scrollWidth, e.clientWidth, n.scrollWidth, n.clientWidth), i = Wu(e.scrollHeight, e.clientHeight, n.scrollHeight, n.clientHeight), a = -t.scrollLeft + uf(e), o = -t.scrollTop;
+	return Xd(n).direction === "rtl" && (a += Wu(e.clientWidth, n.clientWidth) - r), {
 		width: r,
 		height: i,
 		x: a,
 		y: o
 	};
 }
-var Rd = 25;
-function zd(e, t, n) {
+var hf = 25;
+function gf(e, t, n) {
 	n === void 0 && (n = "viewport");
-	let r = n === "layoutViewport", i = rd(e), a = id(e), o = i.visualViewport, s = a.clientWidth, c = a.clientHeight, l = 0, u = 0;
+	let r = n === "layoutViewport", i = Nd(e), a = Pd(e), o = i.visualViewport, s = a.clientWidth, c = a.clientHeight, l = 0, u = 0;
 	if (o) {
-		let e = !vd() || t === "fixed";
+		let e = !Jd() || t === "fixed";
 		r ? e || (l = -o.offsetLeft, u = -o.offsetTop) : (s = o.width, c = o.height, e && (l = o.offsetLeft, u = o.offsetTop));
 	}
-	if (Nd(a) <= 0) {
+	if (uf(a) <= 0) {
 		let e = a.ownerDocument, t = e.body, n = getComputedStyle(t), r = e.compatMode === "CSS1Compat" && parseFloat(n.marginLeft) + parseFloat(n.marginRight) || 0, i = Math.abs(a.clientWidth - t.clientWidth - r), o = getComputedStyle(a).scrollbarGutter === "stable both-edges" ? i / 2 : i;
-		o <= Rd && (s -= o);
+		o <= hf && (s -= o);
 	}
 	return {
 		width: s,
@@ -6222,8 +6553,8 @@ function zd(e, t, n) {
 		y: u
 	};
 }
-function Bd(e, t) {
-	let n = Md(e, !0, t === "fixed"), r = n.top + e.clientTop, i = n.left + e.clientLeft, a = Od(e);
+function _f(e, t) {
+	let n = lf(e, !0, t === "fixed"), r = n.top + e.clientTop, i = n.left + e.clientLeft, a = af(e);
 	return {
 		width: e.clientWidth * a.x,
 		height: e.clientHeight * a.y,
@@ -6231,13 +6562,13 @@ function Bd(e, t) {
 		y: r * a.y
 	};
 }
-function Vd(e, t, n) {
+function vf(e, t, n) {
 	let r;
-	if (t === "viewport" || t === "layoutViewport") r = zd(e, n, t);
-	else if (t === "document") r = Ld(id(e));
-	else if (od(t)) r = Bd(t, n);
+	if (t === "viewport" || t === "layoutViewport") r = gf(e, n, t);
+	else if (t === "document") r = mf(Pd(e));
+	else if (Id(t)) r = _f(t, n);
 	else {
-		let n = Ad(e);
+		let n = sf(e);
 		r = {
 			x: t.x - n.x,
 			y: t.y - n.y,
@@ -6245,23 +6576,23 @@ function Vd(e, t, n) {
 			height: t.height
 		};
 	}
-	return zu(r);
+	return hd(r);
 }
-function Hd(e, t) {
+function yf(e, t) {
 	let n = t.get(e);
 	if (n) return n;
-	let r = wd(e, [], !1).filter((e) => od(e) && nd(e) !== "body"), i = null, a = bd(e).position === "fixed", o = a ? Sd(e) : e;
-	for (; od(o) && !yd(o);) {
-		let e = bd(o), t = gd(o), n = i ? i.position : a ? "fixed" : "";
-		!t && (n === "fixed" || n === "absolute" && e.position === "static") ? r = r.filter((e) => e !== o) : i = e, o = Sd(o);
+	let r = ef(e, [], !1).filter((e) => Id(e) && Md(e) !== "body"), i = null, a = Xd(e).position === "fixed", o = a ? Qd(e) : e;
+	for (; Id(o) && !Yd(o);) {
+		let e = Xd(o), t = Kd(o), n = i ? i.position : a ? "fixed" : "";
+		!t && (n === "fixed" || n === "absolute" && e.position === "static") ? r = r.filter((e) => e !== o) : i = e, o = Qd(o);
 	}
 	return t.set(e, r), r;
 }
-function Ud(e) {
-	let { element: t, boundary: n, rootBoundary: r, strategy: i } = e, a = [...n === "clippingAncestors" ? dd(t) ? [] : Hd(t, this._c) : [].concat(n), r], o = Vd(t, a[0], i), s = o.top, c = o.right, l = o.bottom, u = o.left;
+function bf(e) {
+	let { element: t, boundary: n, rootBoundary: r, strategy: i } = e, a = [...n === "clippingAncestors" ? Vd(t) ? [] : yf(t, this._c) : [].concat(n), r], o = vf(t, a[0], i), s = o.top, c = o.right, l = o.bottom, u = o.left;
 	for (let e = 1; e < a.length; e++) {
-		let n = Vd(t, a[e], i);
-		s = mu(n.top, s), c = pu(n.right, c), l = pu(n.bottom, l), u = mu(n.left, u);
+		let n = vf(t, a[e], i);
+		s = Wu(n.top, s), c = Uu(n.right, c), l = Uu(n.bottom, l), u = Wu(n.left, u);
 	}
 	return {
 		width: c - u,
@@ -6270,24 +6601,24 @@ function Ud(e) {
 		y: s
 	};
 }
-function Wd(e) {
-	let { width: t, height: n } = Ed(e);
+function xf(e) {
+	let { width: t, height: n } = nf(e);
 	return {
 		width: t,
 		height: n
 	};
 }
-function Gd(e, t, n) {
-	let r = sd(t), i = id(t), a = n === "fixed", o = Md(e, !0, a, t), s = {
+function Sf(e, t, n) {
+	let r = Ld(t), i = Pd(t), a = n === "fixed", o = lf(e, !0, a, t), s = {
 		scrollLeft: 0,
 		scrollTop: 0
-	}, c = _u(0);
-	if ((r || !a) && ((nd(t) !== "body" || ld(i)) && (s = xd(t)), r)) {
-		let e = Md(t, !0, a, t);
+	}, c = qu(0);
+	if ((r || !a) && ((Md(t) !== "body" || zd(i)) && (s = Zd(t)), r)) {
+		let e = lf(t, !0, a, t);
 		c.x = e.x + t.clientLeft, c.y = e.y + t.clientTop;
 	}
-	!r && i && (c.x = Nd(i));
-	let l = i && !r && !a ? Pd(i, s) : _u(0);
+	!r && i && (c.x = uf(i));
+	let l = i && !r && !a ? df(i, s) : qu(0);
 	return {
 		x: o.left + s.scrollLeft - c.x - l.x,
 		y: o.top + s.scrollTop - c.y - l.y,
@@ -6295,34 +6626,34 @@ function Gd(e, t, n) {
 		height: o.height
 	};
 }
-function Kd(e) {
-	return bd(e).position === "static";
+function Cf(e) {
+	return Xd(e).position === "static";
 }
-function qd(e, t) {
-	if (!sd(e) || bd(e).position === "fixed") return null;
+function wf(e, t) {
+	if (!Ld(e) || Xd(e).position === "fixed") return null;
 	if (t) return t(e);
 	let n = e.offsetParent;
-	return id(e) === n && (n = n.ownerDocument.body), n;
+	return Pd(e) === n && (n = n.ownerDocument.body), n;
 }
-function Jd(e, t) {
-	let n = rd(e);
-	if (dd(e)) return n;
-	if (!sd(e)) {
-		let t = Sd(e);
-		for (; t && !yd(t);) {
-			if (od(t) && !Kd(t)) return t;
-			t = Sd(t);
+function Tf(e, t) {
+	let n = Nd(e);
+	if (Vd(e)) return n;
+	if (!Ld(e)) {
+		let t = Qd(e);
+		for (; t && !Yd(t);) {
+			if (Id(t) && !Cf(t)) return t;
+			t = Qd(t);
 		}
 		return n;
 	}
-	let r = qd(e, t);
-	for (; r && ud(r) && Kd(r);) r = qd(r, t);
-	return r && yd(r) && Kd(r) && !gd(r) ? n : r || _d(e) || n;
+	let r = wf(e, t);
+	for (; r && Bd(r) && Cf(r);) r = wf(r, t);
+	return r && Yd(r) && Cf(r) && !Kd(r) ? n : r || qd(e) || n;
 }
-var Yd = async function(e) {
-	let t = this.getOffsetParent || Jd, n = this.getDimensions, r = await n(e.floating);
+var Ef = async function(e) {
+	let t = this.getOffsetParent || Tf, n = this.getDimensions, r = await n(e.floating);
 	return {
-		reference: Gd(e.reference, await t(e.floating), e.strategy),
+		reference: Sf(e.reference, await t(e.floating), e.strategy),
 		floating: {
 			x: 0,
 			y: 0,
@@ -6331,26 +6662,26 @@ var Yd = async function(e) {
 		}
 	};
 };
-function Xd(e) {
-	return bd(e).direction === "rtl";
+function Df(e) {
+	return Xd(e).direction === "rtl";
 }
-var Zd = {
-	convertOffsetParentRelativeRectToViewportRelativeRect: Fd,
-	getDocumentElement: id,
-	getClippingRect: Ud,
-	getOffsetParent: Jd,
-	getElementRects: Yd,
-	getClientRects: Id,
-	getDimensions: Wd,
-	getScale: Od,
-	isElement: od,
-	isRTL: Xd
+var Of = {
+	convertOffsetParentRelativeRectToViewportRelativeRect: ff,
+	getDocumentElement: Pd,
+	getClippingRect: bf,
+	getOffsetParent: Tf,
+	getElementRects: Ef,
+	getClientRects: pf,
+	getDimensions: xf,
+	getScale: af,
+	isElement: Id,
+	isRTL: Df
 };
-function Qd(e, t) {
+function kf(e, t) {
 	return e.x === t.x && e.y === t.y && e.width === t.width && e.height === t.height;
 }
-function $d(e, t, n) {
-	let r = null, i, a = id(e);
+function Af(e, t, n) {
+	let r = null, i, a = Pd(e);
 	function o() {
 		var e;
 		clearTimeout(i), (e = r) == null || e.disconnect(), r = null;
@@ -6359,13 +6690,13 @@ function $d(e, t, n) {
 		n === void 0 && (n = !1), c === void 0 && (c = 1), o();
 		let l = e.getBoundingClientRect(), { left: u, top: d, width: f, height: p } = l;
 		if (n || t(), !f || !p) return;
-		let m = gu(d), h = gu(a.clientWidth - (u + f)), g = gu(a.clientHeight - (d + p)), _ = gu(u), v = {
+		let m = Ku(d), h = Ku(a.clientWidth - (u + f)), g = Ku(a.clientHeight - (d + p)), _ = Ku(u), v = {
 			rootMargin: -m + "px " + -h + "px " + -g + "px " + -_ + "px",
-			threshold: mu(0, pu(1, c)) || 1
+			threshold: Wu(0, Uu(1, c)) || 1
 		}, y = !0;
 		function b(t) {
 			let n = t[0].intersectionRatio;
-			if (!Qd(l, e.getBoundingClientRect())) return s();
+			if (!kf(l, e.getBoundingClientRect())) return s();
 			if (n !== c) {
 				if (!y) return s();
 				n ? s(!1, n) : i = setTimeout(() => {
@@ -6384,18 +6715,18 @@ function $d(e, t, n) {
 		}
 		r.observe(e);
 	}
-	let c = rd(e), l = () => s(n);
+	let c = Nd(e), l = () => s(n);
 	return c.addEventListener("resize", l), s(!0), () => {
 		c.removeEventListener("resize", l), o();
 	};
 }
-function ef(e, t, n, r) {
+function jf(e, t, n, r) {
 	r === void 0 && (r = {});
-	let { ancestorScroll: i = !0, ancestorResize: a = !0, elementResize: o = typeof ResizeObserver == "function", layoutShift: s = typeof IntersectionObserver == "function", animationFrame: c = !1 } = r, l = Dd(e), u = i || a ? [...l ? wd(l) : [], ...t ? wd(t) : []] : [];
+	let { ancestorScroll: i = !0, ancestorResize: a = !0, elementResize: o = typeof ResizeObserver == "function", layoutShift: s = typeof IntersectionObserver == "function", animationFrame: c = !1 } = r, l = rf(e), u = i || a ? [...l ? ef(l) : [], ...t ? ef(t) : []] : [];
 	u.forEach((e) => {
 		i && e.addEventListener("scroll", n), a && e.addEventListener("resize", n);
 	});
-	let d = l && s ? $d(l, n, a) : null, f = -1, p = null;
+	let d = l && s ? Af(l, n, a) : null, f = -1, p = null;
 	o && (p = new ResizeObserver((e) => {
 		let [r] = e;
 		r && r.target === l && p && t && (p.unobserve(t), cancelAnimationFrame(f), f = requestAnimationFrame(() => {
@@ -6403,11 +6734,11 @@ function ef(e, t, n, r) {
 			(e = p) == null || e.observe(t);
 		})), n();
 	}), l && !c && p.observe(l), t && p.observe(t));
-	let m, h = c ? Md(e) : null;
+	let m, h = c ? lf(e) : null;
 	c && g();
 	function g() {
-		let t = Md(e);
-		h && !Qd(h, t) && n(), h = t, m = requestAnimationFrame(g);
+		let t = lf(e);
+		h && !kf(h, t) && n(), h = t, m = requestAnimationFrame(g);
 	}
 	return n(), () => {
 		var e;
@@ -6416,30 +6747,30 @@ function ef(e, t, n, r) {
 		}), d?.(), (e = p) == null || e.disconnect(), p = null, c && cancelAnimationFrame(m);
 	};
 }
-var tf = Zu, nf = Qu, rf = Gu, af = ed, of = Ju, sf = Wu, cf = $u, lf = (e, t, n) => {
+var Mf = Dd, Nf = Od, Pf = xd, Ff = Ad, If = wd, Lf = bd, Rf = kd, zf = (e, t, n) => {
 	let r = /* @__PURE__ */ new Map(), i = n ?? {}, a = {
-		...Zd,
+		...Of,
 		...i.platform,
 		_c: r
 	};
-	return Uu(e, t, {
+	return yd(e, t, {
 		...i,
 		platform: a
 	});
 };
 //#endregion
 //#region node_modules/bits-ui/dist/internal/floating-svelte/floating-utils.svelte.js
-function uf(e) {
+function Bf(e) {
 	return typeof e == "function" ? e() : e;
 }
-function df(e) {
+function Vf(e) {
 	return typeof window > "u" ? 1 : (e.ownerDocument.defaultView || window).devicePixelRatio || 1;
 }
-function ff(e, t) {
-	let n = df(e);
+function Hf(e, t) {
+	let n = Vf(e);
 	return Math.round(t * n) / n;
 }
-function pf(e) {
+function Uf(e) {
 	return {
 		[`--bits-${e}-content-transform-origin`]: "var(--bits-floating-transform-origin)",
 		[`--bits-${e}-content-available-width`]: "var(--bits-floating-available-width)",
@@ -6450,15 +6781,15 @@ function pf(e) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/floating-svelte/use-floating.svelte.js
-function mf(e) {
-	let t = e.whileElementsMounted, n = /* @__PURE__ */ F(() => uf(e.open) ?? !0), r = /* @__PURE__ */ F(() => uf(e.middleware)), i = /* @__PURE__ */ F(() => uf(e.transform) ?? !0), a = /* @__PURE__ */ F(() => uf(e.placement) ?? "bottom"), o = /* @__PURE__ */ F(() => uf(e.strategy) ?? "absolute"), s = /* @__PURE__ */ F(() => uf(e.sideOffset) ?? 0), c = /* @__PURE__ */ F(() => uf(e.alignOffset) ?? 0), l = e.reference, u = /* @__PURE__ */ L(0), d = /* @__PURE__ */ L(0), f = Ss(null), p = /* @__PURE__ */ L(cn(G(o))), m = /* @__PURE__ */ L(cn(G(a))), h = /* @__PURE__ */ L(cn({})), g = /* @__PURE__ */ L(!1), _ = !1, v = 0, y = /* @__PURE__ */ F(() => {
-		let e = f.current ? ff(f.current, G(u)) : G(u), t = f.current ? ff(f.current, G(d)) : G(d);
+function Wf(e) {
+	let t = e.whileElementsMounted, n = /* @__PURE__ */ F(() => Bf(e.open) ?? !0), r = /* @__PURE__ */ F(() => Bf(e.middleware)), i = /* @__PURE__ */ F(() => Bf(e.transform) ?? !0), a = /* @__PURE__ */ F(() => Bf(e.placement) ?? "bottom"), o = /* @__PURE__ */ F(() => Bf(e.strategy) ?? "absolute"), s = /* @__PURE__ */ F(() => Bf(e.sideOffset) ?? 0), c = /* @__PURE__ */ F(() => Bf(e.alignOffset) ?? 0), l = e.reference, u = /* @__PURE__ */ L(0), d = /* @__PURE__ */ L(0), f = Qs(null), p = /* @__PURE__ */ L(cn(G(o))), m = /* @__PURE__ */ L(cn(G(a))), h = /* @__PURE__ */ L(cn({})), g = /* @__PURE__ */ L(!1), _ = !1, v = 0, y = /* @__PURE__ */ F(() => {
+		let e = f.current ? Hf(f.current, G(u)) : G(u), t = f.current ? Hf(f.current, G(d)) : G(d);
 		return G(i) ? {
 			position: G(p),
 			left: "0",
 			top: "0",
 			transform: `translate(${e}px, ${t}px)`,
-			...f.current && df(f.current) >= 1.5 && { willChange: "transform" }
+			...f.current && Vf(f.current) >= 1.5 && { willChange: "transform" }
 		} : {
 			position: G(p),
 			left: `${e}px`,
@@ -6468,13 +6799,13 @@ function mf(e) {
 	function x() {
 		if (l.current === null || f.current === null) return;
 		let e = l.current, t = f.current, i = ++v;
-		lf(e, t, {
+		zf(e, t, {
 			middleware: G(r),
 			placement: G(a),
 			strategy: G(o)
 		}).then((r) => {
 			if (i === v && l.current === e && f.current === t) {
-				if (hf(e)) {
+				if (Gf(e)) {
 					R(h, {
 						...G(h),
 						hide: {
@@ -6556,47 +6887,47 @@ function mf(e) {
 		}
 	};
 }
-function hf(e) {
+function Gf(e) {
 	return e instanceof Element ? !e.isConnected || e instanceof HTMLElement && e.hidden ? !0 : e.getClientRects().length === 0 : !1;
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/floating-layer/use-floating-layer.svelte.js
-var gf = {
+var Kf = {
 	top: "bottom",
 	right: "left",
 	bottom: "top",
 	left: "right"
-}, _f = new cc("Floating.Root"), vf = new cc("Floating.Content"), yf = new cc("Floating.Root"), bf = class e {
+}, qf = new Rc("Floating.Root"), Jf = new Rc("Floating.Content"), Yf = new Rc("Floating.Root"), Xf = class e {
 	static create(t = !1) {
-		return t ? yf.set(new e()) : _f.set(new e());
+		return t ? Yf.set(new e()) : qf.set(new e());
 	}
-	anchorNode = Ss(null);
-	customAnchorNode = Ss(null);
-	triggerNode = Ss(null);
+	anchorNode = Qs(null);
+	customAnchorNode = Qs(null);
+	triggerNode = Qs(null);
 	constructor() {
 		On(() => {
 			this.customAnchorNode.current ? typeof this.customAnchorNode.current == "string" ? this.anchorNode.current = document.querySelector(this.customAnchorNode.current) : this.anchorNode.current = this.customAnchorNode.current : this.anchorNode.current = this.triggerNode.current;
 		});
 	}
-}, xf = class e {
+}, Zf = class e {
 	static create(t, n = !1) {
-		return n ? vf.set(new e(t, yf.get())) : vf.set(new e(t, _f.get()));
+		return n ? Jf.set(new e(t, Yf.get())) : Jf.set(new e(t, qf.get()));
 	}
 	opts;
 	root;
-	contentRef = Ss(null);
-	wrapperRef = Ss(null);
-	arrowRef = Ss(null);
-	contentAttachment = Mc(this.contentRef);
-	wrapperAttachment = Mc(this.wrapperRef);
-	arrowAttachment = Mc(this.arrowRef);
-	arrowId = Ss($l());
+	contentRef = Qs(null);
+	wrapperRef = Qs(null);
+	arrowRef = Qs(null);
+	contentAttachment = cl(this.contentRef);
+	wrapperAttachment = cl(this.wrapperRef);
+	arrowAttachment = cl(this.arrowRef);
+	arrowId = Qs(ku());
 	#e = /* @__PURE__ */ F(() => {
-		if (typeof this.opts.style == "string") return Ys(this.opts.style);
+		if (typeof this.opts.style == "string") return Tc(this.opts.style);
 		if (!this.opts.style) return {};
 	});
 	#t = void 0;
-	#n = new mc(() => this.arrowRef.current ?? void 0);
+	#n = new Wc(() => this.arrowRef.current ?? void 0);
 	#r = /* @__PURE__ */ F(() => this.#n?.width ?? 0);
 	#i = /* @__PURE__ */ F(() => this.#n?.height ?? 0);
 	#a = /* @__PURE__ */ F(() => this.opts.side?.current + (this.opts.align.current === "center" ? "" : `-${this.opts.align.current}`));
@@ -6610,7 +6941,7 @@ var gf = {
 	}
 	#c = /* @__PURE__ */ F(() => ({
 		padding: this.opts.collisionPadding.current,
-		boundary: G(this.#o).filter(Wc),
+		boundary: G(this.#o).filter(bl),
 		altBoundary: this.hasExplicitBoundaries
 	}));
 	get detectOverflowOptions() {
@@ -6624,33 +6955,33 @@ var gf = {
 	#d = /* @__PURE__ */ L(void 0);
 	#f = /* @__PURE__ */ L(void 0);
 	#p = /* @__PURE__ */ F(() => [
-		tf({
+		Mf({
 			mainAxis: this.opts.sideOffset.current + G(this.#i),
 			alignmentAxis: this.opts.alignOffset.current
 		}),
-		this.opts.avoidCollisions.current && nf({
+		this.opts.avoidCollisions.current && Nf({
 			mainAxis: !0,
 			crossAxis: !1,
-			limiter: this.opts.sticky.current === "partial" ? cf() : void 0,
+			limiter: this.opts.sticky.current === "partial" ? Rf() : void 0,
 			...this.detectOverflowOptions
 		}),
-		this.opts.avoidCollisions.current && rf({ ...this.detectOverflowOptions }),
-		af({
+		this.opts.avoidCollisions.current && Pf({ ...this.detectOverflowOptions }),
+		Ff({
 			...this.detectOverflowOptions,
 			apply: ({ rects: e, availableWidth: t, availableHeight: n }) => {
 				let { width: r, height: i } = e.reference;
 				R(this.#l, t, !0), R(this.#u, n, !0), R(this.#d, r, !0), R(this.#f, i, !0);
 			}
 		}),
-		this.arrowRef.current && sf({
+		this.arrowRef.current && Lf({
 			element: this.arrowRef.current,
 			padding: this.opts.arrowPadding.current
 		}),
-		Sf({
+		Qf({
 			arrowWidth: G(this.#r),
 			arrowHeight: G(this.#i)
 		}),
-		this.opts.hideWhenDetached.current && of({
+		this.opts.hideWhenDetached.current && If({
 			strategy: "referenceHidden",
 			...this.detectOverflowOptions
 		})
@@ -6662,14 +6993,14 @@ var gf = {
 		R(this.#p, e);
 	}
 	floating;
-	#m = /* @__PURE__ */ F(() => wf(this.floating.placement));
+	#m = /* @__PURE__ */ F(() => ep(this.floating.placement));
 	get placedSide() {
 		return G(this.#m);
 	}
 	set placedSide(e) {
 		R(this.#m, e);
 	}
-	#h = /* @__PURE__ */ F(() => Tf(this.floating.placement));
+	#h = /* @__PURE__ */ F(() => tp(this.floating.placement));
 	get placedAlign() {
 		return G(this.#h);
 	}
@@ -6704,7 +7035,7 @@ var gf = {
 	set contentZIndex(e) {
 		R(this.#y, e, !0);
 	}
-	#b = /* @__PURE__ */ F(() => gf[this.placedSide]);
+	#b = /* @__PURE__ */ F(() => Kf[this.placedSide]);
 	get arrowBaseSide() {
 		return G(this.#b);
 	}
@@ -6742,7 +7073,7 @@ var gf = {
 	#S = /* @__PURE__ */ F(() => ({
 		"data-side": this.placedSide,
 		"data-align": this.placedAlign,
-		style: ec({ ...G(this.#e) }),
+		style: Ac({ ...G(this.#e) }),
 		...this.contentAttachment
 	}));
 	get props() {
@@ -6777,22 +7108,22 @@ var gf = {
 		R(this.#C, e);
 	}
 	constructor(e, t) {
-		this.opts = e, this.root = t, this.#t = e.updatePositionStrategy, e.customAnchor && (this.root.customAnchorNode.current = e.customAnchor.current), dc(() => e.customAnchor.current, (e) => {
+		this.opts = e, this.root = t, this.#t = e.updatePositionStrategy, e.customAnchor && (this.root.customAnchorNode.current = e.customAnchor.current), Vc(() => e.customAnchor.current, (e) => {
 			this.root.customAnchorNode.current = e;
-		}), this.floating = mf({
+		}), this.floating = Wf({
 			strategy: () => this.opts.strategy.current,
 			placement: () => G(this.#a),
 			middleware: () => this.middleware,
 			reference: this.root.anchorNode,
-			whileElementsMounted: (...e) => ef(...e, { animationFrame: this.#t?.current === "always" }),
+			whileElementsMounted: (...e) => jf(...e, { animationFrame: this.#t?.current === "always" }),
 			open: () => this.opts.enabled.current,
 			sideOffset: () => this.opts.sideOffset.current,
 			alignOffset: () => this.opts.alignOffset.current
 		}), On(() => {
 			this.floating.isPositioned && this.opts.onPlaced?.current();
-		}), dc(() => this.contentRef.current, (e) => {
+		}), Vc(() => this.contentRef.current, (e) => {
 			if (!e || !this.opts.enabled.current) return;
-			let t = kc(e), n = t.requestAnimationFrame(() => {
+			let t = al(e), n = t.requestAnimationFrame(() => {
 				if (this.contentRef.current !== e || !this.opts.enabled.current) return;
 				let n = t.getComputedStyle(e).zIndex;
 				n !== this.contentZIndex && (this.contentZIndex = n);
@@ -6805,12 +7136,12 @@ var gf = {
 		});
 	}
 };
-function Sf(e) {
+function Qf(e) {
 	return {
 		name: "transformOrigin",
 		options: e,
 		fn(t) {
-			let { placement: n, rects: r, middlewareData: i } = t, a = i.arrow?.centerOffset !== 0, o = a ? 0 : e.arrowWidth, s = a ? 0 : e.arrowHeight, [c, l] = Cf(n), u = {
+			let { placement: n, rects: r, middlewareData: i } = t, a = i.arrow?.centerOffset !== 0, o = a ? 0 : e.arrowWidth, s = a ? 0 : e.arrowHeight, [c, l] = $f(n), u = {
 				start: "0%",
 				center: "50%",
 				end: "100%"
@@ -6822,30 +7153,30 @@ function Sf(e) {
 		}
 	};
 }
-function Cf(e) {
+function $f(e) {
 	let [t, n = "center"] = e.split("-");
 	return [t, n];
 }
-function wf(e) {
-	return Cf(e)[0];
+function ep(e) {
+	return $f(e)[0];
 }
-function Tf(e) {
-	return Cf(e)[1];
+function tp(e) {
+	return $f(e)[1];
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/floating-layer/components/floating-layer.svelte
-function Ef(e, t) {
+function np(e, t) {
 	N(t, !0);
 	let n = Q(t, "tooltip", 3, !1);
-	bf.create(n());
+	Xf.create(n());
 	var r = Qr();
 	gi(B(r), () => t.children ?? f), q(e, r), P();
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/floating-layer/components/floating-layer-content.svelte
-function Df(e, t) {
+function rp(e, t) {
 	N(t, !0);
-	let n = Q(t, "side", 3, "bottom"), r = Q(t, "sideOffset", 3, 0), i = Q(t, "align", 3, "center"), a = Q(t, "alignOffset", 3, 0), o = Q(t, "arrowPadding", 3, 0), s = Q(t, "avoidCollisions", 3, !0), c = Q(t, "collisionBoundary", 19, () => []), l = Q(t, "collisionPadding", 3, 0), u = Q(t, "hideWhenDetached", 3, !1), d = Q(t, "onPlaced", 3, () => {}), p = Q(t, "sticky", 3, "partial"), m = Q(t, "updatePositionStrategy", 3, "optimized"), h = Q(t, "strategy", 3, "fixed"), g = Q(t, "dir", 3, "ltr"), _ = Q(t, "style", 19, () => ({})), v = Q(t, "wrapperId", 19, $l), y = Q(t, "customAnchor", 3, null), b = Q(t, "tooltip", 3, !1), x = xf.create({
+	let n = Q(t, "side", 3, "bottom"), r = Q(t, "sideOffset", 3, 0), i = Q(t, "align", 3, "center"), a = Q(t, "alignOffset", 3, 0), o = Q(t, "arrowPadding", 3, 0), s = Q(t, "avoidCollisions", 3, !0), c = Q(t, "collisionBoundary", 19, () => []), l = Q(t, "collisionPadding", 3, 0), u = Q(t, "hideWhenDetached", 3, !1), d = Q(t, "onPlaced", 3, () => {}), p = Q(t, "sticky", 3, "partial"), m = Q(t, "updatePositionStrategy", 3, "optimized"), h = Q(t, "strategy", 3, "fixed"), g = Q(t, "dir", 3, "ltr"), _ = Q(t, "style", 19, () => ({})), v = Q(t, "wrapperId", 19, ku), y = Q(t, "customAnchor", 3, null), b = Q(t, "tooltip", 3, !1), x = Zf.create({
 		side: $(() => n()),
 		sideOffset: $(() => r()),
 		align: $(() => i()),
@@ -6865,7 +7196,7 @@ function Df(e, t) {
 		enabled: $(() => t.enabled),
 		wrapperId: $(() => v()),
 		customAnchor: $(() => y())
-	}, b()), S = /* @__PURE__ */ F(() => rc(x.wrapperProps, { style: { pointerEvents: "auto" } }));
+	}, b()), S = /* @__PURE__ */ F(() => Nc(x.wrapperProps, { style: { pointerEvents: "auto" } }));
 	var C = Qr();
 	gi(B(C), () => t.content ?? f, () => ({
 		props: x.props,
@@ -6874,8 +7205,8 @@ function Df(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/floating-layer/components/floating-layer-content-static.svelte
-function Of(e, t) {
-	N(t, !0), na(() => {
+function ip(e, t) {
+	N(t, !0), ra(() => {
 		t.onPlaced?.();
 	});
 	var n = Qr();
@@ -6886,7 +7217,7 @@ function Of(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/popper-layer/popper-content.svelte
-var kf = /* @__PURE__ */ new Set([
+var ap = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy",
@@ -6894,10 +7225,10 @@ var kf = /* @__PURE__ */ new Set([
 	"isStatic",
 	"onPlaced"
 ]);
-function Af(e, t) {
-	let n = Q(t, "isStatic", 3, !1), r = /* @__PURE__ */ X(t, kf);
+function op(e, t) {
+	let n = Q(t, "isStatic", 3, !1), r = /* @__PURE__ */ X(t, ap);
 	var i = Qr(), a = B(i), o = (e) => {
-		Of(e, {
+		ip(e, {
 			get content() {
 				return t.content;
 			},
@@ -6906,7 +7237,7 @@ function Af(e, t) {
 			}
 		});
 	}, s = (e) => {
-		Df(e, Z({
+		rp(e, Z({
 			get content() {
 				return t.content;
 			},
@@ -6921,11 +7252,11 @@ function Af(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/popper-layer/popper-layer-inner.svelte
-var jf = /* @__PURE__ */ new Set(/* @__PURE__ */ "$$slots.$$events.$$legacy.popper.onEscapeKeydown.escapeKeydownBehavior.preventOverflowTextSelection.id.onPointerDown.onPointerUp.side.sideOffset.align.alignOffset.arrowPadding.avoidCollisions.collisionBoundary.collisionPadding.sticky.hideWhenDetached.updatePositionStrategy.strategy.dir.preventScroll.wrapperId.style.onPlaced.onInteractOutside.onCloseAutoFocus.onOpenAutoFocus.onFocusOutside.interactOutsideBehavior.loop.trapFocus.isValidEvent.customAnchor.isStatic.enabled.ref.tooltip.contentPointerEvents".split(".")), Mf = /* @__PURE__ */ K("<!> <!>", 1);
-function Nf(e, t) {
+var sp = /* @__PURE__ */ new Set(/* @__PURE__ */ "$$slots.$$events.$$legacy.popper.onEscapeKeydown.escapeKeydownBehavior.preventOverflowTextSelection.id.onPointerDown.onPointerUp.side.sideOffset.align.alignOffset.arrowPadding.avoidCollisions.collisionBoundary.collisionPadding.sticky.hideWhenDetached.updatePositionStrategy.strategy.dir.preventScroll.wrapperId.style.onPlaced.onInteractOutside.onCloseAutoFocus.onOpenAutoFocus.onFocusOutside.interactOutsideBehavior.loop.trapFocus.isValidEvent.customAnchor.isStatic.enabled.ref.tooltip.contentPointerEvents".split(".")), cp = /* @__PURE__ */ K("<!> <!>", 1);
+function lp(e, t) {
 	N(t, !0);
-	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "trapFocus", 3, !0), i = Q(t, "isValidEvent", 3, () => !1), a = Q(t, "customAnchor", 3, null), o = Q(t, "isStatic", 3, !1), s = Q(t, "tooltip", 3, !1), c = Q(t, "contentPointerEvents", 3, "auto"), l = /* @__PURE__ */ X(t, jf), u = /* @__PURE__ */ F(() => t.preventScroll ?? !0), d = /* @__PURE__ */ F(() => t.strategy ?? (G(u) ? "fixed" : "absolute"));
-	Af(e, {
+	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "trapFocus", 3, !0), i = Q(t, "isValidEvent", 3, () => !1), a = Q(t, "customAnchor", 3, null), o = Q(t, "isStatic", 3, !1), s = Q(t, "tooltip", 3, !1), c = Q(t, "contentPointerEvents", 3, "auto"), l = /* @__PURE__ */ X(t, sp), u = /* @__PURE__ */ F(() => t.preventScroll ?? !0), d = /* @__PURE__ */ F(() => t.strategy ?? (G(u) ? "fixed" : "absolute"));
+	op(e, {
 		get isStatic() {
 			return o();
 		},
@@ -6991,18 +7322,18 @@ function Nf(e, t) {
 		},
 		content: (e, a) => {
 			let o = () => (a?.()).props, s = () => (a?.()).wrapperProps;
-			var d = Mf(), p = B(d), m = (e) => {
-				du(e, { get preventScroll() {
+			var d = cp(), p = B(d), m = (e) => {
+				Vu(e, { get preventScroll() {
 					return G(u);
 				} });
 			}, h = (e) => {
-				du(e, { get preventScroll() {
+				Vu(e, { get preventScroll() {
 					return G(u);
 				} });
 			};
 			Y(p, (e) => {
 				t.forceMount && t.enabled ? e(m) : t.forceMount || e(h, 1);
-			}), Gl(V(p, 2), {
+			}), xu(V(p, 2), {
 				get onOpenAutoFocus() {
 					return t.onOpenAutoFocus;
 				},
@@ -7026,7 +7357,7 @@ function Nf(e, t) {
 				},
 				focusScope: (e, r) => {
 					let a = () => (r?.()).props;
-					Hl(e, {
+					vu(e, {
 						get onEscapeKeydown() {
 							return t.onEscapeKeydown;
 						},
@@ -7040,7 +7371,7 @@ function Nf(e, t) {
 							return t.ref;
 						},
 						children: (e, r) => {
-							zl(e, {
+							hu(e, {
 								get id() {
 									return t.id;
 								},
@@ -7064,7 +7395,7 @@ function Nf(e, t) {
 								},
 								children: (e, n) => {
 									let r = () => (n?.()).props;
-									Ql(e, {
+									Ou(e, {
 										get id() {
 											return t.id;
 										},
@@ -7087,7 +7418,7 @@ function Nf(e, t) {
 											var i = Qr(), u = B(i);
 											{
 												let e = /* @__PURE__ */ F(() => ({
-													props: rc(l, o(), r(), a(), { style: { pointerEvents: c() } }),
+													props: Nc(l, o(), r(), a(), { style: { pointerEvents: c() } }),
 													wrapperProps: s()
 												}));
 												gi(u, () => t.popper ?? f, () => G(e));
@@ -7111,11 +7442,11 @@ function Nf(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/popper-layer/popper-layer.svelte
-var Pf = /* @__PURE__ */ new Set(/* @__PURE__ */ "$$slots.$$events.$$legacy.popper.open.onEscapeKeydown.escapeKeydownBehavior.preventOverflowTextSelection.id.onPointerDown.onPointerUp.side.sideOffset.align.alignOffset.arrowPadding.avoidCollisions.collisionBoundary.collisionPadding.sticky.hideWhenDetached.updatePositionStrategy.strategy.dir.preventScroll.wrapperId.style.onPlaced.onInteractOutside.onCloseAutoFocus.onOpenAutoFocus.onFocusOutside.interactOutsideBehavior.loop.trapFocus.isValidEvent.customAnchor.isStatic.ref.shouldRender".split("."));
-function Ff(e, t) {
-	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "trapFocus", 3, !0), i = Q(t, "isValidEvent", 3, () => !1), a = Q(t, "customAnchor", 3, null), o = Q(t, "isStatic", 3, !1), s = /* @__PURE__ */ X(t, Pf);
+var up = /* @__PURE__ */ new Set(/* @__PURE__ */ "$$slots.$$events.$$legacy.popper.open.onEscapeKeydown.escapeKeydownBehavior.preventOverflowTextSelection.id.onPointerDown.onPointerUp.side.sideOffset.align.alignOffset.arrowPadding.avoidCollisions.collisionBoundary.collisionPadding.sticky.hideWhenDetached.updatePositionStrategy.strategy.dir.preventScroll.wrapperId.style.onPlaced.onInteractOutside.onCloseAutoFocus.onOpenAutoFocus.onFocusOutside.interactOutsideBehavior.loop.trapFocus.isValidEvent.customAnchor.isStatic.ref.shouldRender".split("."));
+function dp(e, t) {
+	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "trapFocus", 3, !0), i = Q(t, "isValidEvent", 3, () => !1), a = Q(t, "customAnchor", 3, null), o = Q(t, "isStatic", 3, !1), s = /* @__PURE__ */ X(t, up);
 	var c = Qr(), l = B(c), u = (e) => {
-		Nf(e, Z({
+		lp(e, Z({
 			get popper() {
 				return t.popper;
 			},
@@ -7233,10 +7564,10 @@ function Ff(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/utilities/popper-layer/popper-layer-force-mount.svelte
-var If = /* @__PURE__ */ new Set(/* @__PURE__ */ "$$slots.$$events.$$legacy.popper.onEscapeKeydown.escapeKeydownBehavior.preventOverflowTextSelection.id.onPointerDown.onPointerUp.side.sideOffset.align.alignOffset.arrowPadding.avoidCollisions.collisionBoundary.collisionPadding.sticky.hideWhenDetached.updatePositionStrategy.strategy.dir.preventScroll.wrapperId.style.onPlaced.onInteractOutside.onCloseAutoFocus.onOpenAutoFocus.onFocusOutside.interactOutsideBehavior.loop.trapFocus.isValidEvent.customAnchor.isStatic.enabled".split("."));
-function Lf(e, t) {
-	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "trapFocus", 3, !0), i = Q(t, "isValidEvent", 3, () => !1), a = Q(t, "customAnchor", 3, null), o = Q(t, "isStatic", 3, !1), s = /* @__PURE__ */ X(t, If);
-	Nf(e, Z({
+var fp = /* @__PURE__ */ new Set(/* @__PURE__ */ "$$slots.$$events.$$legacy.popper.onEscapeKeydown.escapeKeydownBehavior.preventOverflowTextSelection.id.onPointerDown.onPointerUp.side.sideOffset.align.alignOffset.arrowPadding.avoidCollisions.collisionBoundary.collisionPadding.sticky.hideWhenDetached.updatePositionStrategy.strategy.dir.preventScroll.wrapperId.style.onPlaced.onInteractOutside.onCloseAutoFocus.onOpenAutoFocus.onFocusOutside.interactOutsideBehavior.loop.trapFocus.isValidEvent.customAnchor.isStatic.enabled".split("."));
+function pp(e, t) {
+	let n = Q(t, "interactOutsideBehavior", 3, "close"), r = Q(t, "trapFocus", 3, !0), i = Q(t, "isValidEvent", 3, () => !1), a = Q(t, "customAnchor", 3, null), o = Q(t, "isStatic", 3, !1), s = /* @__PURE__ */ X(t, fp);
+	lp(e, Z({
 		get popper() {
 			return t.popper;
 		},
@@ -7346,7 +7677,7 @@ function Lf(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/internal/safe-polygon.svelte.js
-function Rf(e, t) {
+function mp(e, t) {
 	let [n, r] = e, i = !1, a = t.length;
 	for (let e = 0, o = a - 1; e < a; o = e++) {
 		let [a, s] = t[e] ?? [0, 0], [c, l] = t[o] ?? [0, 0];
@@ -7354,14 +7685,14 @@ function Rf(e, t) {
 	}
 	return i;
 }
-function zf(e, t) {
+function hp(e, t) {
 	return e[0] >= t.left && e[0] <= t.right && e[1] >= t.top && e[1] <= t.bottom;
 }
-function Bf(e, t) {
+function gp(e, t) {
 	let n = e.left + e.width / 2, r = e.top + e.height / 2, i = t.left + t.width / 2, a = t.top + t.height / 2, o = i - n, s = a - r;
 	return Math.abs(o) > Math.abs(s) ? o > 0 ? "right" : "left" : s > 0 ? "bottom" : "top";
 }
-var Vf = class {
+var _p = class {
 	#e;
 	#t;
 	#n;
@@ -7390,7 +7721,7 @@ var Vf = class {
 	constructor(e) {
 		this.#e = e, this.#t = e.buffer ?? 1;
 		let t = e.transitIntentTimeout;
-		this.#n = typeof t == "number" && t > 0 ? t : null, dc([
+		this.#n = typeof t == "number" && t > 0 ? t : null, Vc([
 			e.triggerNode,
 			e.contentNode,
 			e.enabled
@@ -7400,14 +7731,14 @@ var Vf = class {
 				return;
 			}
 			return this.#o && this.#o !== e && this.#m(), this.#o = e, [
-				zr(Oc(e), "pointermove", (n) => {
+				zr(il(e), "pointermove", (n) => {
 					this.#p([n.clientX, n.clientY], e, t);
 				}),
 				zr(e, "pointerleave", (e) => {
 					let n = e.relatedTarget;
-					if (Vc(n) && t.contains(n)) return;
+					if (_l(n) && t.contains(n)) return;
 					let r = this.#e.ignoredTargets?.() ?? [];
-					Vc(n) && r.some((e) => e === n || e.contains(n)) || (this.#a = Vc(n) && r.length > 0 ? r.filter((e) => n.contains(e)) : [], this.#r = [e.clientX, e.clientY], this.#i = "content", this.#u());
+					_l(n) && r.some((e) => e === n || e.contains(n)) || (this.#a = _l(n) && r.length > 0 ? r.filter((e) => n.contains(e)) : [], this.#r = [e.clientX, e.clientY], this.#i = "content", this.#u());
 				}),
 				zr(e, "pointerenter", () => {
 					this.#m();
@@ -7417,7 +7748,7 @@ var Vf = class {
 				}),
 				zr(t, "pointerleave", (t) => {
 					let n = t.relatedTarget;
-					Vc(n) && e.contains(n) || (this.#r = [t.clientX, t.clientY], this.#i = "trigger", this.#u());
+					_l(n) && e.contains(n) || (this.#r = [t.clientX, t.clientY], this.#i = "trigger", this.#u());
 				})
 			].reduce((e, t) => () => {
 				e(), t();
@@ -7428,24 +7759,24 @@ var Vf = class {
 		if (!this.#r || !this.#i) return;
 		this.#l(), this.#f();
 		let r = t.getBoundingClientRect(), i = n.getBoundingClientRect();
-		if (this.#i === "content" && zf(e, i)) {
+		if (this.#i === "content" && hp(e, i)) {
 			this.#m();
 			return;
 		}
-		if (this.#i === "trigger" && zf(e, r)) {
+		if (this.#i === "trigger" && hp(e, r)) {
 			this.#m();
 			return;
 		}
 		if (this.#i === "content" && this.#a.length > 0) for (let t of this.#a) {
 			let n = t.getBoundingClientRect();
-			if (zf(e, n)) return;
-			let i = Bf(r, n), a = this.#h(r, n, i);
-			if (a && Rf(e, a)) return;
+			if (hp(e, n)) return;
+			let i = gp(r, n), a = this.#h(r, n, i);
+			if (a && mp(e, a)) return;
 		}
-		let a = Bf(r, i), o = this.#h(r, i, a);
-		if (o && Rf(e, o)) return;
+		let a = gp(r, i), o = this.#h(r, i, a);
+		if (o && mp(e, o)) return;
 		let s = this.#i === "content" ? i : r;
-		Rf(e, this.#g(this.#r, s, a, this.#i)) || (this.#m(), this.#e.onPointerExit());
+		mp(e, this.#g(this.#r, s, a, this.#i)) || (this.#m(), this.#e.onPointerExit());
 	}
 	#m() {
 		this.#r = null, this.#i = null, this.#a = [], this.#l(), this.#d();
@@ -7524,12 +7855,12 @@ var Vf = class {
 			case "right": return "left";
 		}
 	}
-}, Hf = class {
+}, vp = class {
 	#e;
 	#t;
 	#n = null;
 	constructor(e, t) {
-		this.#t = e, this.#e = t, this.stop = this.stop.bind(this), this.start = this.start.bind(this), hc(this.stop);
+		this.#t = e, this.#e = t, this.stop = this.stop.bind(this), this.start = this.start.bind(this), Gc(this.stop);
 	}
 	#r() {
 		this.#n !== null && (window.clearTimeout(this.#n), this.#n = null);
@@ -7542,10 +7873,10 @@ var Vf = class {
 			this.#n = null, this.#t(...e);
 		}, this.#e);
 	}
-}, Uf = Ic({
+}, yp = fl({
 	component: "tooltip",
 	parts: ["content", "trigger"]
-}), Wf = new cc("Tooltip.Provider"), Gf = new cc("Tooltip.Root"), Kf = class {
+}), bp = new Rc("Tooltip.Provider"), xp = new Rc("Tooltip.Root"), Sp = class {
 	#e = /* @__PURE__ */ L(cn(/* @__PURE__ */ new Map()));
 	get triggers() {
 		return G(this.#e);
@@ -7614,9 +7945,9 @@ var Vf = class {
 		let e = this.activeTriggerId;
 		e !== null && (this.triggers.has(e) || (this.activeTriggerId = null));
 	};
-}, qf = class e {
+}, Cp = class e {
 	static create(t) {
-		return Wf.set(new e(t));
+		return bp.set(new e(t));
 	}
 	opts;
 	#e = /* @__PURE__ */ L(!0);
@@ -7626,13 +7957,13 @@ var Vf = class {
 	set isOpenDelayed(e) {
 		R(this.#e, e, !0);
 	}
-	isPointerInTransit = Ss(!1);
+	isPointerInTransit = Qs(!1);
 	#t;
 	#n = /* @__PURE__ */ L(null);
 	constructor(e) {
-		this.opts = e, this.#t = new Hf(() => {
+		this.opts = e, this.#t = new vp(() => {
 			this.isOpenDelayed = !0;
-		}, this.opts.skipDelayDuration.current), gc(() => zr(window, "scroll", (e) => {
+		}, this.opts.skipDelayDuration.current), Kc(() => zr(window, "scroll", (e) => {
 			let t = G(this.#n);
 			if (!t) return;
 			let n = t.triggerNode;
@@ -7658,9 +7989,9 @@ var Vf = class {
 		G(this.#n) === e && (R(this.#n, null), this.#r());
 	};
 	isTooltipOpen = (e) => G(this.#n) === e;
-}, Jf = class e {
+}, wp = class e {
 	static create(t) {
-		return Gf.set(new e(t, Wf.get()));
+		return xp.set(new e(t, bp.get()));
 	}
 	opts;
 	provider;
@@ -7719,25 +8050,25 @@ var Vf = class {
 		R(this.#c, e);
 	}
 	constructor(e, t) {
-		this.opts = e, this.provider = t, this.tether = e.tether.current?.state ?? null, this.registry = this.tether?.registry ?? new Kf(), this.#s = new Hf(() => {
+		this.opts = e, this.provider = t, this.tether = e.tether.current?.state ?? null, this.registry = this.tether?.registry ?? new Sp(), this.#s = new vp(() => {
 			R(this.#o, !0), this.opts.open.current = !0;
-		}, this.delayDuration ?? 0), this.tether && (this.tether.root = this, gc(() => () => {
+		}, this.delayDuration ?? 0), this.tether && (this.tether.root = this, Kc(() => () => {
 			this.tether?.root === this && (this.tether.root = null);
-		})), this.contentPresence = new Kc({
+		})), this.contentPresence = new Sl({
 			open: this.opts.open,
 			ref: $(() => this.contentNode),
 			onComplete: () => {
 				this.opts.onOpenChangeComplete.current(this.opts.open.current);
 			}
-		}), dc(() => this.delayDuration, () => {
-			this.delayDuration !== void 0 && (this.#s = new Hf(() => {
+		}), Vc(() => this.delayDuration, () => {
+			this.delayDuration !== void 0 && (this.#s = new vp(() => {
 				R(this.#o, !0), this.opts.open.current = !0;
 			}, this.delayDuration));
-		}), dc(() => this.opts.open.current, (e) => {
+		}), Vc(() => this.opts.open.current, (e) => {
 			e ? (this.ensureActiveTrigger(), this.provider.onOpen(this)) : this.provider.onClose(this);
-		}, { lazy: !0 }), dc(() => this.opts.triggerId.current, (e) => {
+		}, { lazy: !0 }), Vc(() => this.opts.triggerId.current, (e) => {
 			e !== this.registry.activeTriggerId && this.registry.setActiveTrigger(e);
-		}), dc(() => this.registry.activeTriggerId, (e) => {
+		}), Vc(() => this.registry.activeTriggerId, (e) => {
 			this.opts.triggerId.current !== e && (this.opts.triggerId.current = e);
 		});
 	}
@@ -7790,28 +8121,28 @@ var Vf = class {
 	get activeTriggerId() {
 		return this.registry.activeTriggerId;
 	}
-}, Yf = class e {
+}, Tp = class e {
 	static create(t) {
-		return t.tether.current ? new e(t, null, t.tether.current.state) : new e(t, Gf.get(), null);
+		return t.tether.current ? new e(t, null, t.tether.current.state) : new e(t, xp.get(), null);
 	}
 	opts;
 	root;
 	tether;
 	attachment;
-	#e = Ss(!1);
+	#e = Qs(!1);
 	#t = /* @__PURE__ */ L(!1);
 	domContext;
 	#n = null;
 	#r = !1;
 	#i = null;
 	constructor(e, t, n) {
-		this.opts = e, this.root = t, this.tether = n, this.domContext = new jc(e.ref), this.attachment = Mc(this.opts.ref, (e) => this.#s(e)), dc(() => this.opts.id.current, () => {
+		this.opts = e, this.root = t, this.tether = n, this.domContext = new sl(e.ref), this.attachment = cl(this.opts.ref, (e) => this.#s(e)), Vc(() => this.opts.id.current, () => {
 			this.#s(this.opts.ref.current);
-		}), dc(() => this.opts.payload.current, () => {
+		}), Vc(() => this.opts.payload.current, () => {
 			this.#s(this.opts.ref.current);
-		}), dc(() => this.opts.disabled.current, () => {
+		}), Vc(() => this.opts.disabled.current, () => {
 			this.#s(this.opts.ref.current);
-		}), gc(() => (this.#r = !0, this.#s(this.opts.ref.current), () => {
+		}), Kc(() => (this.#r = !0, this.#s(this.opts.ref.current), () => {
 			let e = this.#a(), t = this.#i;
 			t && (this.tether ? this.tether.registry.unregister(t) : e?.unregisterTrigger(t)), this.#i = null, this.#r = !1;
 		}));
@@ -7886,7 +8217,7 @@ var Vf = class {
 			return;
 		}
 		let n = e.relatedTarget;
-		if (Vc(n)) {
+		if (_l(n)) {
 			for (let e of t.registry.triggers.values()) if (e.node === n) {
 				if (t.provider.opts.skipDelayDuration.current > 0) {
 					R(this.#t, !1);
@@ -7905,7 +8236,7 @@ var Vf = class {
 				t.opts.open.current && t.handleClose();
 				return;
 			}
-			t.ignoreNonKeyboardFocus && !Uc(e.currentTarget) || (t.setActiveTrigger(this.opts.id.current), t.handleOpen());
+			t.ignoreNonKeyboardFocus && !yl(e.currentTarget) || (t.setActiveTrigger(this.opts.id.current), t.handleOpen());
 		}
 	};
 	#h = () => {
@@ -7922,9 +8253,9 @@ var Vf = class {
 			id: this.opts.id.current,
 			"aria-describedby": t ? e?.contentNode?.id : void 0,
 			"data-state": t ? e?.stateAttr : "closed",
-			"data-disabled": Nc(n),
+			"data-disabled": ll(n),
 			"data-delay-duration": `${e?.delayDuration ?? 0}`,
-			[Uf.trigger]: "",
+			[yp.trigger]: "",
 			tabindex: n ? void 0 : this.opts.tabindex.current,
 			disabled: this.opts.disabled.current,
 			onpointerup: this.#l,
@@ -7944,15 +8275,15 @@ var Vf = class {
 	set props(e) {
 		R(this.#_, e);
 	}
-}, Xf = class e {
+}, Ep = class e {
 	static create(t) {
-		return new e(t, Gf.get());
+		return new e(t, xp.get());
 	}
 	opts;
 	root;
 	attachment;
 	constructor(e, t) {
-		this.opts = e, this.root = t, this.attachment = Mc(this.opts.ref, (e) => this.root.contentNode = e), new Vf({
+		this.opts = e, this.root = t, this.attachment = cl(this.opts.ref, (e) => this.root.contentNode = e), new _p({
 			triggerNode: () => this.root.triggerNode,
 			contentNode: () => this.root.contentNode,
 			enabled: () => this.root.opts.open.current && !this.root.disableHoverableContent,
@@ -7969,7 +8300,7 @@ var Vf = class {
 		});
 	}
 	onInteractOutside = (e) => {
-		if (Vc(e.target) && this.root.triggerNode?.contains(e.target) && this.root.disableCloseOnTriggerClick) {
+		if (_l(e.target) && this.root.triggerNode?.contains(e.target) && this.root.disableCloseOnTriggerClick) {
 			e.preventDefault();
 			return;
 		}
@@ -7997,10 +8328,10 @@ var Vf = class {
 	#t = /* @__PURE__ */ F(() => ({
 		id: this.opts.id.current,
 		"data-state": this.root.stateAttr,
-		"data-disabled": Nc(this.root.disabled),
-		...Pc(this.root.contentPresence.transitionStatus),
+		"data-disabled": ll(this.root.disabled),
+		...ul(this.root.contentPresence.transitionStatus),
 		style: { outline: "none" },
-		[Uf.content]: "",
+		[yp.content]: "",
 		...this.attachment
 	}));
 	get props() {
@@ -8018,9 +8349,9 @@ var Vf = class {
 };
 //#endregion
 //#region node_modules/bits-ui/dist/bits/tooltip/components/tooltip.svelte
-function Zf(e, t) {
+function Dp(e, t) {
 	N(t, !0);
-	let n = Q(t, "open", 15, !1), r = Q(t, "triggerId", 15, null), i = Q(t, "onOpenChange", 3, qc), a = Q(t, "onOpenChangeComplete", 3, qc), o = Jf.create({
+	let n = Q(t, "open", 15, !1), r = Q(t, "triggerId", 15, null), i = Q(t, "onOpenChange", 3, Cl), a = Q(t, "onOpenChangeComplete", 3, Cl), o = wp.create({
 		open: $(() => n(), (e) => {
 			n(e), i()(e);
 		}),
@@ -8035,7 +8366,7 @@ function Zf(e, t) {
 		onOpenChangeComplete: $(() => a()),
 		tether: $(() => t.tether)
 	});
-	Ef(e, {
+	np(e, {
 		tooltip: !0,
 		children: (e, n) => {
 			var r = Qr();
@@ -8050,7 +8381,7 @@ function Zf(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/tooltip/components/tooltip-content.svelte
-var Qf = /* @__PURE__ */ new Set([
+var Op = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy",
@@ -8072,11 +8403,11 @@ var Qf = /* @__PURE__ */ new Set([
 	"onEscapeKeydown",
 	"forceMount",
 	"style"
-]), $f = /* @__PURE__ */ K("<div><div><!></div></div>");
-function ep(e, t) {
+]), kp = /* @__PURE__ */ K("<div><div><!></div></div>");
+function Ap(e, t) {
 	let n = $r();
 	N(t, !0);
-	let r = Q(t, "id", 19, () => Jc(n)), i = Q(t, "ref", 15, null), a = Q(t, "side", 3, "top"), o = Q(t, "sideOffset", 3, 0), s = Q(t, "align", 3, "center"), c = Q(t, "avoidCollisions", 3, !0), l = Q(t, "arrowPadding", 3, 0), u = Q(t, "sticky", 3, "partial"), d = Q(t, "hideWhenDetached", 3, !1), p = Q(t, "collisionPadding", 3, 0), m = Q(t, "onInteractOutside", 3, qc), h = Q(t, "onEscapeKeydown", 3, qc), g = Q(t, "forceMount", 3, !1), _ = /* @__PURE__ */ X(t, Qf), v = Xf.create({
+	let r = Q(t, "id", 19, () => wl(n)), i = Q(t, "ref", 15, null), a = Q(t, "side", 3, "top"), o = Q(t, "sideOffset", 3, 0), s = Q(t, "align", 3, "center"), c = Q(t, "avoidCollisions", 3, !0), l = Q(t, "arrowPadding", 3, 0), u = Q(t, "sticky", 3, "partial"), d = Q(t, "hideWhenDetached", 3, !1), p = Q(t, "collisionPadding", 3, 0), m = Q(t, "onInteractOutside", 3, Cl), h = Q(t, "onEscapeKeydown", 3, Cl), g = Q(t, "forceMount", 3, !1), _ = /* @__PURE__ */ X(t, Op), v = Ep.create({
 		id: $(() => r()),
 		ref: $(() => i(), (e) => i(e)),
 		onInteractOutside: $(() => m()),
@@ -8092,11 +8423,11 @@ function ep(e, t) {
 		collisionPadding: p(),
 		strategy: t.strategy,
 		customAnchor: t.customAnchor ?? v.root.triggerNode
-	})), b = /* @__PURE__ */ F(() => rc(_, G(y), v.props));
+	})), b = /* @__PURE__ */ F(() => Nc(_, G(y), v.props));
 	var x = Qr(), S = B(x), C = (e) => {
 		{
 			let n = (e, n) => {
-				let r = () => (n?.()).props, i = () => (n?.()).wrapperProps, a = /* @__PURE__ */ F(() => rc(i(), { style: { pointerEvents: v.root.disableHoverableContent ? "none" : void 0 } })), o = /* @__PURE__ */ F(() => rc(r(), { style: pf("tooltip") }, { style: t.style }));
+				let r = () => (n?.()).props, i = () => (n?.()).wrapperProps, a = /* @__PURE__ */ F(() => Nc(i(), { style: { pointerEvents: v.root.disableHoverableContent ? "none" : void 0 } })), o = /* @__PURE__ */ F(() => Nc(r(), { style: Uf("tooltip") }, { style: t.style }));
 				var s = Qr(), c = B(s), l = (e) => {
 					var n = Qr(), r = B(n);
 					{
@@ -8109,7 +8440,7 @@ function ep(e, t) {
 					}
 					q(e, n);
 				}, u = (e) => {
-					var n = $f();
+					var n = kp();
 					qi(n, () => ({ ...G(a) }));
 					var r = z(n);
 					qi(r, () => ({ ...G(o) })), gi(z(r), () => t.children ?? f), j(r), j(n), q(e, n);
@@ -8118,7 +8449,7 @@ function ep(e, t) {
 					t.child ? e(l) : e(u, -1);
 				}), q(e, s);
 			}, i = /* @__PURE__ */ F(() => v.root.disableHoverableContent ? "none" : "auto");
-			Lf(e, Z(() => G(b), () => v.popperProps, {
+			pp(e, Z(() => G(b), () => v.popperProps, {
 				get enabled() {
 					return v.root.opts.open.current;
 				},
@@ -8146,7 +8477,7 @@ function ep(e, t) {
 	}, w = (e) => {
 		{
 			let n = (e, n) => {
-				let r = () => (n?.()).props, i = () => (n?.()).wrapperProps, a = /* @__PURE__ */ F(() => rc(i(), { style: { pointerEvents: v.root.disableHoverableContent ? "none" : void 0 } })), o = /* @__PURE__ */ F(() => rc(r(), { style: pf("tooltip") }, { style: t.style }));
+				let r = () => (n?.()).props, i = () => (n?.()).wrapperProps, a = /* @__PURE__ */ F(() => Nc(i(), { style: { pointerEvents: v.root.disableHoverableContent ? "none" : void 0 } })), o = /* @__PURE__ */ F(() => Nc(r(), { style: Uf("tooltip") }, { style: t.style }));
 				var s = Qr(), c = B(s), l = (e) => {
 					var n = Qr(), r = B(n);
 					{
@@ -8159,7 +8490,7 @@ function ep(e, t) {
 					}
 					q(e, n);
 				}, u = (e) => {
-					var n = $f();
+					var n = kp();
 					qi(n, () => ({ ...G(a) }));
 					var r = z(n);
 					qi(r, () => ({ ...G(o) })), gi(z(r), () => t.children ?? f), j(r), j(n), q(e, n);
@@ -8168,7 +8499,7 @@ function ep(e, t) {
 					t.child ? e(l) : e(u, -1);
 				}), q(e, s);
 			}, i = /* @__PURE__ */ F(() => v.root.disableHoverableContent ? "none" : "auto");
-			Ff(e, Z(() => G(b), () => v.popperProps, {
+			dp(e, Z(() => G(b), () => v.popperProps, {
 				get open() {
 					return v.root.opts.open.current;
 				},
@@ -8200,7 +8531,7 @@ function ep(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/tooltip/components/tooltip-trigger.svelte
-var tp = /* @__PURE__ */ new Set([
+var jp = /* @__PURE__ */ new Set([
 	"$$slots",
 	"$$events",
 	"$$legacy",
@@ -8213,23 +8544,23 @@ var tp = /* @__PURE__ */ new Set([
 	"type",
 	"tabindex",
 	"ref"
-]), np = /* @__PURE__ */ K("<button><!></button>");
-function rp(e, t) {
+]), Mp = /* @__PURE__ */ K("<button><!></button>");
+function Np(e, t) {
 	let n = $r();
 	N(t, !0);
-	let r = Q(t, "id", 19, () => Jc(n)), i = Q(t, "disabled", 3, !1), a = Q(t, "type", 3, "button"), o = Q(t, "tabindex", 3, 0), s = Q(t, "ref", 15, null), c = /* @__PURE__ */ X(t, tp), l = Yf.create({
+	let r = Q(t, "id", 19, () => wl(n)), i = Q(t, "disabled", 3, !1), a = Q(t, "type", 3, "button"), o = Q(t, "tabindex", 3, 0), s = Q(t, "ref", 15, null), c = /* @__PURE__ */ X(t, jp), l = Tp.create({
 		id: $(() => r()),
 		disabled: $(() => i() ?? !1),
 		tabindex: $(() => o() ?? 0),
 		payload: $(() => t.payload),
 		tether: $(() => t.tether),
 		ref: $(() => s(), (e) => s(e))
-	}), u = /* @__PURE__ */ F(() => rc(c, l.props, { type: a() }));
+	}), u = /* @__PURE__ */ F(() => Nc(c, l.props, { type: a() }));
 	var d = Qr(), p = B(d), m = (e) => {
 		var n = Qr();
 		gi(B(n), () => t.child, () => ({ props: G(u) })), q(e, n);
 	}, h = (e) => {
-		var n = np();
+		var n = Mp();
 		qi(n, () => ({ ...G(u) })), gi(z(n), () => t.children ?? f), j(n), q(e, n);
 	};
 	Y(p, (e) => {
@@ -8238,10 +8569,10 @@ function rp(e, t) {
 }
 //#endregion
 //#region node_modules/bits-ui/dist/bits/tooltip/components/tooltip-provider.svelte
-function ip(e, t) {
+function Pp(e, t) {
 	N(t, !0);
 	let n = Q(t, "delayDuration", 3, 700), r = Q(t, "disableCloseOnTriggerClick", 3, !1), i = Q(t, "disableHoverableContent", 3, !1), a = Q(t, "disabled", 3, !1), o = Q(t, "ignoreNonKeyboardFocus", 3, !1), s = Q(t, "skipDelayDuration", 3, 300);
-	qf.create({
+	Cp.create({
 		delayDuration: $(() => n()),
 		disableCloseOnTriggerClick: $(() => r()),
 		disableHoverableContent: $(() => i()),
@@ -8254,22 +8585,22 @@ function ip(e, t) {
 }
 //#endregion
 //#region src/lib/ui/TimelinePhase.svelte
-var ap = /* @__PURE__ */ K("<span class=\"timeline-phase-label\"> </span> <span class=\"timeline-phase-time\"> </span>", 1), op = /* @__PURE__ */ K("<!> <!>", 1);
-function sp(e, t) {
+var Fp = /* @__PURE__ */ K("<span class=\"timeline-phase-label\"> </span> <span class=\"timeline-phase-time\"> </span>", 1), Ip = /* @__PURE__ */ K("<!> <!>", 1);
+function Lp(e, t) {
 	N(t, !0);
-	let n = /* @__PURE__ */ F(() => So(t.phase.id)), r = /* @__PURE__ */ F(() => `${G(n)}: ${jo(t.phase.start)}–${jo(t.phase.end)}`);
+	let n = /* @__PURE__ */ F(() => Do(t.phase.id)), r = /* @__PURE__ */ F(() => `${G(n)}: ${Io(t.phase.start)}–${Io(t.phase.end)}`);
 	var i = Qr();
-	_i(B(i), () => ip, (e, i) => {
+	_i(B(i), () => Pp, (e, i) => {
 		i(e, {
 			children: (e, i) => {
 				var a = Qr();
-				_i(B(a), () => Zf, (e, i) => {
+				_i(B(a), () => Dp, (e, i) => {
 					i(e, {
 						children: (e, i) => {
-							var a = op(), o = B(a);
+							var a = Ip(), o = B(a);
 							{
 								let e = /* @__PURE__ */ F(() => `timeline-phase ${t.phase.active ? "active" : ""}`), i = /* @__PURE__ */ F(() => `flex-grow: ${t.phase.width_pct};`);
-								_i(o, () => rp, (a, o) => {
+								_i(o, () => Np, (a, o) => {
 									o(a, {
 										get class() {
 											return G(e);
@@ -8282,18 +8613,18 @@ function sp(e, t) {
 											return G(r);
 										},
 										children: (e, r) => {
-											var i = ap(), a = B(i), o = z(a, !0);
+											var i = Fp(), a = B(i), o = z(a, !0);
 											j(a);
 											var s = V(a, 2), c = z(s, !0);
 											j(s), H((e) => {
 												J(o, G(n)), J(c, e);
-											}, [() => jo(t.phase.start)]), q(e, i);
+											}, [() => Io(t.phase.start)]), q(e, i);
 										},
 										$$slots: { default: !0 }
 									});
 								});
 							}
-							_i(V(o, 2), () => ep, (e, t) => {
+							_i(V(o, 2), () => Ap, (e, t) => {
 								t(e, {
 									class: "tooltip",
 									side: "top",
@@ -8316,21 +8647,21 @@ function sp(e, t) {
 }
 //#endregion
 //#region src/views/TodayView.svelte
-var cp = /* @__PURE__ */ K("<!> Schlaf markieren", 1), lp = /* @__PURE__ */ K("<!> Wach markieren", 1), up = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Heute</p> <h2>Gemeinsamer Alltagsstatus</h2> <p class=\"muted\">Anwesenheit, Bio, Aktivität, Tagesrhythmus und Wake Planning aus der gemeinsamen Core-State-Wahrheit.</p></div> <span class=\"data-status\"> </span></div> <section aria-labelledby=\"today-status-heading\"><div><div class=\"hero-label\"><!> <span>Zentrale Statuswahrheit</span></div> <h2 id=\"today-status-heading\"> </h2> <p><!></p> <div class=\"hero-meta\"><span class=\"chip cyan\"> </span> <span class=\"chip purple\"> </span> <span class=\"chip\"> </span></div> <div class=\"action-row\"><!> <!></div></div> <div class=\"hero-side\"><span class=\"hero-side-label\">Nächster effektiver Weckbeginn</span> <strong class=\"hero-time\"> </strong> <span class=\"helper\"> </span> <div class=\"inline-meta\"><span class=\"chip purple\"> </span> <span class=\"chip orange\"> </span> <span class=\"chip\"> </span></div></div></section> <section class=\"grid three state-overview\" aria-label=\"Core-State-Werte des heutigen Tages\"><article class=\"metric-card semantic-cyan\"><span class=\"metric-label\">Anwesenheit</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-purple\"><span class=\"metric-label\">Bio-Status</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-cyan\"><span class=\"metric-label\">Aktivität</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Von Core State bewertet</p></article> <article class=\"metric-card semantic-purple\"><span class=\"metric-label\">Tagesphase</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-orange\"><span class=\"metric-label\">Tageskontext</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-green\"><span class=\"metric-label\">Datenqualität</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article></section> <section class=\"grid four metric-grid\" aria-label=\"Backend-Weckfenster und Schlafschutz\"><article class=\"metric-card\"><span class=\"metric-label\">E · Frühester möglicher Weckbeginn</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Backendseitig berechnet</p></article> <article class=\"metric-card\"><span class=\"metric-label\">L · Spätester Weckbeginn – harte Grenze</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card\"><span class=\"metric-label\">M · Gewünschte Mindestschlafdauer</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Nur Core State entscheidet über die Einhaltung</p></article> <article class=\"metric-card\"><span class=\"metric-label\">A · Schutzvorlauf für vorsorglichen Schlaf</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Schutzstatus bleibt fachlich getrennt</p></article></section> <section class=\"timeline-card\" aria-labelledby=\"timeline-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Tagesrhythmus</p> <h3 id=\"timeline-heading\">Neun echte Tagesphasen</h3></div> <span class=\"helper\"> </span></div> <div class=\"timeline-track\" aria-label=\"Neunphasige Tagesrhythmus-Timeline\"><span class=\"timeline-marker\" aria-label=\"Jetzt\"></span> <!></div> <div class=\"progress-bar\"><span></span></div> <p class=\"helper\" style=\"margin-top: 8px;\"> </p></section>", 1), dp = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Heute</p> <h2>Core State wird geladen</h2> <p class=\"muted\">Die Ansicht zeigt erst nach dem versionierten Snapshot fachliche Werte.</p></div> <span class=\"data-status\"> </span></div> <div class=\"skeleton\" aria-busy=\"true\"></div>", 1);
-function fp(e, t) {
+var Rp = /* @__PURE__ */ K("<!> Schlaf markieren", 1), zp = /* @__PURE__ */ K("<!> Wach markieren", 1), Bp = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Heute</p> <h2>Gemeinsamer Alltagsstatus</h2> <p class=\"muted\">Anwesenheit, Bio, Aktivität, Tagesrhythmus und Wake Planning aus der gemeinsamen Core-State-Wahrheit.</p></div> <span class=\"data-status\"> </span></div> <section aria-labelledby=\"today-status-heading\"><div><div class=\"hero-label\"><!> <span>Zentrale Statuswahrheit</span></div> <h2 id=\"today-status-heading\"> </h2> <p><!></p> <div class=\"hero-meta\"><span class=\"chip cyan\"> </span> <span class=\"chip purple\"> </span> <span class=\"chip\"> </span></div> <div class=\"action-row\"><!> <!></div></div> <div class=\"hero-side\"><span class=\"hero-side-label\">Nächster effektiver Weckbeginn</span> <strong class=\"hero-time\"> </strong> <span class=\"helper\"> </span> <div class=\"inline-meta\"><span class=\"chip purple\"> </span> <span class=\"chip orange\"> </span> <span class=\"chip\"> </span></div></div></section> <section class=\"grid three state-overview\" aria-label=\"Core-State-Werte des heutigen Tages\"><article class=\"metric-card semantic-cyan\"><span class=\"metric-label\">Anwesenheit</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-purple\"><span class=\"metric-label\">Bio-Status</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-cyan\"><span class=\"metric-label\">Aktivität</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Von Core State bewertet</p></article> <article class=\"metric-card semantic-purple\"><span class=\"metric-label\">Tagesphase</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-orange\"><span class=\"metric-label\">Tageskontext</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card semantic-green\"><span class=\"metric-label\">Datenqualität</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article></section> <section class=\"grid four metric-grid\" aria-label=\"Backend-Weckfenster und Schlafschutz\"><article class=\"metric-card\"><span class=\"metric-label\">E · Frühester möglicher Weckbeginn</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Backendseitig berechnet</p></article> <article class=\"metric-card\"><span class=\"metric-label\">L · Spätester Weckbeginn – harte Grenze</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\"> </p></article> <article class=\"metric-card\"><span class=\"metric-label\">M · Gewünschte Mindestschlafdauer</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Nur Core State entscheidet über die Einhaltung</p></article> <article class=\"metric-card\"><span class=\"metric-label\">A · Schutzvorlauf für vorsorglichen Schlaf</span> <div class=\"metric-value\"> </div> <p class=\"metric-note\">Schutzstatus bleibt fachlich getrennt</p></article></section> <section class=\"timeline-card\" aria-labelledby=\"timeline-heading\"><div class=\"section-header\"><div><p class=\"section-kicker\">Tagesrhythmus</p> <h3 id=\"timeline-heading\">Neun echte Tagesphasen</h3></div> <span class=\"helper\"> </span></div> <div class=\"timeline-track\" aria-label=\"Neunphasige Tagesrhythmus-Timeline\"><span class=\"timeline-marker\" aria-label=\"Jetzt\"></span> <!></div> <div class=\"progress-bar\"><span></span></div> <p class=\"helper\" style=\"margin-top: 8px;\"> </p></section>", 1), Vp = /* @__PURE__ */ K("<div class=\"view-heading\"><div><p class=\"section-kicker\">Heute</p> <h2>Core State wird geladen</h2> <p class=\"muted\">Die Ansicht zeigt erst nach dem versionierten Snapshot fachliche Werte.</p></div> <span class=\"data-status\"> </span></div> <div class=\"skeleton\" aria-busy=\"true\"></div>", 1);
+function Hp(e, t) {
 	N(t, !0);
 	var n = Qr(), r = B(n), i = (e) => {
-		let n = /* @__PURE__ */ F(() => t.snapshot.data.today), r = /* @__PURE__ */ F(() => t.snapshot.data.timeline), i = /* @__PURE__ */ F(() => wo(G(n).profile.id)), a = /* @__PURE__ */ F(() => Co(G(n).day_context.value, { holiday: G(n).day_context.holiday })), o = /* @__PURE__ */ F(() => bo(G(n).presence.effective || G(n).presence.personal));
-		var s = up(), c = B(s), l = V(z(c), 2), u = z(l);
+		let n = /* @__PURE__ */ F(() => t.snapshot.data.today), r = /* @__PURE__ */ F(() => t.snapshot.data.timeline), i = /* @__PURE__ */ F(() => ko(G(n).profile.id)), a = /* @__PURE__ */ F(() => Oo(G(n).day_context.value, { holiday: G(n).day_context.holiday })), o = /* @__PURE__ */ F(() => To(G(n).presence.effective || G(n).presence.personal));
+		var s = Bp(), c = B(s), l = V(z(c), 2), u = z(l);
 		j(l), j(c);
 		var d = V(c, 2), f = z(d), p = z(f), m = z(p), h = (e) => {
-			Fa(e, { size: 18 });
+			Ia(e, { size: 18 });
 		}, g = (e) => {
-			Ga(e, { size: 18 });
+			Ka(e, { size: 18 });
 		}, _ = (e) => {
-			qa(e, { size: 18 });
+			Ja(e, { size: 18 });
 		}, v = (e) => {
-			da(e, { size: 18 });
+			fa(e, { size: 18 });
 		};
 		Y(m, (e) => {
 			G(n).bio.state === "sleep" ? e(h) : G(n).bio.state === "awake" ? e(g, 1) : G(n).bio.state === "waking" ? e(_, 2) : e(v, -1);
@@ -8341,7 +8672,7 @@ function fp(e, t) {
 			q(e, Zr("Vorläufiger Schlafschutz: Diese Zeit zählt noch nicht als bestätigter Schlaf."));
 		}, w = (e) => {
 			var t = Zr();
-			H((e) => J(t, `${e ?? ""}.`), [() => ko(G(n).reason)]), q(e, t);
+			H((e) => J(t, `${e ?? ""}.`), [() => Po(G(n).reason)]), q(e, t);
 		};
 		Y(S, (e) => {
 			G(n).bio.provisional ? e(C) : e(w, -1);
@@ -8355,14 +8686,14 @@ function fp(e, t) {
 		var ie = V(T, 2), ae = z(ie), oe = (e) => {
 			{
 				let n = /* @__PURE__ */ F(() => t.pendingCommand !== null);
-				hs(e, {
+				Gs(e, {
 					get disabled() {
 						return G(n);
 					},
 					onclick: () => t.onCommand("bio.mark_sleep"),
 					children: (e, t) => {
-						var n = cp();
-						Fa(B(n), { size: 16 }), M(), q(e, n);
+						var n = Rp();
+						Ia(B(n), { size: 16 }), M(), q(e, n);
 					},
 					$$slots: { default: !0 }
 				});
@@ -8374,15 +8705,15 @@ function fp(e, t) {
 		var se = V(ae, 2), ce = (e) => {
 			{
 				let n = /* @__PURE__ */ F(() => t.pendingCommand !== null);
-				hs(e, {
+				Gs(e, {
 					variant: "secondary",
 					get disabled() {
 						return G(n);
 					},
 					onclick: () => t.onCommand("bio.mark_awake"),
 					children: (e, t) => {
-						var n = lp();
-						Ga(B(n), { size: 16 }), M(), q(e, n);
+						var n = zp();
+						Ka(B(n), { size: 16 }), M(), q(e, n);
 					},
 					$$slots: { default: !0 }
 				});
@@ -8437,7 +8768,7 @@ function fp(e, t) {
 		j(ct), j(st);
 		var ut = V(st, 2), dt = z(ut);
 		ui(V(dt, 2), 17, () => G(r).phases, (e) => e.id, (e, t) => {
-			sp(e, { get phase() {
+			Lp(e, { get phase() {
 				return G(t);
 			} });
 		}), j(ut);
@@ -8447,33 +8778,33 @@ function fp(e, t) {
 		j(mt), j(ot), H((e, t, s, c, f, p, m, h, g, _, v, y, x, S, C, w, T, E, D, ne, ie) => {
 			Gi(l, "data-status", G(n).data_status), J(u, `Datenlage: ${e ?? ""}`), Oi(d, 1, `hero-card ${G(n).bio.state}`), J(b, t), J(ee, `Profil: ${G(i) ?? ""}`), J(te, `Tageskontext: ${G(a) ?? ""}`), J(re, `Anwesenheit: ${G(o) ?? ""}`), J(de, s), J(pe, `${c ?? ""}.`), J(ge, `Weckzustand: ${f ?? ""}`), J(ve, `Entscheidung: ${p ?? ""}`), J(be, `Datenlage: ${m ?? ""}`), J(we, G(o)), J(Ee, `Persönlich: ${h ?? ""}`), J(Oe, g), J(Ae, _), J(Ne, v), J(A, y), J(Ie, `Nächster Phasenwechsel: ${x ?? ""}`), J(ze, G(a)), J(Ve, `Wirksames Weckprofil: ${G(i) ?? ""}`), J(We, S), J(Ke, `Snapshot: ${C ?? ""}`), J(Je, w), J(Ze, T), J($e, G(n).wake.hard_l_applied ? "Harte Grenze angewendet" : "Keine Grenzverschiebung"), J(nt, E), J(at, D), J(lt, `Nächster Wechsel: ${ne ?? ""}`), Ai(dt, `left: ${G(r).now_marker_pct}%;`), Gi(ft, "aria-label", `Fortschritt ${G(r).active_phase_progress_pct}%`), Ai(pt, `width: ${G(r).active_phase_progress_pct}%;`), J(ht, `Aktive Phase: ${ie ?? ""} · ${G(r).active_phase_progress_pct ?? ""}% fortgeschritten`);
 		}, [
-			() => To(G(n).data_status),
-			() => vo(G(n).bio.state),
-			() => No(G(n).wake.next_effective_start),
-			() => ko(G(n).wake.reason),
-			() => yo(G(n).wake.wake_state),
-			() => Do(G(n).wake.decided_by),
-			() => To(t.status),
-			() => bo(G(n).presence.personal),
-			() => vo(G(n).bio.state),
-			() => G(n).bio.provisional ? "Schutzstatus, nicht bestätigte Schlafzeit" : ko(G(n).bio.diagnostics.reason),
-			() => xo(G(n).activity.state),
-			() => So(G(r).active_phase),
-			() => No(G(r).next_change),
-			() => To(G(n).data_status),
-			() => No(t.snapshot.updated_at),
-			() => Po(G(n).wake.e),
-			() => Po(G(n).wake.l),
-			() => Fo(G(n).wake.m_minutes),
-			() => Fo(G(n).wake.a_minutes),
-			() => No(G(r).next_change),
-			() => So(G(r).active_phase)
+			() => Ao(G(n).data_status),
+			() => Co(G(n).bio.state),
+			() => Ro(G(n).wake.next_effective_start),
+			() => Po(G(n).wake.reason),
+			() => wo(G(n).wake.wake_state),
+			() => Mo(G(n).wake.decided_by),
+			() => Ao(t.status),
+			() => To(G(n).presence.personal),
+			() => Co(G(n).bio.state),
+			() => G(n).bio.provisional ? "Schutzstatus, nicht bestätigte Schlafzeit" : Po(G(n).bio.diagnostics.reason),
+			() => Eo(G(n).activity.state),
+			() => Do(G(r).active_phase),
+			() => Ro(G(r).next_change),
+			() => Ao(G(n).data_status),
+			() => Ro(t.snapshot.updated_at),
+			() => zo(G(n).wake.e),
+			() => zo(G(n).wake.l),
+			() => Bo(G(n).wake.m_minutes),
+			() => Bo(G(n).wake.a_minutes),
+			() => Ro(G(r).next_change),
+			() => Do(G(r).active_phase)
 		]), q(e, s);
 	}, a = (e) => {
-		var n = dp(), r = B(n), i = V(z(r), 2), a = z(i);
+		var n = Vp(), r = B(n), i = V(z(r), 2), a = z(i);
 		j(i), j(r), M(2), H((e) => {
 			Gi(i, "data-status", t.status), J(a, `Datenlage: ${e ?? ""}`);
-		}, [() => _o(t.status)]), q(e, n);
+		}, [() => So(t.status)]), q(e, n);
 	};
 	Y(r, (e) => {
 		t.snapshot?.data ? e(i) : e(a, -1);
@@ -8481,10 +8812,10 @@ function fp(e, t) {
 }
 //#endregion
 //#region src/App.svelte
-var pp = /* @__PURE__ */ K("<span class=\"version-chip\"> </span> <span class=\"contract-version\"> </span>", 1), mp = /* @__PURE__ */ K("<button type=\"button\"><!> <!> <!> <!> <!> <span> </span></button>"), hp = /* @__PURE__ */ K("<div class=\"inline-error\" role=\"alert\"> </div>"), gp = /* @__PURE__ */ K("<div><strong> </strong> <span> </span></div>"), _p = /* @__PURE__ */ K("<section class=\"core-state-module min-h-full\" aria-label=\"Core State\"><header class=\"module-header\"><div><p class=\"eyebrow\">Core State</p> <h1>Core State</h1> <p class=\"module-subtitle\">Aktueller Alltagsstatus und Wake Planning</p></div> <div class=\"module-status\" aria-live=\"polite\"><span class=\"status-dot\" aria-hidden=\"true\"></span> <span> </span> <!></div></header> <nav class=\"module-nav flex items-center gap-1\" aria-label=\"Core-State-Bereiche\"></nav> <!> <!> <main class=\"module-content\"><!></main></section>");
-function vp(e, t) {
+var Up = /* @__PURE__ */ K("<span class=\"version-chip\"> </span> <span class=\"contract-version\"> </span>", 1), Wp = /* @__PURE__ */ K("<button type=\"button\"><!> <!> <!> <!> <!> <!> <span> </span></button>"), Gp = /* @__PURE__ */ K("<div class=\"inline-error\" role=\"alert\"> </div>"), Kp = /* @__PURE__ */ K("<div><strong> </strong> <span> </span></div>"), qp = /* @__PURE__ */ K("<section class=\"core-state-module min-h-full\" aria-label=\"Core State\"><header class=\"module-header\"><div><p class=\"eyebrow\">Core State</p> <h1>Core State</h1> <p class=\"module-subtitle\">Aktueller Alltagsstatus und Wake Planning</p></div> <div class=\"module-status\" aria-live=\"polite\"><span class=\"status-dot\" aria-hidden=\"true\"></span> <span> </span> <!></div></header> <nav class=\"module-nav flex items-center gap-1\" aria-label=\"Core-State-Bereiche\"></nav> <!> <!> <main class=\"module-content\"><!></main></section>");
+function Jp(e, t) {
 	N(t, !0);
-	let n = new Io(), r = /* @__PURE__ */ L(cn(n.state)), i = /* @__PURE__ */ L("today"), a = /* @__PURE__ */ L(!1), o = /* @__PURE__ */ L(!1), s = [
+	let n = new Vo(), r = /* @__PURE__ */ L(cn(n.state)), i = /* @__PURE__ */ L("today"), a = /* @__PURE__ */ L(!1), o = /* @__PURE__ */ L(!1), s = [
 		{
 			id: "today",
 			label: "Heute"
@@ -8496,6 +8827,10 @@ function vp(e, t) {
 		{
 			id: "profiles",
 			label: "Profile & Regeln"
+		},
+		{
+			id: "day_phases",
+			label: "Tagesphasen"
 		},
 		{
 			id: "diagnostics",
@@ -8512,37 +8847,40 @@ function vp(e, t) {
 	async function l(e, t = {}) {
 		await n.command(e, t);
 	}
+	function u(e, t) {
+		return n.dayPhasePreview(e, t);
+	}
 	On(() => {
 		G(i) === "calendar" && G(a) && !G(o) && (R(o, !0), n.loadProjection());
-	}), na(() => {
+	}), ra(() => {
 		let e = n.subscribe((e) => {
 			R(r, e, !0);
-		}), t = Cp.subscribe((e) => {
-			R(a, !0), n.setAdapter($a(e));
+		}), t = $p.subscribe((e) => {
+			R(a, !0), n.setAdapter(no(e));
 		});
 		return () => {
 			e(), t(), n.dispose();
 		};
 	});
-	var u = _p(), d = z(u), f = V(z(d), 2), p = V(z(f), 2), m = z(p);
-	j(p);
-	var h = V(p, 2), g = (e) => {
-		var t = pp(), n = B(t), i = z(n);
+	var d = qp(), f = z(d), p = V(z(f), 2), m = V(z(p), 2), h = z(m);
+	j(m);
+	var g = V(m, 2), _ = (e) => {
+		var t = Up(), n = B(t), i = z(n);
 		j(n);
 		var a = V(n, 2), o = z(a);
 		j(a), H(() => {
 			J(i, `Integration v${G(r).snapshot.integration_version ?? ""}`), J(o, `UX-Vertrag v${G(r).snapshot.version ?? ""}`);
 		}), q(e, t);
 	};
-	Y(h, (e) => {
-		G(r).snapshot && e(g);
-	}), j(f), j(d);
-	var _ = V(d, 2);
-	ui(_, 21, () => s, (e) => e.id, (e, t) => {
-		var n = mp();
+	Y(g, (e) => {
+		G(r).snapshot && e(_);
+	}), j(p), j(f);
+	var v = V(f, 2);
+	ui(v, 21, () => s, (e) => e.id, (e, t) => {
+		var n = Wp();
 		let r;
 		var a = z(n), o = (e) => {
-			ja(e, {
+			Ma(e, {
 				size: 17,
 				strokeWidth: 1.8
 			});
@@ -8551,7 +8889,7 @@ function vp(e, t) {
 			G(t).id === "today" && e(o);
 		});
 		var s = V(a, 2), l = (e) => {
-			ya(e, {
+			ba(e, {
 				size: 17,
 				strokeWidth: 1.8
 			});
@@ -8560,7 +8898,7 @@ function vp(e, t) {
 			G(t).id === "calendar" && e(l);
 		});
 		var u = V(s, 2), d = (e) => {
-			Na(e, {
+			Pa(e, {
 				size: 17,
 				strokeWidth: 1.8
 			});
@@ -8569,37 +8907,46 @@ function vp(e, t) {
 			G(t).id === "profiles" && e(d);
 		});
 		var f = V(u, 2), p = (e) => {
-			da(e, {
+			ga(e, {
 				size: 17,
 				strokeWidth: 1.8
 			});
 		};
 		Y(f, (e) => {
-			G(t).id === "diagnostics" && e(p);
+			G(t).id === "day_phases" && e(p);
 		});
 		var m = V(f, 2), h = (e) => {
-			Va(e, {
+			fa(e, {
 				size: 17,
 				strokeWidth: 1.8
 			});
 		};
 		Y(m, (e) => {
-			G(t).id === "settings" && e(h);
+			G(t).id === "diagnostics" && e(h);
 		});
-		var g = V(m, 2), _ = z(g, !0);
-		j(g), j(n), H(() => {
-			r = Oi(n, 1, "nav-item", null, r, { active: G(i) === G(t).id }), Gi(n, "aria-current", G(i) === G(t).id ? "page" : void 0), J(_, G(t).label);
+		var g = V(m, 2), _ = (e) => {
+			Ha(e, {
+				size: 17,
+				strokeWidth: 1.8
+			});
+		};
+		Y(g, (e) => {
+			G(t).id === "settings" && e(_);
+		});
+		var v = V(g, 2), y = z(v, !0);
+		j(v), j(n), H(() => {
+			r = Oi(n, 1, "nav-item", null, r, { active: G(i) === G(t).id }), Gi(n, "aria-current", G(i) === G(t).id ? "page" : void 0), J(y, G(t).label);
 		}), Vr("click", n, () => c(G(t).id)), q(e, n);
-	}), j(_);
-	var v = V(_, 2), y = (e) => {
-		var t = hp(), n = z(t, !0);
+	}), j(v);
+	var y = V(v, 2), b = (e) => {
+		var t = Gp(), n = z(t, !0);
 		j(t), H(() => J(n, G(r).error)), q(e, t);
 	};
-	Y(v, (e) => {
-		G(r).error && e(y);
+	Y(y, (e) => {
+		G(r).error && e(b);
 	});
-	var b = V(v, 2), x = (e) => {
-		var t = gp();
+	var x = V(y, 2), S = (e) => {
+		var t = Kp();
 		let n;
 		var i = z(t), a = z(i, !0);
 		j(i);
@@ -8610,13 +8957,13 @@ function vp(e, t) {
 				"command-pending": G(r).commandResult.status === "pending",
 				"command-error": G(r).commandResult.status === "error"
 			}), Gi(t, "role", G(r).commandResult.status === "error" ? "alert" : "status"), J(a, G(r).commandResult.status === "success" ? "Gespeichert" : G(r).commandResult.status === "pending" ? "Wird gespeichert" : "Nicht gespeichert"), J(s, e);
-		}, [() => G(r).commandResult.status === "success" ? "Core State wurde neu synchronisiert." : G(r).commandResult.status === "pending" ? "Core State verarbeitet die Änderung." : Ao(G(r).commandResult.error)]), q(e, t);
+		}, [() => G(r).commandResult.status === "success" ? "Core State wurde neu synchronisiert." : G(r).commandResult.status === "pending" ? "Core State verarbeitet die Änderung." : Fo(G(r).commandResult.error)]), q(e, t);
 	};
-	Y(b, (e) => {
-		G(r).commandResult && e(x);
+	Y(x, (e) => {
+		G(r).commandResult && e(S);
 	});
-	var S = V(b, 2), C = z(S), w = (e) => {
-		fp(e, {
+	var C = V(x, 2), w = z(C), T = (e) => {
+		Hp(e, {
 			get snapshot() {
 				return G(r).snapshot;
 			},
@@ -8628,8 +8975,8 @@ function vp(e, t) {
 			},
 			onCommand: l
 		});
-	}, T = (e) => {
-		qo(e, {
+	}, E = (e) => {
+		Qo(e, {
 			get projection() {
 				return G(r).projection;
 			},
@@ -8637,8 +8984,8 @@ function vp(e, t) {
 				return G(r).status;
 			}
 		});
-	}, E = (e) => {
-		ss(e, {
+	}, ee = (e) => {
+		Ls(e, {
 			get snapshot() {
 				return G(r).snapshot;
 			},
@@ -8647,8 +8994,19 @@ function vp(e, t) {
 			},
 			onCommand: l
 		});
-	}, ee = (e) => {
-		Qo(e, {
+	}, D = (e) => {
+		Cs(e, {
+			get snapshot() {
+				return G(r).snapshot;
+			},
+			get pendingCommand() {
+				return G(r).pendingCommand;
+			},
+			onCommand: l,
+			onPreview: u
+		});
+	}, te = (e) => {
+		Os(e, {
 			get snapshot() {
 				return G(r).snapshot;
 			},
@@ -8656,8 +9014,8 @@ function vp(e, t) {
 				return G(r).status;
 			}
 		});
-	}, D = (e) => {
-		fs(e, {
+	}, ne = (e) => {
+		Hs(e, {
 			get snapshot() {
 				return G(r).snapshot;
 			},
@@ -8667,23 +9025,23 @@ function vp(e, t) {
 			onCommand: l
 		});
 	};
-	Y(C, (e) => {
-		G(i) === "today" ? e(w) : G(i) === "calendar" ? e(T, 1) : G(i) === "profiles" ? e(E, 2) : G(i) === "diagnostics" ? e(ee, 3) : e(D, -1);
-	}), j(S), j(u), H((e) => {
-		Gi(f, "data-status", G(r).status), J(m, `Datenlage: ${e ?? ""}`);
-	}, [() => _o(G(r).status)]), q(e, u), P();
+	Y(w, (e) => {
+		G(i) === "today" ? e(T) : G(i) === "calendar" ? e(E, 1) : G(i) === "profiles" ? e(ee, 2) : G(i) === "day_phases" ? e(D, 3) : G(i) === "diagnostics" ? e(te, 4) : e(ne, -1);
+	}), j(C), j(d), H((e) => {
+		Gi(p, "data-status", G(r).status), J(h, `Datenlage: ${e ?? ""}`);
+	}, [() => So(G(r).status)]), q(e, d), P();
 }
 Hr(["click"]);
 //#endregion
 //#region src/styles.css?inline
-var yp = "/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */\n@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-border-style:solid;--tw-outline-style:solid;--tw-blur:initial;--tw-brightness:initial;--tw-contrast:initial;--tw-grayscale:initial;--tw-hue-rotate:initial;--tw-invert:initial;--tw-opacity:initial;--tw-saturate:initial;--tw-sepia:initial;--tw-drop-shadow:initial;--tw-drop-shadow-color:initial;--tw-drop-shadow-alpha:100%;--tw-drop-shadow-size:initial}}}.collapse{visibility:collapse}.visible{visibility:visible}.absolute{position:absolute}.fixed{position:fixed}.static{position:static}.sticky{position:sticky}.block{display:block}.contents{display:contents}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline{display:inline}.inline-flex{display:inline-flex}.min-h-full{min-height:100%}.flex-grow{flex-grow:1}.transform{transform:var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)}.resize{resize:both}.items-center{align-items:center}.justify-center{justify-content:center}.border{border-style:var(--tw-border-style);border-width:1px}.outline{outline-style:var(--tw-outline-style);outline-width:1px}.filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}:host{color:#e7edf4;font-synthesis:none;text-rendering:optimizelegibility;--graphite-950:#11161d;--graphite-900:#171d25;--graphite-850:#1b222c;--graphite-800:#202934;--graphite-700:#2d3745;--graphite-600:#465363;--text:#e7edf4;--muted:#9aa8b8;--subtle:#718093;--cyan:#61d8e6;--cyan-muted:#2d7881;--purple:#b49bff;--orange:#f4b46d;--green:#7dd7ad;--red:#ff8b8b;--yellow:#f4d37b;--radius-sm:8px;--radius-md:12px;--shadow:0 12px 30px #0003;background:#11161d;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;display:block}.core-state-module,.core-state-module *,.core-state-module :before,.core-state-module :after{box-sizing:border-box}.core-state-module{width:min(2080px,100% - 64px);max-width:2080px;min-height:100%;color:var(--text);background:var(--graphite-950);font-synthesis:none;text-rendering:optimizelegibility;margin:0 auto;padding:28px 0 48px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}.core-state-module button,.core-state-module input,.core-state-module select,.core-state-module textarea{font:inherit}.core-state-module button{cursor:pointer}.core-state-module button:focus-visible,.core-state-module input:focus-visible,.core-state-module select:focus-visible,.core-state-module textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}.module-header{border-bottom:1px solid var(--graphite-700);justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:22px;display:flex}.eyebrow,.section-kicker{color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px;font-size:.74rem;font-weight:700}.core-state-module h1,.core-state-module h2,.core-state-module h3,.core-state-module p{margin-top:0}.core-state-module h1{letter-spacing:-.035em;margin-bottom:0;font-size:clamp(1.55rem,3vw,2.3rem)}.module-subtitle{color:var(--muted);margin:8px 0 0;font-size:.95rem}.core-state-module h2{letter-spacing:-.025em;margin-bottom:8px;font-size:clamp(1.45rem,2.8vw,2rem)}.core-state-module h3{margin-bottom:6px;font-size:1rem}.module-status,.status-badge,.data-status{border:1px solid var(--graphite-600);min-height:32px;color:var(--muted);white-space:nowrap;border-radius:999px;align-items:center;gap:8px;padding:6px 10px;font-size:.78rem;display:inline-flex}.status-dot{background:var(--green);border-radius:50%;width:8px;height:8px;box-shadow:0 0 0 3px #7dd7ad21}[data-status=loading] .status-dot,[data-status=reconnecting] .status-dot{background:var(--cyan)}[data-status=degraded] .status-dot,[data-status=stale] .status-dot{background:var(--yellow)}[data-status=error] .status-dot,[data-status=offline] .status-dot,[data-status=unavailable] .status-dot,[data-status=blocked] .status-dot{background:var(--red)}.data-status[data-status=ready]{color:var(--green);border-color:#7dd7ad59}.data-status[data-status=degraded],.data-status[data-status=stale]{color:var(--orange);border-color:#f4b46d61}.data-status[data-status=error],.data-status[data-status=offline],.data-status[data-status=unavailable],.data-status[data-status=blocked]{color:var(--red);border-color:#ff8b8b6b}.contract-version{border-left:1px solid var(--graphite-600);color:var(--subtle);font-variant-numeric:tabular-nums;padding-left:8px}.version-chip{color:var(--text);font-variant-numeric:tabular-nums}.module-nav{scrollbar-width:thin;gap:4px;padding:14px 0 22px;display:flex;overflow-x:auto}.nav-item,.button{border-radius:var(--radius-sm);min-height:44px;color:var(--muted);background:0 0;border:1px solid #0000;justify-content:center;align-items:center;gap:8px;padding:0 14px;font-size:.9rem;transition:all .16s;display:inline-flex}.nav-item:hover,.nav-item.active{color:var(--text);background:var(--graphite-850);border-color:var(--graphite-600)}.nav-item.active{box-shadow:inset 0 -2px var(--cyan)}.button{border-color:var(--graphite-600);background:var(--graphite-800);color:var(--text);font-weight:650}.button:hover{border-color:var(--cyan-muted);background:var(--graphite-700)}.button.secondary{background:0 0}.button.danger{color:var(--red)}.button:disabled{cursor:wait;opacity:.5}.inline-error,.callout{border-radius:var(--radius-sm);color:#ffd0d0;background:#6f283238;border:1px solid #ff8b8b73;margin:0 0 18px;padding:12px 14px}.callout.info{color:#c4f3f7;background:#215b6333;border-color:#61d8e659}.command-feedback{border:1px solid var(--graphite-600);border-radius:var(--radius-sm);color:var(--muted);background:var(--graphite-900);flex-wrap:wrap;align-items:baseline;gap:8px;margin:0 0 18px;padding:11px 14px;display:flex}.command-feedback.command-success{color:#c9f4de;background:#27695033;border-color:#7dd7ad73}.command-feedback.command-pending{color:#c4f3f7;background:#215b6333;border-color:#61d8e666}.command-feedback.command-error{color:#ffd0d0;background:#6f283238;border-color:#ff8b8b73}.module-content{min-width:0}.view-heading{justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px;display:flex}.view-heading p,.muted,.helper{color:var(--muted)}.helper{margin-bottom:0;font-size:.82rem;line-height:1.5}.grid{gap:14px;display:grid}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.card,.hero-card,.metric-card,.timeline-card,.table-card{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);box-shadow:var(--shadow)}.hero-card{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:24px;margin-bottom:14px;padding:24px;display:grid}.hero-card.provisional_sleep{border-color:#f4b46d7a}.hero-card.sleep{border-color:#b49bff7a}.hero-card.waking{border-color:#61d8e67a}.hero-card.awake{border-color:#7dd7ad7a}.hero-label{color:var(--cyan);align-items:center;gap:8px;margin-bottom:18px;font-size:.84rem;font-weight:700;display:inline-flex}.hero-card p{max-width:62ch;line-height:1.55}.hero-side{border-left:1px solid var(--graphite-700);flex-direction:column;justify-content:center;gap:12px;padding:4px 0 4px 20px;display:flex}.hero-side-label,.metric-label,.field-label,.mini-label{color:var(--subtle);letter-spacing:.07em;text-transform:uppercase;font-size:.74rem;font-weight:700}.hero-time{color:var(--text);letter-spacing:-.04em;font-size:2rem;font-weight:750}.hero-meta,.inline-meta,.action-row,.card-header,.section-header{flex-wrap:wrap;align-items:center;gap:10px;display:flex}.hero-meta{margin-top:18px}.chip{border:1px solid var(--graphite-600);min-height:30px;color:var(--muted);border-radius:999px;align-items:center;gap:6px;padding:4px 9px;font-size:.8rem;display:inline-flex}.chip.cyan{color:var(--cyan);border-color:var(--cyan-muted)}.chip.purple{color:var(--purple);border-color:#b49bff59}.chip.orange{color:var(--orange);border-color:#f4b46d59}.metric-card,.card,.timeline-card,.table-card{padding:18px}.metric-card{min-height:100px}.hero-card.sleep .hero-label,.hero-card.provisional_sleep .hero-label,.hero-card.waking .hero-label,.hero-side-label,.hero-time{color:var(--purple)}.semantic-cyan{border-color:#61d8e657}.semantic-purple{border-color:#b49bff5c}.semantic-orange{border-color:#f4b46d61}.semantic-green{border-color:#7dd7ad61}.semantic-red{border-color:#ff8b8b6b}.state-overview,.metric-grid{margin-top:14px}.trace-card{min-height:220px}.trace-summary{color:var(--muted);line-height:1.5}.quality-line{color:var(--subtle);margin:12px 0;font-size:.78rem;display:block}.metric-value{color:var(--text);margin:8px 0 4px;font-size:1.25rem;font-weight:700}.metric-note{color:var(--subtle);margin:0;font-size:.78rem}.timeline-card{margin-top:14px}.section-header{justify-content:space-between;margin-bottom:14px}.section-header h3,.card-header h3{margin-bottom:0}.timeline-track{gap:2px;height:68px;padding-top:10px;display:flex;position:relative}.timeline-marker{z-index:2;background:var(--cyan);width:2px;position:absolute;top:0;bottom:0;box-shadow:0 0 0 3px #61d8e621}.timeline-phase{border:1px solid var(--graphite-700);background:var(--graphite-850);border-radius:6px;min-width:0;height:58px;padding:9px 6px;position:relative;overflow:hidden}.timeline-phase.active{border-color:var(--cyan-muted);background:#20333a}.timeline-phase-label{color:var(--muted);text-overflow:ellipsis;white-space:nowrap;font-size:.7rem;font-weight:650;display:block;overflow:hidden}.timeline-phase-time{color:var(--subtle);font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:5px;font-size:.68rem;display:block}.tooltip{z-index:10;border:1px solid var(--graphite-600);border-radius:var(--radius-sm);max-width:260px;color:var(--text);background:var(--graphite-800);box-shadow:var(--shadow);padding:8px 10px;font-size:.75rem;line-height:1.4}.progress-bar{background:var(--graphite-700);border-radius:999px;height:6px;margin-top:12px;overflow:hidden}.progress-bar>span{background:var(--cyan);height:100%;display:block}.action-row{margin-top:18px}.calendar-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;max-width:1780px;margin:0 auto;display:grid}.calendar-day{border:1px solid var(--graphite-700);border-radius:var(--radius-sm);background:var(--graphite-900);flex-direction:column;gap:8px;min-height:142px;padding:12px;display:flex}.calendar-day.weekend{background:#1b202a}.calendar-day.holiday,.calendar-day.vacation{border-color:#f4b46d85}.calendar-day.vacation{background:#5c422c33}.calendar-day.weekday{background:var(--graphite-900)}.calendar-day.degraded,.calendar-day.stale{border-color:#f4d37b66}.calendar-day-header{justify-content:space-between;align-items:center;gap:6px;display:flex}.calendar-date{color:var(--text);font-size:.8rem;font-weight:700}.calendar-wake{color:var(--cyan);font-size:1.35rem;font-weight:750}.calendar-wake.purple{color:var(--purple)}.calendar-wake.orange{color:var(--orange)}.day-context-list{flex-direction:column;align-items:flex-start;gap:6px;display:flex}.calendar-day .helper{font-size:.75rem}.calendar-day .data-status{align-self:flex-start;min-height:26px;margin-top:auto;padding:3px 7px;font-size:.7rem}.profile-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;display:grid}.profile-matrix{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);padding:18px}.profile-card{border:1px solid var(--graphite-700);border-radius:var(--radius-md);width:100%;min-height:44px;color:var(--text);background:var(--graphite-850);text-align:left;padding:18px;display:block}.profile-card:hover,.profile-card:focus-visible,.profile-card.active{border-color:var(--cyan-muted);background:#202d35}.profile-card h3{color:var(--text);margin-bottom:14px}.profile-matrix-list{gap:10px;margin:0 0 14px;display:grid}.profile-matrix-list>div{border-bottom:1px solid var(--graphite-700);grid-template-columns:minmax(0,1.4fr) minmax(120px,.6fr);gap:12px;padding-bottom:9px;display:grid}.profile-matrix-list dt{color:var(--muted);font-size:.82rem}.profile-matrix-list dd{color:var(--text);text-align:right;margin:0;font-weight:700}.form-card{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);padding:18px}.form-card.active{border-color:var(--cyan-muted);box-shadow:inset 0 0 0 1px #61d8e629, var(--shadow)}.form-card h3{color:var(--cyan)}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px;display:grid}.field{flex-direction:column;gap:6px;min-width:0;display:flex}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{border:1px solid var(--graphite-600);border-radius:var(--radius-sm);width:100%;min-height:44px;color:var(--text);background:var(--graphite-850);padding:9px 10px}.field textarea{resize:vertical;min-height:88px}.field small{color:var(--subtle);font-size:.73rem;line-height:1.4}.validation-error{border-radius:var(--radius-sm);color:#ffd0d0;background:#6f283238;border:1px solid #ff8b8b73;margin-top:14px;padding:10px 12px}.table-wrap{overflow-x:auto}.rules-table{border-collapse:collapse;width:100%;font-size:.84rem}.rules-table th,.rules-table td{border-bottom:1px solid var(--graphite-700);text-align:left;vertical-align:top;padding:12px 10px}.rules-table th{color:var(--subtle);letter-spacing:.06em;text-transform:uppercase;font-size:.72rem}.rules-table td{color:var(--muted)}.rules-table strong{color:var(--text)}.diagnostic-list{grid-template-columns:minmax(130px,.5fr) minmax(0,1fr);gap:8px 16px;margin:0;font-size:.84rem;display:grid}.diagnostic-list dt{color:var(--subtle)}.diagnostic-list dd{color:var(--muted);overflow-wrap:anywhere;margin:0}.diagnostic-pre{border:1px solid var(--graphite-700);border-radius:var(--radius-sm);color:#c9d6e4;white-space:pre-wrap;background:#121820;max-height:360px;margin:0 0 12px;padding:12px;font-family:Cascadia Code,SFMono-Regular,Consolas,monospace;font-size:.75rem;line-height:1.5;overflow:auto}.core-state-module details{border-top:1px solid var(--graphite-700)}.core-state-module details summary{min-height:44px;color:var(--cyan);cursor:pointer;padding:13px 0;font-size:.86rem;font-weight:650}.core-state-module details[open] summary{margin-bottom:8px}.skeleton{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);min-height:180px}.empty-state{border:1px dashed var(--graphite-600);border-radius:var(--radius-md);color:var(--muted);text-align:center;padding:36px 18px}@media (width<=880px){.hero-card,.grid.two,.grid.three,.grid.four,.profile-grid{grid-template-columns:1fr}.hero-side{border-top:1px solid var(--graphite-700);border-left:0;padding:16px 0 0}.calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (width<=560px){.core-state-module{width:calc(100% - 20px);max-width:none;padding-top:16px}.module-header,.view-heading{flex-direction:column;align-items:flex-start}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.calendar-grid{grid-template-columns:1fr}}@media (prefers-reduced-motion:reduce){.core-state-module,.core-state-module *,.core-state-module :before,.core-state-module :after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}@property --tw-rotate-x{syntax:\"*\";inherits:false}@property --tw-rotate-y{syntax:\"*\";inherits:false}@property --tw-rotate-z{syntax:\"*\";inherits:false}@property --tw-skew-x{syntax:\"*\";inherits:false}@property --tw-skew-y{syntax:\"*\";inherits:false}@property --tw-border-style{syntax:\"*\";inherits:false;initial-value:solid}@property --tw-outline-style{syntax:\"*\";inherits:false;initial-value:solid}@property --tw-blur{syntax:\"*\";inherits:false}@property --tw-brightness{syntax:\"*\";inherits:false}@property --tw-contrast{syntax:\"*\";inherits:false}@property --tw-grayscale{syntax:\"*\";inherits:false}@property --tw-hue-rotate{syntax:\"*\";inherits:false}@property --tw-invert{syntax:\"*\";inherits:false}@property --tw-opacity{syntax:\"*\";inherits:false}@property --tw-saturate{syntax:\"*\";inherits:false}@property --tw-sepia{syntax:\"*\";inherits:false}@property --tw-drop-shadow{syntax:\"*\";inherits:false}@property --tw-drop-shadow-color{syntax:\"*\";inherits:false}@property --tw-drop-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:\"*\";inherits:false}", bp = "data-bcs-styles", xp = "data-bcs-mount";
-function Sp(e) {
-	let t = e.querySelector(`style[${bp}]`);
-	t || (t = document.createElement("style"), t.setAttribute(bp, ""), t.textContent = yp, e.append(t));
-	let n = e.querySelector(`[${xp}]`);
-	return n || (n = document.createElement("div"), n.setAttribute(xp, ""), e.append(n)), n;
+var Yp = "/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */\n@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-rotate-x:initial;--tw-rotate-y:initial;--tw-rotate-z:initial;--tw-skew-x:initial;--tw-skew-y:initial;--tw-border-style:solid;--tw-outline-style:solid;--tw-blur:initial;--tw-brightness:initial;--tw-contrast:initial;--tw-grayscale:initial;--tw-hue-rotate:initial;--tw-invert:initial;--tw-opacity:initial;--tw-saturate:initial;--tw-sepia:initial;--tw-drop-shadow:initial;--tw-drop-shadow-color:initial;--tw-drop-shadow-alpha:100%;--tw-drop-shadow-size:initial}}}.collapse{visibility:collapse}.visible{visibility:visible}.absolute{position:absolute}.fixed{position:fixed}.static{position:static}.sticky{position:sticky}.block{display:block}.contents{display:contents}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline{display:inline}.inline-flex{display:inline-flex}.min-h-full{min-height:100%}.flex-grow{flex-grow:1}.transform{transform:var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)}.resize{resize:both}.items-center{align-items:center}.justify-center{justify-content:center}.border{border-style:var(--tw-border-style);border-width:1px}.outline{outline-style:var(--tw-outline-style);outline-width:1px}.filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}:host{color:#e7edf4;font-synthesis:none;text-rendering:optimizelegibility;--graphite-950:#11161d;--graphite-900:#171d25;--graphite-850:#1b222c;--graphite-800:#202934;--graphite-700:#2d3745;--graphite-600:#465363;--text:#e7edf4;--muted:#9aa8b8;--subtle:#718093;--cyan:#61d8e6;--cyan-muted:#2d7881;--purple:#b49bff;--orange:#f4b46d;--green:#7dd7ad;--red:#ff8b8b;--yellow:#f4d37b;--radius-sm:8px;--radius-md:12px;--shadow:0 12px 30px #0003;background:#11161d;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;display:block}.core-state-module,.core-state-module *,.core-state-module :before,.core-state-module :after{box-sizing:border-box}.core-state-module{width:min(2080px,100% - 64px);max-width:2080px;min-height:100%;color:var(--text);background:var(--graphite-950);font-synthesis:none;text-rendering:optimizelegibility;margin:0 auto;padding:28px 0 48px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}.core-state-module button,.core-state-module input,.core-state-module select,.core-state-module textarea{font:inherit}.core-state-module button{cursor:pointer}.core-state-module button:focus-visible,.core-state-module input:focus-visible,.core-state-module select:focus-visible,.core-state-module textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}.module-header{border-bottom:1px solid var(--graphite-700);justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:22px;display:flex}.eyebrow,.section-kicker{color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px;font-size:.74rem;font-weight:700}.core-state-module h1,.core-state-module h2,.core-state-module h3,.core-state-module p{margin-top:0}.core-state-module h1{letter-spacing:-.035em;margin-bottom:0;font-size:clamp(1.55rem,3vw,2.3rem)}.module-subtitle{color:var(--muted);margin:8px 0 0;font-size:.95rem}.core-state-module h2{letter-spacing:-.025em;margin-bottom:8px;font-size:clamp(1.45rem,2.8vw,2rem)}.core-state-module h3{margin-bottom:6px;font-size:1rem}.module-status,.status-badge,.data-status{border:1px solid var(--graphite-600);min-height:32px;color:var(--muted);white-space:nowrap;border-radius:999px;align-items:center;gap:8px;padding:6px 10px;font-size:.78rem;display:inline-flex}.status-dot{background:var(--green);border-radius:50%;width:8px;height:8px;box-shadow:0 0 0 3px #7dd7ad21}[data-status=loading] .status-dot,[data-status=reconnecting] .status-dot{background:var(--cyan)}[data-status=degraded] .status-dot,[data-status=stale] .status-dot{background:var(--yellow)}[data-status=error] .status-dot,[data-status=offline] .status-dot,[data-status=unavailable] .status-dot,[data-status=blocked] .status-dot{background:var(--red)}.data-status[data-status=ready]{color:var(--green);border-color:#7dd7ad59}.data-status[data-status=degraded],.data-status[data-status=stale]{color:var(--orange);border-color:#f4b46d61}.data-status[data-status=error],.data-status[data-status=offline],.data-status[data-status=unavailable],.data-status[data-status=blocked]{color:var(--red);border-color:#ff8b8b6b}.contract-version{border-left:1px solid var(--graphite-600);color:var(--subtle);font-variant-numeric:tabular-nums;padding-left:8px}.version-chip{color:var(--text);font-variant-numeric:tabular-nums}.module-nav{scrollbar-width:thin;gap:4px;padding:14px 0 22px;display:flex;overflow-x:auto}.nav-item,.button{border-radius:var(--radius-sm);min-height:44px;color:var(--muted);background:0 0;border:1px solid #0000;justify-content:center;align-items:center;gap:8px;padding:0 14px;font-size:.9rem;transition:all .16s;display:inline-flex}.nav-item:hover,.nav-item.active{color:var(--text);background:var(--graphite-850);border-color:var(--graphite-600)}.nav-item.active{box-shadow:inset 0 -2px var(--cyan)}.button{border-color:var(--graphite-600);background:var(--graphite-800);color:var(--text);font-weight:650}.button:hover{border-color:var(--cyan-muted);background:var(--graphite-700)}.button.secondary{background:0 0}.button.danger{color:var(--red)}.button:disabled{cursor:wait;opacity:.5}.inline-error,.callout{border-radius:var(--radius-sm);color:#ffd0d0;background:#6f283238;border:1px solid #ff8b8b73;margin:0 0 18px;padding:12px 14px}.callout.info{color:#c4f3f7;background:#215b6333;border-color:#61d8e659}.command-feedback{border:1px solid var(--graphite-600);border-radius:var(--radius-sm);color:var(--muted);background:var(--graphite-900);flex-wrap:wrap;align-items:baseline;gap:8px;margin:0 0 18px;padding:11px 14px;display:flex}.command-feedback.command-success{color:#c9f4de;background:#27695033;border-color:#7dd7ad73}.command-feedback.command-pending{color:#c4f3f7;background:#215b6333;border-color:#61d8e666}.command-feedback.command-error{color:#ffd0d0;background:#6f283238;border-color:#ff8b8b73}.module-content{min-width:0}.view-heading{justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px;display:flex}.view-heading p,.muted,.helper{color:var(--muted)}.helper{margin-bottom:0;font-size:.82rem;line-height:1.5}.grid{gap:14px;display:grid}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.card,.hero-card,.metric-card,.timeline-card,.table-card{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);box-shadow:var(--shadow)}.hero-card{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:24px;margin-bottom:14px;padding:24px;display:grid}.hero-card.provisional_sleep{border-color:#f4b46d7a}.hero-card.sleep{border-color:#b49bff7a}.hero-card.waking{border-color:#61d8e67a}.hero-card.awake{border-color:#7dd7ad7a}.hero-label{color:var(--cyan);align-items:center;gap:8px;margin-bottom:18px;font-size:.84rem;font-weight:700;display:inline-flex}.hero-card p{max-width:62ch;line-height:1.55}.hero-side{border-left:1px solid var(--graphite-700);flex-direction:column;justify-content:center;gap:12px;padding:4px 0 4px 20px;display:flex}.hero-side-label,.metric-label,.field-label,.mini-label{color:var(--subtle);letter-spacing:.07em;text-transform:uppercase;font-size:.74rem;font-weight:700}.hero-time{color:var(--text);letter-spacing:-.04em;font-size:2rem;font-weight:750}.hero-meta,.inline-meta,.action-row,.card-header,.section-header{flex-wrap:wrap;align-items:center;gap:10px;display:flex}.hero-meta{margin-top:18px}.chip{border:1px solid var(--graphite-600);min-height:30px;color:var(--muted);border-radius:999px;align-items:center;gap:6px;padding:4px 9px;font-size:.8rem;display:inline-flex}.chip.cyan{color:var(--cyan);border-color:var(--cyan-muted)}.chip.purple{color:var(--purple);border-color:#b49bff59}.chip.orange{color:var(--orange);border-color:#f4b46d59}.metric-card,.card,.timeline-card,.table-card{padding:18px}.metric-card{min-height:100px}.hero-card.sleep .hero-label,.hero-card.provisional_sleep .hero-label,.hero-card.waking .hero-label,.hero-side-label,.hero-time{color:var(--purple)}.semantic-cyan{border-color:#61d8e657}.semantic-purple{border-color:#b49bff5c}.semantic-orange{border-color:#f4b46d61}.semantic-green{border-color:#7dd7ad61}.semantic-red{border-color:#ff8b8b6b}.state-overview,.metric-grid{margin-top:14px}.trace-card{min-height:220px}.trace-summary{color:var(--muted);line-height:1.5}.quality-line{color:var(--subtle);margin:12px 0;font-size:.78rem;display:block}.metric-value{color:var(--text);margin:8px 0 4px;font-size:1.25rem;font-weight:700}.metric-note{color:var(--subtle);margin:0;font-size:.78rem}.timeline-card{margin-top:14px}.section-header{justify-content:space-between;margin-bottom:14px}.section-header h3,.card-header h3{margin-bottom:0}.timeline-track{gap:2px;height:68px;padding-top:10px;display:flex;position:relative}.timeline-marker{z-index:2;background:var(--cyan);width:2px;position:absolute;top:0;bottom:0;box-shadow:0 0 0 3px #61d8e621}.timeline-phase{border:1px solid var(--graphite-700);background:var(--graphite-850);border-radius:6px;min-width:0;height:58px;padding:9px 6px;position:relative;overflow:hidden}.timeline-phase.active{border-color:var(--cyan-muted);background:#20333a}.timeline-phase-label{color:var(--muted);text-overflow:ellipsis;white-space:nowrap;font-size:.7rem;font-weight:650;display:block;overflow:hidden}.timeline-phase-time{color:var(--subtle);font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:5px;font-size:.68rem;display:block}.tooltip{z-index:10;border:1px solid var(--graphite-600);border-radius:var(--radius-sm);max-width:260px;color:var(--text);background:var(--graphite-800);box-shadow:var(--shadow);padding:8px 10px;font-size:.75rem;line-height:1.4}.progress-bar{background:var(--graphite-700);border-radius:999px;height:6px;margin-top:12px;overflow:hidden}.progress-bar>span{background:var(--cyan);height:100%;display:block}.action-row{margin-top:18px}.calendar-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;max-width:1780px;margin:0 auto;display:grid}.calendar-day{border:1px solid var(--graphite-700);border-radius:var(--radius-sm);background:var(--graphite-900);flex-direction:column;gap:8px;min-height:142px;padding:12px;display:flex}.calendar-day.weekend{background:#1b202a}.calendar-day.holiday,.calendar-day.vacation{border-color:#f4b46d85}.calendar-day.vacation{background:#5c422c33}.calendar-day.weekday{background:var(--graphite-900)}.calendar-day.degraded,.calendar-day.stale{border-color:#f4d37b66}.calendar-day-header{justify-content:space-between;align-items:center;gap:6px;display:flex}.calendar-date{color:var(--text);font-size:.8rem;font-weight:700}.calendar-wake{color:var(--cyan);font-size:1.35rem;font-weight:750}.calendar-wake.purple{color:var(--purple)}.calendar-wake.orange{color:var(--orange)}.day-context-list{flex-direction:column;align-items:flex-start;gap:6px;display:flex}.calendar-day .helper{font-size:.75rem}.calendar-day .data-status{align-self:flex-start;min-height:26px;margin-top:auto;padding:3px 7px;font-size:.7rem}.profile-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;display:grid}.profile-matrix{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);padding:18px}.profile-card{border:1px solid var(--graphite-700);border-radius:var(--radius-md);width:100%;min-height:44px;color:var(--text);background:var(--graphite-850);text-align:left;padding:18px;display:block}.profile-card:hover,.profile-card:focus-visible,.profile-card.active{border-color:var(--cyan-muted);background:#202d35}.profile-card h3{color:var(--text);margin-bottom:14px}.profile-matrix-list{gap:10px;margin:0 0 14px;display:grid}.profile-matrix-list>div{border-bottom:1px solid var(--graphite-700);grid-template-columns:minmax(0,1.4fr) minmax(120px,.6fr);gap:12px;padding-bottom:9px;display:grid}.profile-matrix-list dt{color:var(--muted);font-size:.82rem}.profile-matrix-list dd{color:var(--text);text-align:right;margin:0;font-weight:700}.form-card{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);padding:18px}.form-card.active{border-color:var(--cyan-muted);box-shadow:inset 0 0 0 1px #61d8e629, var(--shadow)}.form-card h3{color:var(--cyan)}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px;display:grid}.field{flex-direction:column;gap:6px;min-width:0;display:flex}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{border:1px solid var(--graphite-600);border-radius:var(--radius-sm);width:100%;min-height:44px;color:var(--text);background:var(--graphite-850);padding:9px 10px}.field textarea{resize:vertical;min-height:88px}.field small{color:var(--subtle);font-size:.73rem;line-height:1.4}.validation-error{border-radius:var(--radius-sm);color:#ffd0d0;background:#6f283238;border:1px solid #ff8b8b73;margin-top:14px;padding:10px 12px}.table-wrap{overflow-x:auto}.rules-table{border-collapse:collapse;width:100%;font-size:.84rem}.rules-table th,.rules-table td{border-bottom:1px solid var(--graphite-700);text-align:left;vertical-align:top;padding:12px 10px}.rules-table th{color:var(--subtle);letter-spacing:.06em;text-transform:uppercase;font-size:.72rem}.rules-table td{color:var(--muted)}.rules-table strong{color:var(--text)}.diagnostic-list{grid-template-columns:minmax(130px,.5fr) minmax(0,1fr);gap:8px 16px;margin:0;font-size:.84rem;display:grid}.diagnostic-list dt{color:var(--subtle)}.diagnostic-list dd{color:var(--muted);overflow-wrap:anywhere;margin:0}.diagnostic-pre{border:1px solid var(--graphite-700);border-radius:var(--radius-sm);color:#c9d6e4;white-space:pre-wrap;background:#121820;max-height:360px;margin:0 0 12px;padding:12px;font-family:Cascadia Code,SFMono-Regular,Consolas,monospace;font-size:.75rem;line-height:1.5;overflow:auto}.core-state-module details{border-top:1px solid var(--graphite-700)}.core-state-module details summary{min-height:44px;color:var(--cyan);cursor:pointer;padding:13px 0;font-size:.86rem;font-weight:650}.core-state-module details[open] summary{margin-bottom:8px}.anchor-table{table-layout:fixed;min-width:640px}.anchor-table th:first-child{width:22%}.anchor-input{border:1px solid var(--graphite-600);border-radius:var(--radius-sm);width:100%;min-height:40px;color:var(--text);background:var(--graphite-850);font-variant-numeric:tabular-nums;padding:7px 9px}.anchor-input[aria-invalid=true]{border-color:var(--red);box-shadow:inset 0 0 0 1px #ff8b8b59}.anchor-error{color:#ffd0d0;margin-top:4px;font-size:.72rem;line-height:1.35;display:block}.rules-table td.active-profile{color:var(--cyan)}.skeleton{border:1px solid var(--graphite-700);border-radius:var(--radius-md);background:var(--graphite-900);min-height:180px}.empty-state{border:1px dashed var(--graphite-600);border-radius:var(--radius-md);color:var(--muted);text-align:center;padding:36px 18px}@media (width<=880px){.hero-card,.grid.two,.grid.three,.grid.four,.profile-grid{grid-template-columns:1fr}.hero-side{border-top:1px solid var(--graphite-700);border-left:0;padding:16px 0 0}.calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (width<=560px){.core-state-module{width:calc(100% - 20px);max-width:none;padding-top:16px}.module-header,.view-heading{flex-direction:column;align-items:flex-start}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.calendar-grid{grid-template-columns:1fr}}@media (prefers-reduced-motion:reduce){.core-state-module,.core-state-module *,.core-state-module :before,.core-state-module :after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}@property --tw-rotate-x{syntax:\"*\";inherits:false}@property --tw-rotate-y{syntax:\"*\";inherits:false}@property --tw-rotate-z{syntax:\"*\";inherits:false}@property --tw-skew-x{syntax:\"*\";inherits:false}@property --tw-skew-y{syntax:\"*\";inherits:false}@property --tw-border-style{syntax:\"*\";inherits:false;initial-value:solid}@property --tw-outline-style{syntax:\"*\";inherits:false;initial-value:solid}@property --tw-blur{syntax:\"*\";inherits:false}@property --tw-brightness{syntax:\"*\";inherits:false}@property --tw-contrast{syntax:\"*\";inherits:false}@property --tw-grayscale{syntax:\"*\";inherits:false}@property --tw-hue-rotate{syntax:\"*\";inherits:false}@property --tw-invert{syntax:\"*\";inherits:false}@property --tw-opacity{syntax:\"*\";inherits:false}@property --tw-saturate{syntax:\"*\";inherits:false}@property --tw-sepia{syntax:\"*\";inherits:false}@property --tw-drop-shadow{syntax:\"*\";inherits:false}@property --tw-drop-shadow-color{syntax:\"*\";inherits:false}@property --tw-drop-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:\"*\";inherits:false}", Xp = "data-bcs-styles", Zp = "data-bcs-mount";
+function Qp(e) {
+	let t = e.querySelector(`style[${Xp}]`);
+	t || (t = document.createElement("style"), t.setAttribute(Xp, ""), t.textContent = Yp, e.append(t));
+	let n = e.querySelector(`[${Zp}]`);
+	return n || (n = document.createElement("div"), n.setAttribute(Zp, ""), e.append(n)), n;
 }
-var Cp = ct(null), wp = class extends HTMLElement {
+var $p = ct(null), em = class extends HTMLElement {
 	app = null;
 	_hass = null;
 	unmountPromise = null;
@@ -8692,12 +9050,12 @@ var Cp = ct(null), wp = class extends HTMLElement {
 		return this._hass;
 	}
 	set hass(e) {
-		this._hass = e, Cp.set(e);
+		this._hass = e, $p.set(e);
 	}
 	connectedCallback() {
 		if (this.app) return;
-		let e = ++this.mountGeneration, t = Sp(this.shadowRoot ?? this.attachShadow({ mode: "open" })), n = () => {
-			!this.isConnected || this.app || e !== this.mountGeneration || (this.app = ei(vp, { target: t }));
+		let e = ++this.mountGeneration, t = Qp(this.shadowRoot ?? this.attachShadow({ mode: "open" })), n = () => {
+			!this.isConnected || this.app || e !== this.mountGeneration || (this.app = ei(Jp, { target: t }));
 		};
 		if (this.unmountPromise) {
 			let e = this.unmountPromise;
@@ -8708,6 +9066,6 @@ var Cp = ct(null), wp = class extends HTMLElement {
 		this.mountGeneration += 1, this.app && (this.unmountPromise = ii(this.app)), this.app = null;
 	}
 };
-customElements.get("bcs-app") || customElements.define("bcs-app", wp);
+customElements.get("bcs-app") || customElements.define("bcs-app", em);
 //#endregion
-export { Cp as hassStore };
+export { $p as hassStore };

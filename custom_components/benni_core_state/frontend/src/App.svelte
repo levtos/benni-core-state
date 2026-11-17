@@ -2,19 +2,21 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Activity, CalendarDays, House, ListChecks, Settings2 } from "@lucide/svelte";
+  import { Activity, CalendarClock, CalendarDays, House, ListChecks, Settings2 } from "@lucide/svelte";
   import { hassStore } from "./main";
   import { createAdapter } from "./lib/adapters";
   import type { DataStatus } from "./lib/contracts";
   import { displayCommandError, statusLabel } from "./lib/contracts";
   import { CoreStateStore, type CoreStateViewState } from "./lib/store";
+  import type { AnchorMatrix } from "./lib/contracts";
   import CalendarView from "./views/CalendarView.svelte";
+  import DayPhasesView from "./views/DayPhasesView.svelte";
   import DiagnosticsView from "./views/DiagnosticsView.svelte";
   import ProfilesRulesView from "./views/ProfilesRulesView.svelte";
   import SettingsView from "./views/SettingsView.svelte";
   import TodayView from "./views/TodayView.svelte";
 
-  type ViewId = "today" | "calendar" | "profiles" | "diagnostics" | "settings";
+  type ViewId = "today" | "calendar" | "profiles" | "day_phases" | "diagnostics" | "settings";
 
   const store = new CoreStateStore();
   let viewState: CoreStateViewState = $state(store.state);
@@ -26,6 +28,7 @@
     { id: "today", label: "Heute" },
     { id: "calendar", label: "Kalender" },
     { id: "profiles", label: "Profile & Regeln" },
+    { id: "day_phases", label: "Tagesphasen" },
     { id: "diagnostics", label: "Diagnose" },
     { id: "settings", label: "Einstellungen" },
   ];
@@ -36,6 +39,10 @@
 
   async function sendCommand(command: string, payload: Record<string, unknown> = {}): Promise<void> {
     await store.command(command, payload);
+  }
+
+  function previewDayPhases(date: string, anchors: AnchorMatrix | null) {
+    return store.dayPhasePreview(date, anchors);
   }
 
   $effect(() => {
@@ -90,6 +97,7 @@
         {#if item.id === "today"}<House size={17} strokeWidth={1.8} />{/if}
         {#if item.id === "calendar"}<CalendarDays size={17} strokeWidth={1.8} />{/if}
         {#if item.id === "profiles"}<ListChecks size={17} strokeWidth={1.8} />{/if}
+        {#if item.id === "day_phases"}<CalendarClock size={17} strokeWidth={1.8} />{/if}
         {#if item.id === "diagnostics"}<Activity size={17} strokeWidth={1.8} />{/if}
         {#if item.id === "settings"}<Settings2 size={17} strokeWidth={1.8} />{/if}
         <span>{item.label}</span>
@@ -129,6 +137,13 @@
         snapshot={viewState.snapshot}
         pendingCommand={viewState.pendingCommand}
         onCommand={sendCommand}
+      />
+    {:else if activeView === "day_phases"}
+      <DayPhasesView
+        snapshot={viewState.snapshot}
+        pendingCommand={viewState.pendingCommand}
+        onCommand={sendCommand}
+        onPreview={previewDayPhases}
       />
     {:else if activeView === "diagnostics"}
       <DiagnosticsView snapshot={viewState.snapshot} status={viewState.status} />

@@ -5,6 +5,53 @@ Format angelehnt an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-11-17
+
+### Added
+- Saisonales Tagesphasen-Akkordeon (`seasonal-anchor-accordion-v3`): vier
+  Hauptphasen Morgen/Tag/Abend/Nacht aus 32 unabhängig editierbaren
+  Ankerzeiten (2 Tagesprofile × 4 Stichtage 21.03./21.06./23.09./21.12. × 4
+  Phasenbeginne), linear über die tatsächlichen Kalendertage interpoliert,
+  exakt rational ohne Drift, Schaltjahr- und Jahreswechsel-fest.
+- Neuer Sensor `sensor.<profil>_core_state_day_phase` (`morning`, `day`,
+  `evening`, `night`) mit Grenzzeiten, Profil, Zyklus und Qualität als
+  Diagnose. Er rechnet immer mit, auch solange `day_state` noch das bisherige
+  Modell verwendet.
+- Gemeinsames Tagesprofil Werktag/Freier Tag (`day_profile`) aus der
+  bestehenden Core-State-Kalenderquelle; der Wake Planner nutzt dieselbe
+  Entscheidung.
+- Panel-Ansicht „Tagesphasen“: Pflege der 32 Ankerzeiten je Profil und
+  Stichtag, verständliche Validierung, Vorschau für ein frei wählbares Datum
+  (auch mit ungespeicherten Werten), Verwerfen, Startwerte, Wiederherstellen
+  und kontrollierte Modellumschaltung.
+- Service `benni_core_state.set_day_phase_model` sowie UX-Commands
+  `day_phase.config.update|rollback|reset_defaults` und `day_phase.model.set`,
+  WebSocket `benni_core_state/ux_day_phase_preview` und REST
+  `/api/benni_core_state/day_phase_preview`.
+- Mapping-Vertrag 1.6.0 mit dem neuen `day_phase`-Eintrag.
+
+### Changed
+- `sensor.<profil>_core_state_day_state` kann per Schalter aus dem Akkordeon
+  abgeleitet werden (Morgen → `early_morning`; Tag → `forenoon`/`midday`/
+  `afternoon`/`late_afternoon` 3:2:2:2; Abend → `evening`/`late_evening` 1:1;
+  Nacht → `early_night`/`late_night` 2:1). Entity-ID, Unique-ID und die neun
+  Zustände bleiben unverändert. **Default bleibt das bisherige Modell
+  (`legacy`)**; ohne Umschaltung ändert sich kein Zustand.
+- Mitternacht löst keinen Phasenwechsel aus; die Nacht endet mit dem Morgen des
+  neuen Datums und dessen Profil. Ein persistierter Monotonie-Guard verhindert
+  Rücksprünge bei Profil- oder Konfigurationsänderung und in der doppelten
+  Stunde der Winterzeit-Umstellung.
+
+### Safety
+- Ungültiges gespeichertes Akkordeon-Dokument oder ein Berechnungsfehler
+  führen automatisch zum bisherigen Algorithmus; `day_state` und `day_phase`
+  werden nie `unknown`.
+- Am bestehenden `day_state`-Sensor werden die von Verbrauchern ausgewerteten
+  Attributnamen `degraded`, `quality`, `source_quality`, `quality_status` und
+  `master_phase` bewusst nicht gesetzt (blind_control, light_policy).
+- Verbraucher-Audit und dokumentierte Verhaltensänderungen:
+  [docs/architecture/2026-11-17-day-phase-accordion.md](docs/architecture/2026-11-17-day-phase-accordion.md).
+
 ## [0.11.8] - 2026-09-02
 
 ### Added

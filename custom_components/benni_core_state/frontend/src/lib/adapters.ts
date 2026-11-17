@@ -1,4 +1,4 @@
-import type { CommandAck, Projection, Snapshot } from "./contracts";
+import type { AnchorMatrix, CommandAck, DayPhasePreview, Projection, Snapshot } from "./contracts";
 
 export interface HassConnection {
   sendMessagePromise?<T>(message: Record<string, unknown>): Promise<T>;
@@ -16,6 +16,7 @@ export interface CoreStateAdapter {
   readonly kind: "ha-panel" | "standalone";
   snapshot(): Promise<Snapshot>;
   projection(days: number): Promise<Projection>;
+  dayPhasePreview(date: string, anchors?: AnchorMatrix | null): Promise<DayPhasePreview>;
   command(
     requestId: string,
     command: string,
@@ -28,6 +29,7 @@ export abstract class HostAdapter implements CoreStateAdapter {
   abstract readonly kind: "ha-panel" | "standalone";
   abstract snapshot(): Promise<Snapshot>;
   abstract projection(days: number): Promise<Projection>;
+  abstract dayPhasePreview(date: string, anchors?: AnchorMatrix | null): Promise<DayPhasePreview>;
   abstract command(
     requestId: string,
     command: string,
@@ -63,6 +65,12 @@ export class HaPanelAdapter extends HostAdapter {
       type: "benni_core_state/ux_projection",
       days,
     });
+  }
+
+  dayPhasePreview(date: string, anchors: AnchorMatrix | null = null): Promise<DayPhasePreview> {
+    const message: Record<string, unknown> = { type: "benni_core_state/ux_day_phase_preview", date };
+    if (anchors) message.anchors = anchors;
+    return this.connection.sendMessagePromise!(message);
   }
 
   command(
@@ -115,6 +123,13 @@ export class StandaloneAdapter extends HostAdapter {
 
   projection(days: number): Promise<Projection> {
     return this.request<Projection>(`/api/benni_core_state/projection?days=${days}`);
+  }
+
+  dayPhasePreview(date: string, anchors: AnchorMatrix | null = null): Promise<DayPhasePreview> {
+    return this.request<DayPhasePreview>("/api/benni_core_state/day_phase_preview", {
+      method: "POST",
+      body: JSON.stringify(anchors ? { date, anchors } : { date }),
+    });
   }
 
   command(

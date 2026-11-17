@@ -23,7 +23,7 @@ from .const import (
 )
 
 
-MAPPING_CONTRACT_VERSION: Final[str] = "1.5.0"
+MAPPING_CONTRACT_VERSION: Final[str] = "1.6.0"
 DEFAULT_CANONICAL_PROFILE: Final[str] = "benni"
 _COMPACT_DIAGNOSTIC_KEYS: Final[tuple[str, ...]] = (
     "mapping_key",
@@ -49,6 +49,8 @@ CANONICAL_DAY_STATES: Final[tuple[str, ...]] = (
     "evening",
     "late_evening",
 )
+
+CANONICAL_DAY_PHASES: Final[tuple[str, ...]] = ("morning", "day", "evening", "night")
 
 STATUS_CANONICAL_CURRENT: Final[str] = "canonical_current"
 STATUS_CANONICAL_TARGET: Final[str] = "canonical_target"
@@ -336,6 +338,36 @@ CANONICAL_MAPPINGS: Final[tuple[EntityMapping, ...]] = (
         entity_id_pattern="sensor.{profile}_core_state_day_state",
         entity_suffix="day_state",
         target_attributes=("phase_starts", "source"),
+    ),
+    EntityMapping(
+        mapping_key="day_phase",
+        contract_fact="vier Hauptphasen des saisonalen Akkordeons (Morgen/Tag/Abend/Nacht)",
+        canonical_entity_id=_entity("sensor", "day_phase"),
+        domain="sensor",
+        unique_id_template=_uid_template("day_phase"),
+        allowed_states=CANONICAL_DAY_PHASES,
+        attributes=(
+            "main_phase",
+            "sub_phase",
+            "day_profile",
+            "cycle_date",
+            "main_phase_starts",
+            "sub_phase_starts",
+            "day_phase_model",
+            "degraded",
+        ),
+        owner="benni-core-state (L1)",
+        current_source=("runtime:day_phase.evaluate", "internal:day_profile.resolve_day_profile"),
+        legacy_references=(),
+        legacy_resolution=LEGACY_CANONICAL,
+        status=STATUS_CANONICAL_CURRENT,
+        reason="Zusätzlicher Vier-Phasen-Vertrag; ersetzt day_state nicht. Die neun day_state-Werte werden aus diesen Hauptphasen abgeleitet, sobald das Akkordeon-Modell aktiv ist.",
+        planned_cutover="Kein Consumer-Rebind in dieser Phase; Verbraucher bleiben auf day_state.",
+        rollback="Modell auf legacy stellen; der Sensor rechnet weiter als Vorschau.",
+        consumer_issue="https://github.com/Levtos/benni-core-state/issues/24",
+        entity_id_pattern="sensor.{profile}_core_state_day_phase",
+        entity_suffix="day_phase",
+        target_attributes=("main_phase", "day_profile", "main_phase_starts"),
     ),
     _current(
         mapping_key="day_context",

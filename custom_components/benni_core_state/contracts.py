@@ -14,7 +14,7 @@ from typing import Any, Mapping
 
 from homeassistant.util import dt as dt_util
 
-from . import logic, wake_config
+from . import day_phase, day_profile, logic, wake_config
 from .const import (
     BIO_AWAKE,
     BIO_PROVISIONAL_SLEEP,
@@ -95,8 +95,74 @@ def _snapshot_status(coord: Any) -> str:
     return "ready"
 
 
+def _rows_to_timeline(
+    rows: list[tuple[str, datetime, datetime]],
+    local_now: datetime,
+    *,
+    date_iso: str,
+    source: str,
+) -> dict[str, Any]:
+    phase_rows: list[dict[str, Any]] = []
+    for phase, start, end in rows:
+        seconds = max(1.0, (end - start).total_seconds())
+        phase_rows.append(
+            {
+                "id": phase,
+                "label": PHASE_LABELS.get(phase, phase),
+                "start": start.isoformat(),
+                "end": end.isoformat(),
+                "duration_seconds": round(seconds, 3),
+                "width_pct": 0.0,
+                "active": start <= local_now < end,
+                "progress_pct": round(
+                    max(0.0, min(100.0, (local_now - start).total_seconds() / seconds * 100)),
+                    2,
+                ),
+            }
+        )
+    total = sum(float(row["duration_seconds"]) for row in phase_rows)
+    for row in phase_rows:
+        row["width_pct"] = round(float(row["duration_seconds"]) / total * 100, 4)
+    active = next((row for row in phase_rows if row["active"]), phase_rows[-1])
+    marker = max(
+        0.0,
+        min(100.0, (local_now - rows[0][1]).total_seconds() / max(1.0, total) * 100),
+    )
+    return {
+        "version": "1.0.0",
+        "date": date_iso,
+        "phases": phase_rows,
+        "now_marker_pct": round(marker, 3),
+        "active_phase": active["id"],
+        "active_phase_progress_pct": active["progress_pct"],
+        "next_change": active["end"],
+        "source": source,
+    }
+
+
 def _timeline(coord: Any, local_now: datetime) -> dict[str, Any]:
     """Build backend-owned phase widths, marker and next change."""
+
+    evaluation = getattr(coord, "day_phase_evaluation", None)
+    if (
+        getattr(coord, "active_day_phase_model", day_phase.MODEL_LEGACY)
+        == day_phase.MODEL_ACCORDION
+        and evaluation is not None
+    ):
+        rows = [
+            (phase, start.astimezone(local_now.tzinfo), end.astimezone(local_now.tzinfo))
+            if start.tzinfo is not None
+            else (phase, start, end)
+            for phase, start, end in evaluation.timeline_rows()
+        ]
+        timeline = _rows_to_timeline(
+            rows,
+            local_now,
+            date_iso=evaluation.cycle.cycle_date.isoformat(),
+            source="internal:day_phase.evaluate",
+        )
+        timeline["active_phase"] = evaluation.sub_phase
+        return timeline
 
     current_starts = logic.compute_day_phase_starts(local_now)
     if local_now.replace(tzinfo=None) < current_starts[DAY_EARLY_NIGHT].replace(tzinfo=None):
@@ -190,6 +256,50 @@ def _public_config(config: wake_config.WakePlanningConfig) -> dict[str, Any]:
     return _safe(raw)
 
 
+def _day_phase_contract(coord: Any) -> dict[str, Any] | None:
+    """Accordion configuration, labels and live status for the UX."""
+
+    config = getattr(coord, "day_phase_config", None)
+    if config is None:
+        return None
+    data = getattr(coord, "data", None)
+    current = (getattr(data, "attrs", None) or {}).get("day_phase") if data is not None else None
+    return {
+        "contract_version": day_phase.CONFIG_CONTRACT_VERSION,
+        "model_version": day_phase.MODEL_VERSION,
+        "model": config.model,
+        "active_model": getattr(coord, "active_day_phase_model", config.model),
+        "load_error": getattr(coord, "day_phase_load_error", None),
+        "models": [
+            {"id": model, "label": day_phase.MODEL_LABELS[model]}
+            for model in day_phase.MODELS
+        ],
+        "anchors": day_phase._copy_anchors(config.anchors),
+        "defaults": day_phase._copy_anchors(day_phase.DEFAULT_ANCHORS),
+        "rollback_available": bool(config.previous_anchors),
+        "updated_at": config.updated_at,
+        "model_changed_at": config.model_changed_at,
+        "min_phase_minutes": day_phase.MIN_PHASE_MINUTES,
+        "profiles": [
+            {"id": profile, "label": day_profile.DAY_PROFILE_LABELS[profile]}
+            for profile in day_profile.DAY_PROFILES
+        ],
+        "seasons": [
+            {"id": season, "label": day_phase.SEASON_LABELS[season]}
+            for season in day_phase.SEASONS
+        ],
+        "main_phases": [
+            {"id": phase, "label": day_phase.MAIN_PHASE_LABELS[phase]}
+            for phase in day_phase.MAIN_PHASES
+        ],
+        "derivation": {
+            main: [{"id": sub, "weight": weight} for sub, weight in weights]
+            for main, weights in day_phase.SUB_PHASE_WEIGHTS.items()
+        },
+        "current": _safe(current) if isinstance(current, Mapping) else None,
+    }
+
+
 def build_snapshot(coord: Any, *, can_command: bool = True) -> dict[str, Any]:
     """Return the stable, versioned Today/diagnostic/config snapshot."""
 
@@ -211,8 +321,10 @@ def build_snapshot(coord: Any, *, can_command: bool = True) -> dict[str, Any]:
                 "edit_profiles": False,
                 "edit_rules": False,
                 "edit_settings": False,
+                "edit_day_phases": False,
             },
             "config": _public_config(coord.wake_config),
+            "day_phase": _day_phase_contract(coord),
             "permissions": {"read": True, "command": can_command},
         }
 
@@ -303,8 +415,10 @@ def build_snapshot(coord: Any, *, can_command: bool = True) -> dict[str, Any]:
             },
         },
         "config": _public_config(coord.wake_config),
+        "day_phase": _day_phase_contract(coord),
         "capabilities": {
             "legacy_comparison": legacy_available,
+            "edit_day_phases": can_command,
             "mark_sleep": can_command,
             "mark_awake": can_command,
             "edit_profiles": can_command,

@@ -67,6 +67,7 @@ Die folgende Tabelle zeigt die Route **Benni**:
 | `binary_sensor.benni_core_state_presence_preheat_active` | running | on / off |
 | `sensor.benni_core_state_bio_state` | enum | `sleep`, `provisional_sleep`, `waking`, `awake` |
 | `sensor.benni_core_state_day_state` | enum | `early_night`, `late_night`, `early_morning`, `forenoon`, `midday`, `afternoon`, `late_afternoon`, `evening`, `late_evening` |
+| `sensor.benni_core_state_day_phase` | enum | `morning`, `day`, `evening`, `night` (Hauptphasen des saisonalen Akkordeons; zusätzlich, ersetzt `day_state` nicht) |
 | `sensor.benni_core_state_day_context` | enum | `werktag`, `wochenende`, `frei` |
 | `sensor.benni_core_state_activity_state` | enum | `sleep`, `waking`, `private_time`, `gaming`, `entertainment`, `music`, `work_home`, `household`, `pc_active`, `free_time`, `idle` (plus legacy `work_away`) |
 | `sensor.benni_core_state_master_context` | string | komposit `presence.bio.day_state.day_context.activity` |
@@ -134,6 +135,26 @@ statt auf `unavailable` zu gehen.
   einstündigen Sprung in den lokalen Phasen.
   Die `day_state`-Attribute enthalten Datum, aktive Phase, effektive lokale
   Grenzen, Saisonparameter, Reason und Modellversion.
+  Dieser Absatz beschreibt das Modell `legacy` (Default). Seit 0.12.0 gibt es
+  zusätzlich das **saisonale Akkordeon** (siehe unten), das per Schalter die
+  Berechnung von `day_state` übernimmt.
+* **Tagesphasen-Akkordeon (0.12.0):** Vier Hauptphasen Morgen/Tag/Abend/Nacht,
+  vier Stichtage (21.03., 21.06., 23.09., 21.12.) und zwei Tagesprofile
+  (Werktag, Freier Tag) ergeben 32 unabhängig editierbare Beginnzeiten.
+  Dazwischen wird linear über die tatsächlichen Kalendertage interpoliert –
+  ohne Astronomie, Sonnenkorrektur oder Zuschläge. Die neun `day_state`-Werte
+  werden fest abgeleitet: Morgen → `early_morning`; Tag → `forenoon` 3 :
+  `midday` 2 : `afternoon` 2 : `late_afternoon` 2; Abend → `evening` 1 :
+  `late_evening` 1; Nacht → `early_night` 2 : `late_night` 1. Ein Zyklus
+  läuft von Morgen bis zum Morgen des Folgetags; die Nacht endet mit dem Morgen
+  des neuen Datums und dessen Profil, Mitternacht selbst löst keinen Wechsel
+  aus. Ein persistierter Monotonie-Guard verhindert Rücksprünge (Profilwechsel
+  am laufenden Tag, Konfigurationsänderung, doppelte Stunde bei Zeitumstellung).
+  Werktag/Freier Tag kommt aus derselben Core-State-Kalenderquelle wie der
+  Wake Planner (Wochenende, Feiertag, Urlaubs-/freie Intervalle). Pflege im
+  Panel unter **Tagesphasen**. Details, Verbraucher-Audit und
+  Aktivierungsschritte:
+  [Tagesphasen-Akkordeon](docs/architecture/2026-11-17-day-phase-accordion.md).
 * **Activity** gehört Core State. Die kanonische Entscheidung folgt exakt
   `sleep > waking > private_time > gaming > entertainment > music > work_home >
   household > pc_active > free_time > idle`. Media State liefert dafür nur den
@@ -158,6 +179,7 @@ benni_core_state.set_bio_state   (state: sleep | waking | awake)
 benni_core_state.mark_sleep      (Shortcut für state=sleep)
 benni_core_state.mark_awake      (Shortcut für state=awake)
 benni_core_state.configure_sleep_window (persistiert M und A)
+benni_core_state.set_day_phase_model   (model: legacy | accordion – kontrollierte Umschaltung von day_state)
 ```
 
 Alle Bio-Services verwenden denselben kanonischen Command- und Persistenzpfad.
@@ -243,6 +265,12 @@ Restart-fest (fachlich identisch zum Ist-Stand):
 * `minimum_sleep_minutes`, `provisional_lead_minutes`
 * `transition_state` + Startzeit
 * `preheat_active`, `preheat_source`, `preheat_started`
+* Tagesphasen: Monotonie-Guard `day_phase_guard` und Profil-Journal
+  `day_profile_journal` (Vortag/heute)
+
+Die 32 Ankerzeiten und das aktive Tagesphasen-Modell liegen getrennt in
+`.storage/benni_core_state_day_phase_<entry_id>` (Default-Modell `legacy`; ein
+ungültiges Dokument führt sicher zum Modell `legacy`).
 
 Defaults beim Erststart: `bio_state = sleep`, `transition_state = none`,
 `preheat_active = false`. Für den Shadow-Test ist **keine** harte Migration aus dem

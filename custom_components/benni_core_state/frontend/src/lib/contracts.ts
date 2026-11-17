@@ -127,6 +127,91 @@ export interface TodayData {
   data_status: DataStatus;
 }
 
+export type DayProfileId = "workday" | "free_day";
+export type SeasonId = "spring" | "summer" | "autumn" | "winter";
+export type MainPhaseId = "morning" | "day" | "evening" | "night";
+export type DayPhaseModel = "legacy" | "accordion";
+export type AnchorMatrix = Record<DayProfileId, Record<SeasonId, Record<MainPhaseId, string>>>;
+
+export interface DayPhaseCurrent {
+  main_phase?: MainPhaseId;
+  main_phase_label?: string;
+  sub_phase?: string;
+  computed_sub_phase?: string;
+  guard_hold?: boolean;
+  cycle_date?: string;
+  day_profile?: DayProfileId;
+  day_profile_label?: string;
+  day_profile_reason?: string;
+  next_phase?: string;
+  next_phase_at?: string;
+  main_phase_starts?: Record<string, string>;
+  day_phase_model?: DayPhaseModel;
+  drives_day_state?: boolean;
+  degraded?: boolean;
+  degraded_reasons?: string[];
+}
+
+export interface DayPhaseContract {
+  contract_version: string;
+  model_version: string;
+  model: DayPhaseModel;
+  active_model: DayPhaseModel;
+  load_error: string | null;
+  models: Array<{ id: DayPhaseModel; label: string }>;
+  anchors: AnchorMatrix;
+  defaults: AnchorMatrix;
+  rollback_available: boolean;
+  updated_at: string | null;
+  model_changed_at: string | null;
+  min_phase_minutes: number;
+  profiles: Array<{ id: DayProfileId; label: string }>;
+  seasons: Array<{ id: SeasonId; label: string }>;
+  main_phases: Array<{ id: MainPhaseId; label: string }>;
+  derivation: Record<MainPhaseId, Array<{ id: string; weight: number }>>;
+  current: DayPhaseCurrent | null;
+}
+
+export interface DayPhaseIssue {
+  path: string;
+  code: string;
+  message: string;
+}
+
+export interface DayPhaseRow {
+  id: string;
+  label?: string;
+  main?: MainPhaseId;
+  start: string;
+  end: string;
+  start_iso: string;
+  duration_minutes?: number;
+}
+
+export interface DayPhaseCycleRows {
+  label: string;
+  main: DayPhaseRow[];
+  sub: DayPhaseRow[];
+}
+
+export interface DayPhasePreview {
+  contract: "benni_core_state.day_phase_preview";
+  version: string;
+  valid: boolean;
+  errors: DayPhaseIssue[];
+  date?: string;
+  draft?: boolean;
+  season?: { from: SeasonId; to: SeasonId; elapsed_days: number; interval_days: number };
+  profiles?: Record<DayProfileId, DayPhaseCycleRows>;
+  applied?: (DayPhaseCycleRows & {
+    profile: DayProfileId;
+    reason: string;
+    reason_label: string;
+    quality: string;
+    next_profile: DayProfileId;
+  }) | null;
+}
+
 export interface Snapshot {
   contract: typeof UX_SNAPSHOT_CONTRACT;
   version: string;
@@ -139,8 +224,10 @@ export interface Snapshot {
     diagnostics: Record<string, unknown>;
   } | null;
   config: WakeConfig;
+  day_phase?: DayPhaseContract | null;
   capabilities: {
     legacy_comparison?: boolean;
+    edit_day_phases?: boolean;
     mark_sleep?: boolean;
     mark_awake?: boolean;
     edit_profiles?: boolean;
@@ -171,6 +258,13 @@ export interface ProjectionDay {
   };
   status: DataStatus;
   source: string;
+  day_phases?: {
+    profile: DayProfileId;
+    profile_label: string;
+    reason: string;
+    model: DayPhaseModel;
+    starts: Record<MainPhaseId, string>;
+  } | null;
 }
 
 export interface Projection {
@@ -312,7 +406,25 @@ const COMMAND_ERROR_LABELS: Record<string, string> = {
   minimum_sleep_invalid: "Die gewünschte Mindestschlafdauer muss eine positive Minutenzahl sein.",
   provisional_lead_invalid: "Der Schutzvorlauf muss eine positive Minutenzahl sein.",
   command_not_authorized: "Core State hat die Änderung nicht autorisiert.",
+  "day_phase_config_invalid:time_invalid": "Mindestens eine Ankerzeit hat kein gültiges Format (HH:MM).",
+  "day_phase_config_invalid:order_invalid": "Die Phasen müssen in der Reihenfolge Morgen, Tag, Abend, Nacht mit Mindestabstand beginnen.",
+  "day_phase_config_invalid:night_overlaps_morning": "Die Nacht beginnt zu kurz vor dem nächsten Morgen.",
+  "day_phase_config_invalid:cross_day_overlap": "Bei einem Profilwechsel um Mitternacht würde die Nacht in den Morgen laufen.",
+  "day_phase_config_invalid:rollback_unavailable": "Es gibt keinen vorherigen Stand.",
+  "day_phase_config_invalid:model_invalid": "Unbekanntes Berechnungsmodell.",
+  day_phase_anchors_invalid: "Die Ankerzeiten konnten nicht gelesen werden.",
 };
+
+const MAIN_PHASE_LABELS: Record<string, string> = {
+  morning: "Morgen",
+  day: "Tag",
+  evening: "Abend",
+  night: "Nacht",
+};
+
+export function displayMainPhase(value: string | null | undefined): string {
+  return mappedLabel(value, MAIN_PHASE_LABELS);
+}
 
 function mappedLabel(
   value: string | null | undefined,

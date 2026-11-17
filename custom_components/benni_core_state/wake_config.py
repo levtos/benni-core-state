@@ -13,7 +13,7 @@ from dataclasses import dataclass, replace
 from datetime import date, datetime, time, timezone
 from typing import Any, Mapping
 
-from . import wake_planning
+from . import day_profile, wake_planning
 
 
 CONFIG_CONTRACT_VERSION = "1.0.0"
@@ -330,7 +330,9 @@ def planning_rules(config: WakePlanningConfig) -> tuple[wake_planning.WakeRule, 
 
 
 def profile_id_for_date(day: date, holidays: Mapping[date, Any]) -> str:
-    if day.weekday() >= 5 or bool(getattr(holidays.get(day), "is_holiday", False)):
+    """Wake profile from the shared Core-State day profile (one owner)."""
+
+    if day_profile.resolve_day_profile(day, holidays).is_free:
         return PROFILE_WEEKEND
     return PROFILE_WEEKDAY
 

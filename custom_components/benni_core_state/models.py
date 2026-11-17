@@ -49,6 +49,10 @@ class PersistentState:
     preheat_active: bool = False
     preheat_source: str | None = None
     preheat_started: str | None = None
+    # Day-phase accordion: monotonic guard (cycle date + sub-phase index) and
+    # the per-date profile frozen while that date was "today" (D-1, D, D+1).
+    day_phase_guard: dict[str, Any] | None = None
+    day_profile_journal: dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -120,3 +124,6 @@ class ComputedState:
     # Live-Status UX-Sensor (Anzeige-only, keine Policy). Kurzer deutscher Text;
     # Details liegen in attrs["live_status"].
     live_status: str = ""
+    # Main phase of the seasonal anchor accordion (morning/day/evening/night).
+    # Always computed (shadow while the legacy model drives day_state).
+    day_phase: str | None = None
