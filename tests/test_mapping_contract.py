@@ -105,7 +105,7 @@ def test_old_outputs_keep_actual_semantics_and_are_not_rebound_now() -> None:
     assert m.mapping_for("waking").status == m.STATUS_ATTRIBUTE_ONLY
 
     activity = m.mapping_for("activity_state")
-    assert m.MAPPING_CONTRACT_VERSION == "1.5.0"
+    assert m.MAPPING_CONTRACT_VERSION == "1.6.0"
     assert activity.allowed_states[: len(ACTIVITY_PRECEDENCE)] == ACTIVITY_PRECEDENCE
     assert "work_away" in activity.allowed_states
     for attribute in (

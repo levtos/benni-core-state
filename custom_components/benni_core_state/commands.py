@@ -9,7 +9,9 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from . import wake_config
+from datetime import datetime, timezone
+
+from . import day_phase, wake_config
 from .const import BIO_AWAKE, BIO_SLEEP
 from .contracts import command_ack
 
@@ -23,6 +25,10 @@ COMMANDS = frozenset(
         "wake.rule.remove",
         "wake.settings.update",
         "wake.config.rollback",
+        "day_phase.config.update",
+        "day_phase.config.rollback",
+        "day_phase.config.reset_defaults",
+        "day_phase.model.set",
     }
 )
 
@@ -105,6 +111,18 @@ async def async_execute_command(
             updated = wake_config.rollback_config(coord.wake_config)
             await coord.async_save_wake_config(updated)
             await coord.async_request_refresh()
+        elif command.startswith("day_phase."):
+            await _execute_day_phase_command(coord, command, values)
+    except day_phase.DayPhaseConfigError as err:
+        # Keep the stable ack contract; the first issue code tells the UI what
+        # failed.  Full field messages come from the preview endpoint.
+        first = err.issues[0].code if err.issues else "day_phase_config_invalid"
+        result = command_ack(
+            request_id=request_id,
+            status="error",
+            command=command,
+            error=f"day_phase_config_invalid:{first}",
+        )
     except (TypeError, ValueError, KeyError) as err:
         result = command_ack(
             request_id=request_id,
@@ -122,3 +140,26 @@ async def async_execute_command(
     coord._ux_command_results[request_id] = result
     await coord.async_save_ux_command_results()
     return result
+
+
+async def _execute_day_phase_command(
+    coord: Any, command: str, values: Mapping[str, Any]
+) -> None:
+    now_iso = datetime.now(timezone.utc).isoformat()
+    config = coord.day_phase_config
+    if command == "day_phase.model.set":
+        await coord.async_set_day_phase_model(str(values.get("model") or ""))
+        return
+    if command == "day_phase.config.update":
+        anchors = values.get("anchors", values.get("values"))
+        if not isinstance(anchors, Mapping):
+            raise ValueError("day_phase_anchors_invalid")
+        updated = day_phase.with_anchors(config, anchors, now_iso=now_iso)
+    elif command == "day_phase.config.rollback":
+        updated = day_phase.rollback(config, now_iso=now_iso)
+    elif command == "day_phase.config.reset_defaults":
+        updated = day_phase.reset_defaults(config, now_iso=now_iso)
+    else:  # pragma: no cover - guarded by COMMANDS
+        raise ValueError("command_not_allowed")
+    await coord.async_save_day_phase_config(updated)
+    await coord.async_request_refresh()

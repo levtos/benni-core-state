@@ -88,6 +88,7 @@ from .const import (
     DEFAULT_TRACKER_FRESHNESS,
     DEFAULT_TRANSITION_HOLD,
     DEFAULT_WAKING_TIMEOUT_MINUTES,
+    DAY_PHASE_STORAGE_VERSION,
     DOMAIN,
     PERS_AWAY,
     PERS_PARENTS,
@@ -98,6 +99,7 @@ from .const import (
     SLEEP_DETECTION_CONTRACT_VERSION,
     UPDATE_INTERVAL,
     storage_key,
+    day_phase_storage_key,
     WAKE_CONFIG_STORAGE_VERSION,
     UX_COMMAND_STORAGE_VERSION,
     wake_config_storage_key,
@@ -105,7 +107,7 @@ from .const import (
 )
 from .models import ComputedState, PersistentState, apply_manual_bio_command
 from .mapping import MAPPING_CONTRACT_VERSION, mapping_diagnostics
-from . import sleep_window, wake_config, wake_planning
+from . import day_phase, day_profile, sleep_window, wake_config, wake_planning
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -138,6 +140,17 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
             UX_COMMAND_STORAGE_VERSION,
             ux_command_storage_key(entry.entry_id),
         )
+        self._day_phase_store: Store[dict[str, Any]] = Store(
+            hass,
+            DAY_PHASE_STORAGE_VERSION,
+            day_phase_storage_key(entry.entry_id),
+        )
+        self._day_phase_config = day_phase.default_config()
+        # Set when the persisted accordion document could not be loaded; the
+        # integration then runs the legacy model until a valid save.
+        self._day_phase_load_error: str | None = None
+        self._day_phase_evaluation: day_phase.DayPhaseEvaluation | None = None
+        self._day_phase_eval_error: str | None = None
         self._persistent = PersistentState()
         self._wake_config = wake_config.default_config()
         self._wake_config_ready = False
@@ -275,6 +288,21 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
             )
             await self._wake_config_store.async_save(self._wake_config.to_dict())
             self._wake_config_ready = True
+        day_phase_raw = await self._day_phase_store.async_load()
+        if day_phase_raw:
+            try:
+                self._day_phase_config = day_phase.config_from_dict(day_phase_raw)
+                self._day_phase_load_error = None
+            except (TypeError, ValueError) as err:
+                # Fail safe: keep the proven legacy model and the default
+                # anchors; never drive day_state from an unreadable document.
+                self._day_phase_config = day_phase.default_config()
+                self._day_phase_load_error = "stored_day_phase_config_invalid"
+                _LOGGER.error(
+                    "Invalid Core-State day-phase config; using legacy model: %s", err
+                )
+        else:
+            await self._day_phase_store.async_save(self._day_phase_config.to_dict())
         command_raw = await self._ux_command_store.async_load()
         if isinstance(command_raw, dict):
             stored_results = command_raw.get("results", command_raw)
@@ -316,6 +344,53 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
         self._wake_config_ready = True
         await self._wake_config_store.async_save(self._wake_config.to_dict())
 
+    @property
+    def day_phase_config(self) -> day_phase.DayPhaseConfig:
+        return self._day_phase_config
+
+    @property
+    def day_phase_load_error(self) -> str | None:
+        return self._day_phase_load_error
+
+    @property
+    def active_day_phase_model(self) -> str:
+        """Model that currently drives ``sensor.*_core_state_day_state``."""
+
+        if (
+            self._day_phase_config.model == day_phase.MODEL_ACCORDION
+            and self._day_phase_load_error is None
+            and self._day_phase_eval_error is None
+        ):
+            return day_phase.MODEL_ACCORDION
+        return day_phase.MODEL_LEGACY
+
+    @property
+    def day_phase_evaluation(self) -> day_phase.DayPhaseEvaluation | None:
+        return self._day_phase_evaluation
+
+    async def async_save_day_phase_config(self, config: day_phase.DayPhaseConfig) -> None:
+        """Persist a validated accordion document and recompute immediately."""
+
+        # Re-validate the stored representation (round trip) before saving.
+        validated = day_phase.config_from_dict(config.to_dict())
+        self._day_phase_config = validated
+        self._day_phase_load_error = None
+        await self._day_phase_store.async_save(validated.to_dict())
+
+    async def async_set_day_phase_model(self, model: str) -> None:
+        """Controlled legacy <-> accordion switch for the nine-state sensor."""
+
+        updated = day_phase.with_model(
+            self._day_phase_config, model, now_iso=dt_util.utcnow().isoformat()
+        )
+        await self.async_save_day_phase_config(updated)
+        _LOGGER.warning(
+            "Core-State day_state model switched to %s (entry %s)",
+            model,
+            self.entry.entry_id,
+        )
+        await self.async_request_refresh()
+
     async def async_save_ux_command_results(self) -> None:
         """Persist only a bounded request-id result cache."""
 
@@ -349,11 +424,14 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
             return [dict(event)]
         return []
 
-    def _configured_holidays(self, local_now: datetime) -> dict[Any, Any]:
+    def _configured_holidays(
+        self, local_now: datetime, start: Any | None = None
+    ) -> dict[Any, Any]:
+        first = start or local_now.date()
         end = local_now.date() + timedelta(days=wake_planning.DEFAULT_HORIZON_DAYS)
         holidays = wake_planning.parse_manual_holiday_dates(
             self._wake_config.manual_holiday_intervals,
-            local_now.date(),
+            first,
             end,
         )
         entity_id = self._wake_config.holiday_calendar_entity
@@ -367,7 +445,7 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
             )
         for event in self._configured_events(self._wake_config.holiday_calendar_entity):
             event_date = wake_planning._event_date(event)
-            if event_date is None or not local_now.date() <= event_date <= end:
+            if event_date is None or not first <= event_date <= end:
                 continue
             holidays[event_date] = wake_planning.WakeHoliday(
                 is_holiday=True,
@@ -457,9 +535,166 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
                     },
                     "status": source_status,
                     "source": "internal:core_state.wake_planning",
+                    "day_phases": self._projection_day_phases(
+                        calendar_day, holidays, local_now
+                    ),
                 }
             )
         return rows
+
+    def _projection_day_phases(
+        self, calendar_day: Any, holidays: dict[Any, Any], local_now: datetime
+    ) -> dict[str, Any] | None:
+        """Main-phase starts of the accordion for one projected date."""
+
+        try:
+            resolution = day_profile.resolve_day_profile(calendar_day, holidays)
+            cycle = day_phase.compute_cycle(
+                self._day_phase_config,
+                calendar_day,
+                resolution.profile,
+                day_profile.resolve_day_profile(
+                    calendar_day + timedelta(days=1), holidays
+                ).profile,
+            )
+        except (ArithmeticError, KeyError, ValueError):
+            return None
+        return {
+            "profile": resolution.profile,
+            "profile_label": day_profile.DAY_PROFILE_LABELS[resolution.profile],
+            "reason": resolution.reason,
+            "model": self.active_day_phase_model,
+            "starts": {
+                phase: cycle.wall(int(cycle.main_starts[phase]), local_now.tzinfo).strftime("%H:%M")
+                for phase in day_phase.MAIN_PHASES
+            },
+        }
+
+    # ------------------------------------------------------------- day phase
+
+    def _holiday_source_quality(self) -> str:
+        """``degraded`` when a configured holiday calendar is not readable."""
+
+        entity_id = self._wake_config.holiday_calendar_entity
+        if not entity_id:
+            return day_profile.QUALITY_FRESH
+        state = self.hass.states.get(entity_id)
+        if state is None or state.state in ("", "unknown", "unavailable"):
+            return day_profile.QUALITY_DEGRADED
+        return day_profile.QUALITY_FRESH
+
+    def _day_profile_lookup(
+        self, local_now: datetime, holidays: dict[Any, Any], *, record: bool
+    ) -> Any:
+        """Shared Werktag/Freier-Tag lookup with a frozen per-date journal.
+
+        Today's resolution is journaled every tick.  After midnight the
+        previous date keeps the profile it had while it was today, so a
+        calendar that only reports the *current* event cannot rewrite the
+        running night.  Tomorrow is always resolved live (look-ahead).
+        """
+
+        today = local_now.date()
+        quality = self._holiday_source_quality()
+        journal_raw = self._persistent.day_profile_journal
+        journal = journal_raw if isinstance(journal_raw, dict) else {}
+
+        def lookup(day: Any) -> day_profile.DayProfileResolution:
+            if day < today:
+                frozen = day_profile.resolution_from_journal(
+                    day, str(journal.get(day.isoformat(), ""))
+                )
+                if frozen is not None:
+                    return frozen
+            return day_profile.resolve_day_profile(day, holidays, quality=quality)
+
+        if record:
+            current = day_profile.resolve_day_profile(today, holidays, quality=quality)
+            keep = {
+                (today + timedelta(days=offset)).isoformat() for offset in (-1, 0)
+            }
+            pruned = {key: value for key, value in journal.items() if key in keep}
+            pruned[today.isoformat()] = current.profile
+            self._persistent.day_profile_journal = pruned
+            journal = pruned
+        return lookup
+
+    def _evaluate_day_phase(
+        self, local_now: datetime, now: datetime, holidays: dict[Any, Any]
+    ) -> day_phase.DayPhaseEvaluation | None:
+        """Guarded accordion evaluation; never raises into the update cycle."""
+
+        lookup = self._day_profile_lookup(local_now, holidays, record=True)
+        try:
+            evaluation = day_phase.evaluate(
+                self._day_phase_config,
+                local_now,
+                lookup,
+                guard=self._persistent.day_phase_guard,
+                now_iso=now.isoformat(),
+            )
+        except (ArithmeticError, KeyError, TypeError, ValueError) as err:
+            if self._day_phase_eval_error is None:
+                _LOGGER.error(
+                    "Core-State day-phase accordion failed; legacy model drives "
+                    "day_state: %s",
+                    err,
+                )
+            self._day_phase_eval_error = "accordion_evaluation_failed"
+            self._day_phase_evaluation = None
+            return None
+        self._day_phase_eval_error = None
+        self._persistent.day_phase_guard = dict(evaluation.guard)
+        self._day_phase_evaluation = evaluation
+        return evaluation
+
+    def day_phase_preview(
+        self, day_iso: str | None, draft: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
+        """Backend-owned preview for the configuration mask (no persistence)."""
+
+        local_now = dt_util.as_local(dt_util.utcnow())
+        try:
+            day = (
+                datetime.fromisoformat(str(day_iso)).date()
+                if day_iso
+                else local_now.date()
+            )
+        except ValueError:
+            return {"valid": False, "errors": [{"path": "date", "code": "date_invalid", "message": "Ungültiges Datum."}]}
+        config, errors = day_phase.draft_config(self._day_phase_config, draft)
+        if config is None:
+            return {"valid": False, "errors": errors, "date": day.isoformat()}
+        holidays = self._configured_holidays(
+            local_now, start=min(day, local_now.date()) - timedelta(days=1)
+        )
+        quality = self._holiday_source_quality()
+        horizon_end = local_now.date() + timedelta(days=wake_planning.DEFAULT_HORIZON_DAYS)
+
+        def resolve(target: Any) -> day_profile.DayProfileResolution:
+            resolution = day_profile.resolve_day_profile(target, holidays, quality=quality)
+            if target > horizon_end and resolution.reason == day_profile.REASON_WORKDAY:
+                # Beyond the calendar horizon only the weekday rule is known.
+                return day_profile.DayProfileResolution(
+                    day=target,
+                    profile=resolution.profile,
+                    reason=resolution.reason,
+                    source="calendar_weekday_beyond_horizon",
+                    quality=resolution.quality,
+                )
+            return resolution
+
+        try:
+            result = day_phase.preview(
+                config,
+                day,
+                tz=local_now.tzinfo,
+                applied=resolve(day),
+                next_applied=resolve(day + timedelta(days=1)),
+            )
+        except (ArithmeticError, KeyError, ValueError):
+            return {"valid": False, "errors": [{"path": "anchors", "code": "preview_failed", "message": "Die Phasen konnten nicht berechnet werden."}], "date": day.isoformat()}
+        return {"valid": True, "errors": [], **result, "draft": bool(draft)}
 
     # -------------------------------------------------------------- listeners
 
@@ -744,6 +979,73 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
 
     # --------------------------------------------------------------- compute
 
+    def _day_state_outputs(
+        self, local_now: datetime, now: datetime, core_holidays: dict[Any, Any]
+    ) -> tuple[str, dict[str, Any], str, dict[str, Any], str]:
+        """Nine-state day_state + four-phase day_phase with legacy fallback.
+
+        Returns ``(day_state, day_state_attrs, main_phase, day_phase_attrs,
+        active_model)``.  The accordion is always evaluated (shadow); it only
+        drives ``day_state`` when configured *and* loaded/evaluated without
+        error, otherwise the unchanged legacy algorithm is published.
+        """
+
+        legacy_day_state = logic.compute_day_state(local_now)
+        accordion = self._evaluate_day_phase(local_now, now, core_holidays)
+        active_model = self.active_day_phase_model
+        if active_model == day_phase.MODEL_ACCORDION and accordion is not None:
+            day_state = accordion.sub_phase
+            day_state_attrs = {
+                **accordion.legacy_sensor_attributes(),
+                "legacy_shadow_state": legacy_day_state,
+            }
+        else:
+            day_state = legacy_day_state
+            day_state_attrs = {
+                **logic.compute_day_phase_diagnostics(local_now, legacy_day_state),
+                "day_phase_model": day_phase.MODEL_LEGACY,
+                "configured_day_phase_model": self._day_phase_config.model,
+                "day_phase_fallback_reason": (
+                    self._day_phase_load_error or self._day_phase_eval_error
+                ),
+                "accordion_shadow": (
+                    {
+                        "state": accordion.sub_phase,
+                        "main_phase": accordion.main_phase,
+                        "day_profile": accordion.profile.profile,
+                        "cycle_date": accordion.cycle.cycle_date.isoformat(),
+                    }
+                    if accordion is not None
+                    else None
+                ),
+            }
+        if accordion is not None:
+            main_phase = accordion.main_phase
+            phase_attrs = accordion.day_phase_attributes(active_model=active_model)
+        else:
+            # Never unknown: project the published nine-state value.
+            main_phase = day_phase.MAIN_OF_SUB.get(day_state, day_phase.MAIN_NIGHT)
+            phase_attrs = {
+                "main_phase": main_phase,
+                "main_phase_label": day_phase.MAIN_PHASE_LABELS[main_phase],
+                "sub_phase": day_state,
+                "day_phase_model": active_model,
+                "drives_day_state": False,
+                "model_version": day_phase.MODEL_VERSION,
+                "degraded": True,
+                "degraded_reasons": [
+                    self._day_phase_eval_error or "accordion_unavailable",
+                    "projected_from_legacy_day_state",
+                ],
+            }
+        if self._day_phase_load_error:
+            phase_attrs["degraded"] = True
+            phase_attrs["degraded_reasons"] = [
+                *phase_attrs.get("degraded_reasons", []),
+                self._day_phase_load_error,
+            ]
+        return day_state, day_state_attrs, main_phase, phase_attrs, active_model
+
     async def _async_update_data(self) -> ComputedState:
         now = dt_util.utcnow()
 
@@ -874,10 +1176,19 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
         legacy_holiday_raw, legacy_holiday_ts, _ = self._read_entity(CONF_HOLIDAY_ACTIVE)
         await self.async_ensure_wake_config(wake_state_attrs)
         local_now = dt_util.as_local(now)
-        day_state = logic.compute_day_state(local_now)
-        day_phase_diagnostics = logic.compute_day_phase_diagnostics(
-            local_now, day_state
+        # One holiday map for day context, day profile and (via its own call)
+        # wake planning.  It starts one day early so the running night can
+        # still see yesterday's profile after midnight.
+        core_holidays = self._configured_holidays(
+            local_now, start=local_now.date() - timedelta(days=1)
         )
+        (
+            day_state,
+            day_phase_diagnostics,
+            main_day_phase,
+            day_phase_attrs,
+            active_day_model,
+        ) = self._day_state_outputs(local_now, now, core_holidays)
 
         # Issue #59 reads only canonical, already-normalized device/activity
         # contracts. None is unusable and must never be interpreted as off.
@@ -926,7 +1237,6 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
         wake_indicators["window"] = window_edge
         wake_indicator_active_since["window"] = window_at
 
-        core_holidays = self._configured_holidays(local_now)
         holiday = local_now.date() in core_holidays
         day_context = logic.compute_day_context(local_now, holiday)
 
@@ -1281,6 +1591,7 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
                 },
             },
             "day_state": day_phase_diagnostics,
+            "day_phase": day_phase_attrs,
             # #26 Shadow-only outputs. These are additive read-only projections;
             # the internal sleep-window result drives Bio when it is available,
             # with the old wake inputs retained only as an explicit fallback.
@@ -1379,7 +1690,11 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
             "day_state": tuple(
                 source
                 for source in (
-                    "runtime:logic.compute_day_state",
+                    (
+                        "runtime:day_phase.evaluate"
+                        if active_day_model == day_phase.MODEL_ACCORDION
+                        else "runtime:logic.compute_day_state"
+                    ),
                 )
                 if source
             ),
@@ -1452,6 +1767,7 @@ class BenniCoreStateCoordinator(DataUpdateCoordinator[ComputedState]):
             effective_source_activity=hold.source_activity,
             effective_hold_active=hold.hold_active,
             live_status=live.state,
+            day_phase=main_day_phase,
         )
 
 

@@ -1,5 +1,5 @@
 import type { CoreStateAdapter } from "./adapters";
-import type { CommandAck, DataStatus, Projection, Snapshot } from "./contracts";
+import type { AnchorMatrix, CommandAck, DataStatus, DayPhasePreview, Projection, Snapshot } from "./contracts";
 
 export interface CoreStateViewState {
   snapshot: Snapshot | null;
@@ -85,6 +85,12 @@ export class CoreStateStore {
     } catch (error) {
       this.patch({ error: this.message(error) });
     }
+  }
+
+  /** Read-only backend preview; never mutates the store state. */
+  async dayPhasePreview(date: string, anchors: AnchorMatrix | null = null): Promise<DayPhasePreview | null> {
+    if (!this.adapter) return null;
+    return this.adapter.dayPhasePreview(date, anchors);
   }
 
   async command(command: string, payload: Record<string, unknown> = {}): Promise<CommandAck> {

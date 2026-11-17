@@ -56,6 +56,31 @@ class _ProjectionView(HomeAssistantView):
         return self.json(build_projection(coord, days))
 
 
+class _DayPhasePreviewView(HomeAssistantView):
+    url = "/api/benni_core_state/day_phase_preview"
+    name = "api:benni_core_state:day_phase_preview"
+    requires_auth = True
+
+    async def post(self, request):
+        try:
+            body: dict[str, Any] = await request.json()
+        except (TypeError, ValueError):
+            return self.json_message("json_invalid", status_code=400)
+        coord = _coordinator(request.app["hass"], body.get("entry_id"))
+        if coord is None:
+            return self.json_message("Core State not loaded", status_code=503)
+        anchors = body.get("anchors")
+        return self.json(
+            {
+                "contract": "benni_core_state.day_phase_preview",
+                "version": "1.0.0",
+                **coord.day_phase_preview(
+                    body.get("date"), anchors if isinstance(anchors, dict) else None
+                ),
+            }
+        )
+
+
 class _CommandView(HomeAssistantView):
     url = "/api/benni_core_state/commands"
     name = "api:benni_core_state:commands"
@@ -89,4 +114,5 @@ def async_setup_api(hass: HomeAssistant) -> None:
     hass.http.register_view(_SnapshotView)
     hass.http.register_view(_ProjectionView)
     hass.http.register_view(_CommandView)
+    hass.http.register_view(_DayPhasePreviewView)
     data[DATA_API_REGISTERED] = True

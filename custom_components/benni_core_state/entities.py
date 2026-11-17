@@ -26,6 +26,7 @@ from .const import (
     BIO_STATES,
     CONF_PROFILE,
     DAY_CONTEXT_STATES,
+    DAY_PHASE_STATES,
     DAY_STATES,
     DEFAULT_PROFILE,
     DOMAIN,
@@ -91,6 +92,20 @@ SENSORS: tuple[_Desc, ...] = (
           None, lambda s: s.live_status, "live_status"),
 )
 
+# Additional four-phase contract of the seasonal anchor accordion.  It never
+# replaces ``day_state``; the explicit entity_id keeps the clean route even
+# though newly registered entities could otherwise inherit a renamed device
+# prefix (``system_``).
+DAY_PHASE_SENSOR = _Desc(
+    "day_phase", "Day Phase",
+    DAY_PHASE_STATES, lambda s: s.day_phase, "day_phase",
+)
+
+
+def day_phase_entity_id(profile: str) -> str:
+    normalized = profile if profile in PROFILE_LABELS else DEFAULT_PROFILE
+    return f"sensor.{normalized}_core_state_day_phase"
+
 
 def _device_info(entry: ConfigEntry) -> dict[str, Any]:
     # Der Device-Name bestimmt bei has_entity_name den Entity-Slug:
@@ -113,7 +128,14 @@ async def async_get_entities(
     if coord is None:
         return []
     if platform == Platform.SENSOR:
-        return [BenniCoreStateSensor(coord, entry, desc) for desc in SENSORS]
+        entities = [BenniCoreStateSensor(coord, entry, desc) for desc in SENSORS]
+        day_phase_sensor = BenniCoreStateSensor(coord, entry, DAY_PHASE_SENSOR)
+        profile = entry.data.get(CONF_PROFILE, DEFAULT_PROFILE)
+        day_phase_sensor.entity_id = day_phase_entity_id(
+            profile if isinstance(profile, str) else DEFAULT_PROFILE
+        )
+        entities.append(day_phase_sensor)
+        return entities
     if platform == Platform.BINARY_SENSOR:
         runtime = startup_readiness_from_hass(hass)
         entities = [

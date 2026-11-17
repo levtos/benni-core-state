@@ -40,6 +40,7 @@ from .const import (
     PROFILE_LABELS,
     WS_GET_STATUS,
     WS_UX_COMMAND,
+    WS_UX_DAY_PHASE_PREVIEW,
     WS_UX_PROJECTION,
     WS_UX_SNAPSHOT,
     WS_UX_SUBSCRIBE,
@@ -194,6 +195,31 @@ def async_setup_websocket_api(hass: HomeAssistant) -> None:
 
     @websocket_api.websocket_command(
         {
+            vol.Required("type"): WS_UX_DAY_PHASE_PREVIEW,
+            vol.Optional("date"): vol.All(str, vol.Length(max=32)),
+            vol.Optional("anchors"): dict,
+            vol.Optional("entry_id"): str,
+        }
+    )
+    @websocket_api.async_response
+    async def ws_ux_day_phase_preview(hass, connection, msg) -> None:
+        """Read-only preview of saved or draft anchors for one date."""
+
+        coord = _coordinator(hass, msg.get("entry_id"))
+        if coord is None:
+            connection.send_error(msg["id"], "not_ready", "Core State not loaded")
+            return
+        connection.send_result(
+            msg["id"],
+            {
+                "contract": "benni_core_state.day_phase_preview",
+                "version": "1.0.0",
+                **coord.day_phase_preview(msg.get("date"), msg.get("anchors")),
+            },
+        )
+
+    @websocket_api.websocket_command(
+        {
             vol.Required("type"): WS_UX_COMMAND,
             vol.Required("request_id"): vol.All(str, vol.Length(min=1, max=128)),
             vol.Required("command"): vol.All(str, vol.Length(min=1, max=96)),
@@ -253,5 +279,6 @@ def async_setup_websocket_api(hass: HomeAssistant) -> None:
 
     websocket_api.async_register_command(hass, ws_ux_snapshot)
     websocket_api.async_register_command(hass, ws_ux_projection)
+    websocket_api.async_register_command(hass, ws_ux_day_phase_preview)
     websocket_api.async_register_command(hass, ws_ux_command)
     websocket_api.async_register_command(hass, ws_ux_subscribe)

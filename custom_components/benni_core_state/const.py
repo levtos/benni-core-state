@@ -181,6 +181,17 @@ DAY_STATES = [
     DAY_LATE_EVENING,
 ]
 
+# Four main day phases (seasonal anchor accordion).  Published by the
+# additional ``sensor.<profile>_core_state_day_phase``; the nine DAY_STATES
+# above stay the compatible contract of ``sensor.<profile>_core_state_day_state``.
+DAY_PHASE_MORNING = "morning"
+DAY_PHASE_DAY = "day"
+DAY_PHASE_EVENING = "evening"
+DAY_PHASE_NIGHT = "night"
+DAY_PHASE_STATES = [
+    DAY_PHASE_MORNING, DAY_PHASE_DAY, DAY_PHASE_EVENING, DAY_PHASE_NIGHT,
+]
+
 # Day context
 DC_WERKTAG = "werktag"
 DC_WOCHENENDE = "wochenende"
@@ -341,6 +352,7 @@ PROFILE_SSIDS: dict[str, dict[str, list[str]]] = {
 STORAGE_VERSION = 1
 WAKE_CONFIG_STORAGE_VERSION = 1
 UX_COMMAND_STORAGE_VERSION = 1
+DAY_PHASE_STORAGE_VERSION = 1
 
 
 def storage_key(entry_id: str) -> str:
@@ -362,6 +374,11 @@ def ux_command_storage_key(entry_id: str) -> str:
     return f"{DOMAIN}_ux_commands_{entry_id}"
 
 
+def day_phase_storage_key(entry_id: str) -> str:
+    """Own persistent 32-anchor day-phase accordion configuration."""
+    return f"{DOMAIN}_day_phase_{entry_id}"
+
+
 def unique_id(entry_id: str, suffix: str) -> str:
     """Eindeutige unique_id mit Domain-Präfix (kollisionsfrei zur Toolbox)."""
     return f"{DOMAIN}_{entry_id}_{suffix}"
@@ -376,6 +393,7 @@ SERVICE_SET_BIO = "set_bio_state"
 SERVICE_MARK_SLEEP = "mark_sleep"
 SERVICE_MARK_AWAKE = "mark_awake"
 SERVICE_CONFIGURE_SLEEP_WINDOW = "configure_sleep_window"
+SERVICE_SET_DAY_PHASE_MODEL = "set_day_phase_model"
 
 # --- Panel / WebSocket-API (eigenes Dashboard-Frontend) ----------------------
 # Muster wie benni_light_policy: statisch ausgeliefertes Vanilla-Lit-Frontend
@@ -393,6 +411,7 @@ WS_UX_SNAPSHOT = f"{DOMAIN}/ux_snapshot"
 WS_UX_PROJECTION = f"{DOMAIN}/ux_projection"
 WS_UX_COMMAND = f"{DOMAIN}/ux_command"
 WS_UX_SUBSCRIBE = f"{DOMAIN}/ux_subscribe"
+WS_UX_DAY_PHASE_PREVIEW = f"{DOMAIN}/ux_day_phase_preview"
 
 # Versioned browser/gateway contract identifiers.
 UX_SNAPSHOT_CONTRACT_VERSION = "1.0.0"
